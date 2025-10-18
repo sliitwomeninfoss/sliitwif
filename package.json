@@ -4,10 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "next build --turbopack",
+    "build": "next build && next export",
     "start": "next start",
     "lint": "eslint",
-    "deploy": "next build && next export && gh-pages -d out"
+    "deploy":"next build && gh-pages -d out"
   },
   "dependencies": {
     "next": "15.5.6",
