@@ -19,12 +19,12 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
-         # cache: 'npm'           # <-- caches node_modules between runs
+          cache: 'npm'
 
       - name: Install dependencies
-        run: npm install       # <-- use ci to match package-lock.json exactly
+        run: npm ci              # Back to npm ci now that lock file is fixed
 
-      - name: Rebuild native modules (optional but fixes lightningcss issues)
+      - name: Rebuild native modules
         run: npm rebuild lightningcss
 
       - name: Build and Export Next.js
