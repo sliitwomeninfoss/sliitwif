@@ -10,6 +10,7 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -18,9 +19,13 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
+          cache: 'npm'           # <-- caches node_modules between runs
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci              # <-- use ci to match package-lock.json exactly
+
+      - name: Rebuild native modules (optional but fixes lightningcss issues)
+        run: npm rebuild lightningcss
 
       - name: Build and Export Next.js
         run: npm run build
