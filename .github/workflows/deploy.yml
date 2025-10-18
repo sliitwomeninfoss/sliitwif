@@ -22,7 +22,7 @@ jobs:
           cache: 'npm'
 
       - name: Install dependencies
-        run: npm ci              # Back to npm ci now that lock file is fixed
+        run: npm install            # Back to npm ci now that lock file is fixed
 
       - name: Rebuild native modules
         run: npm rebuild lightningcss
