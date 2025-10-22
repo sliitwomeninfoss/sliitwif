@@ -1,12 +1,10 @@
 import type { NextConfig } from "next";
-const path = require("path");
 
 const nextConfig: NextConfig = {
-  output: 'export',
+  output: "export",
   images: { unoptimized: true },
-  basePath: '/sliitwif',
-  assetPrefix: '/sliitwif/',
-   outdir: path.join(__dirname, 'out')
+  basePath: "/sliitwif",
+  assetPrefix: "/sliitwif/",
 };
 
 export default nextConfig;
