@@ -23,11 +23,11 @@ export default function Header() {
   // Active link styling
   const linkClasses = (path: string) =>
     pathname === path
-      ? "px-8 py-2 rounded-lg font-semibold text-white bg-[#914FA8] transition-all"
+      ? "px-8 py-2 rounded-lg font-semibold text-white bg-[#7e05ec] transition-all"
       : "px-6 py-2 font-semibold text-gray-800 hover:text-purple-600 transition-colors";
 
   return (
-    <header className="bg-gray-100 border-b-4 border-gray-400">
+    <header className="bg-gray-100 border-b-4 ">
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
