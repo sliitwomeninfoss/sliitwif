@@ -12,12 +12,11 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set PR number for dynamic basePath
+      - name: Set PR number
         run: echo "NEXT_PUBLIC_PR_NUMBER=${{ github.event.number }}" >> $GITHUB_ENV
 
       - name: Setup Node.js
@@ -30,9 +29,9 @@ jobs:
         run: npm install
 
       - name: Build PR version
-        run: npm run build 
+        run: npm run build
 
-      - name: Upload PR artifact
+      - name: Upload PR Artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./out
@@ -42,7 +41,9 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: github-pages-pr
-      url: ${{ steps.deployment.outputs.page_url }}
+      url: ${{ steps.deploypr.outputs.page_url }}
+
     steps:
-      - id: deployment
+      - name: Deploy Preview
+        id: deploypr
         uses: actions/deploy-pages@v4
