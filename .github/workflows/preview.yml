@@ -13,11 +13,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    permissions:
-      contents: write
-      pages: write
-      id-token: write
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -35,10 +30,7 @@ jobs:
         run: npm install
 
       - name: Build PR version
-        run: npm run build
-
-      - name: Add .nojekyll
-        run: echo "" > out/.nojekyll
+        run: npm run build && npm run export
 
       - name: Upload PR artifact
         uses: actions/upload-pages-artifact@v3
@@ -48,13 +40,9 @@ jobs:
   deploy:
     needs: build
     runs-on: ubuntu-latest
-    permissions:
-      pages: write
-      id-token: write
     environment:
       name: github-pages-pr
       url: ${{ steps.deployment.outputs.page_url }}
-
     steps:
       - id: deployment
         uses: actions/deploy-pages@v4
