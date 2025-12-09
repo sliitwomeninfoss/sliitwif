@@ -10,7 +10,6 @@ export default function Header() {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
 
-  // Navigation links with proper labels
   const links = [
     { path: "/", label: "Home" },
     { path: "/about-us", label: "About Us" },
@@ -20,34 +19,33 @@ export default function Header() {
     { path: "/contact", label: "Contact Us" },
   ];
 
-  // Active link styling
   const linkClasses = (path: string) =>
     pathname === path
-      ? "px-8 py-2 rounded-lg font-semibold text-white bg-[#7e05ec] transition-all"
-      : "px-6 py-2 font-semibold text-gray-800 hover:text-purple-600 transition-colors";
+      ? "px-5 py-2 rounded-md font-semibold text-white bg-[#7e05ec] transition-all whitespace-nowrap"
+      : "px-4 py-2 font-semibold text-gray-800 hover:text-purple-600 transition-colors whitespace-nowrap";
 
   return (
-    <header className="bg-gray-100  ">
+    <header className="bg-gray-100">
       <motion.div
-        initial={{ opacity: 0, y: -20 }}
+        initial={{ opacity: 0, y: -12 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4 }}
-        className="container mx-auto px-6 py-4"
+        transition={{ duration: 0.35, ease: "easeOut" }}
+        className="w-full max-w-screen-xl mx-auto px-6 lg:px-10 py-4"
       >
         <div className="flex items-center justify-between">
 
           {/* Logo Section */}
-          <Link href="/" className="flex items-center gap-4">
+          <Link href="/" className="flex items-center gap-3">
             <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.4, delay: 0.1 }}
+              initial={{ opacity: 0, x: -15 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.35, delay: 0.08 }}
             >
               <Image
                 src="/sliitwif/assets/logo.png"
                 alt="SLIIT WIF Logo"
-                width={110}
-                height={110}
+                width={105}
+                height={105}
                 className="object-contain"
               />
             </motion.div>
@@ -58,9 +56,9 @@ export default function Header() {
             {links.map((link, index) => (
               <motion.div
                 key={link.path}
-                initial={{ opacity: 0, y: -8 }}
+                initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.15 + index * 0.1 }}
+                transition={{ delay: 0.12 + index * 0.08 }}
               >
                 <Link href={link.path} className={linkClasses(link.path)}>
                   {link.label}
@@ -70,20 +68,24 @@ export default function Header() {
           </nav>
 
           {/* Mobile Menu Button */}
-          <button
+          <motion.button
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.25 }}
             onClick={() => setMenuOpen(!menuOpen)}
-            className="md:hidden text-3xl font-bold"
+            className="md:hidden text-3xl font-bold text-gray-800"
           >
             ☰
-          </button>
+          </motion.button>
         </div>
 
         {/* Mobile Menu */}
         {menuOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -10 }}
+            initial={{ opacity: 0, y: -15 }}
             animate={{ opacity: 1, y: 0 }}
-            className="md:hidden bg-white shadow-lg p-6 mt-4 flex flex-col gap-4 rounded-lg"
+            transition={{ duration: 0.25 }}
+            className="md:hidden bg-white shadow-xl p-5 mt-4 flex flex-col gap-3 rounded-lg border border-gray-200"
           >
             {links.map((link) => (
               <Link
