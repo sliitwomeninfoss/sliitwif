@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "deploy": "next build && gh-pages -d out"
+    "deploy": "next build && gh-pages -d out",
+    "export": "next export -o out"
   },
   "dependencies": {
     "autoprefixer": "^10.4.21",
