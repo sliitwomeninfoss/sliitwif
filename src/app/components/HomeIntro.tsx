@@ -226,7 +226,7 @@ export default function HomeIntro() {
             className="text-center md:text-left"
           >
            <motion.h2
-  className="text-3xl md:text-4xl font-bold text-[#7e05ec] mb-4 text-center leading-tight"
+  className="text-3xl md:text-4xl font-bold text-[#7e05ec] mb-8 text-center leading-tight"
 >
   Meet Nifi <br />
   Our Official Mascot
