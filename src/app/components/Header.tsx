@@ -27,7 +27,7 @@ export default function Header() {
       : "px-6 py-2 font-semibold text-gray-800 hover:text-purple-600 transition-colors";
 
   return (
-    <header className="bg-gray-100 border-b-4 ">
+    <header className="bg-gray-100  ">
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
