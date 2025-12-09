@@ -12,11 +12,17 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+      pages: write
+      id-token: write
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set PR number
+      - name: Set PR number for dynamic basePath
         run: echo "NEXT_PUBLIC_PR_NUMBER=${{ github.event.number }}" >> $GITHUB_ENV
 
       - name: Setup Node.js
@@ -31,7 +37,10 @@ jobs:
       - name: Build PR version
         run: npm run build
 
-      - name: Upload PR Artifact
+      - name: Add .nojekyll
+        run: echo "" > out/.nojekyll
+
+      - name: Upload PR artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./out
@@ -39,11 +48,13 @@ jobs:
   deploy:
     needs: build
     runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
     environment:
       name: github-pages-pr
-      url: ${{ steps.deploypr.outputs.page_url }}
+      url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
-      - name: Deploy Preview
-        id: deploypr
+      - id: deployment
         uses: actions/deploy-pages@v4

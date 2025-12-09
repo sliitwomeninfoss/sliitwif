@@ -13,6 +13,11 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: write
+      pages: write
+      id-token: write
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -26,23 +31,14 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Build static site
+      - name: Build Next.js (Static Export)
         run: npm run build
 
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: ./out
+      - name: Add .nojekyll
+        run: echo "" > out/.nojekyll
 
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-
-    environment:
-      name: github-pages
-      url: ${{ steps.deploy.outputs.page_url }}
-
-    steps:
       - name: Deploy to GitHub Pages
-        id: deploy
-        uses: actions/deploy-pages@v4
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./out
