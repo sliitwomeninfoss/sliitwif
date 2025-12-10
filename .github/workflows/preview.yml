@@ -30,7 +30,7 @@ jobs:
         run: npm install
 
       - name: Build PR version
-        run: npm run build && npm run export
+        run: npm run build
 
       - name: Upload PR artifact
         uses: actions/upload-pages-artifact@v3
