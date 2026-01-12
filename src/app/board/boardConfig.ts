@@ -1,3 +1,10 @@
+export interface BoardMember {
+  ROLE: string;
+  NAME: string;
+  IMAGE_SRC: string;
+  FACEBOOK: string;
+  LINKEDIN: string;
+}
 export const rawBoardData: Record<string, any[]> = {
     "2021": [
         {
