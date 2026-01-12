@@ -5,7 +5,9 @@ export interface BoardMember {
   FACEBOOK: string;
   LINKEDIN: string;
 }
-export const rawBoardData: Record<string, any[]> = {
+
+// FIX: Changed any[] to BoardMember[]
+export const rawBoardData: Record<string, BoardMember[]> = {
     "2021": [
         {
             "ROLE": "CLUB LEAD",
@@ -202,7 +204,6 @@ export const rawBoardData: Record<string, any[]> = {
             "FACEBOOK": "#",
             "LINKEDIN": "linkedin.com/in/irushi-gunawardana- 941893250"
         }
-       
     ],
     "2025": [
         {
@@ -253,13 +254,12 @@ export const rawBoardData: Record<string, any[]> = {
             "FACEBOOK": "https://www.facebook.com/profile.php?id=100092984103364",
             "LINKEDIN": " https://www.linkedin.com/in/manushi-katipearachchi-b8481627a/?trk=opento_sprofile_goalscard"
         },
-         {
+        {
             "ROLE": "EVENT COORDINATOR",
             "NAME": "Dilni Nishshanka ",
             "IMAGE_SRC": "/sliitwif/assets/2025/Dilni Nishshanka.jpg",
             "FACEBOOK": "#",
             "LINKEDIN": "https://www.linkedin.com/in/dilni-nishshanka-b889b82b1/"
         }
-       
     ]
-}
+};
