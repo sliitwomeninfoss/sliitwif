@@ -4,6 +4,7 @@ import React, { useEffect, useState, useMemo } from "react";
 import { gsap } from "gsap";
 import { ChevronDown, Facebook, Linkedin } from "lucide-react";
 import { rawBoardData } from "./boardConfig";
+import Image from "next/image";
 
 export default function CreativeBoard() {
   const availableYears = useMemo(() => Object.keys(rawBoardData).sort((a, b) => Number(b) - Number(a)), []);
