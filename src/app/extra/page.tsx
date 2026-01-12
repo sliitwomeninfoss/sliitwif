@@ -5,22 +5,28 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 import Image from 'next/image';
 
+// --- TYPE DEFINITIONS ---
+interface Item {
+  title: string;
+  year: string;
+  img: string;
+}
+
 // --- DATA ---
-// Replace these with your actual imports (e.g., from './past-events')
-const PAST_EVENTS = [
+const PAST_EVENTS: Item[] = [
   { title: 'Open Source Summit', year: '2024', img: 'https://images.unsplash.com/photo-1540575861501-7cf05a4b125a?q=80&w=800' },
   { title: 'Code with WIF', year: '2023', img: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=800' },
   { title: 'Git Mastery Lab', year: '2023', img: 'https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=800' },
   { title: 'FOSS Awareness', year: '2022', img: 'https://images.unsplash.com/photo-1591115765373-520b7a2d7a59?q=80&w=800' },
 ];
 
-const WEBINARS = [
+const WEBINARS: Item[] = [
   { title: 'GSoC Guide 2024', year: '2024', img: 'https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?q=80&w=800' },
   { title: 'UI/UX in FOSS', year: '2024', img: 'https://images.unsplash.com/photo-1586717791821-3f44a563eb4c?q=80&w=800' },
   { title: 'Cloud Native 101', year: '2023', img: 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?q=80&w=800' },
 ];
 
-const BLOGS = [
+const BLOGS: Item[] = [
   { title: 'The Power of PRs', year: '2024', img: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=800' },
   { title: 'Success Stories', year: '2024', img: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=800' },
   { title: 'Mentorship Matters', year: '2023', img: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=800' },
@@ -31,7 +37,7 @@ if (typeof window !== 'undefined') {
 }
 
 // Reusable Card Component
-const ItemCard = ({ item }: { item: any }) => (
+const ItemCard = ({ item }: { item: Item }) => (
   <div className="flex-shrink-0 w-[320px] md:w-[480px] group cursor-pointer">
     <div className="relative aspect-[16/10] overflow-hidden rounded-2xl bg-white/5 border border-white/10 transition-all duration-500 group-hover:border-purple-500/50">
       <Image 
@@ -120,11 +126,12 @@ export default function WomenInFOSS() {
         duration: 1.2,
         ease: "power4.out"
       });
-
-      // 5. Triple Horizontal Scroll Logic
-      const horizontalSections = gsap.utils.toArray('.horizontal-container');
-      horizontalSections.forEach((section: any) => {
-        const track = section.querySelector('.scroll-track');
+      
+      const horizontalSections = gsap.utils.toArray<HTMLElement>('.horizontal-container');
+      horizontalSections.forEach((section) => {
+        const track = section.querySelector<HTMLElement>('.scroll-track');
+        if (!track) return;
+        
         gsap.to(track, {
           x: () => -(track.scrollWidth - window.innerWidth),
           ease: "none",
@@ -373,4 +380,3 @@ export default function WomenInFOSS() {
     </main>
   );
 }
-// --- END OF FILE --- A
