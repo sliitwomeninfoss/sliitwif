@@ -3,7 +3,7 @@
 import React, { useEffect, useState, useMemo } from "react";
 import { gsap } from "gsap";
 import { ChevronDown, Facebook, Linkedin } from "lucide-react";
-import { rawBoardData } from "./boardConfig";
+import { rawBoardData, type BoardMember } from "./boardConfig";
 import Image from "next/image";
 
 export default function CreativeBoard() {
@@ -22,20 +22,19 @@ export default function CreativeBoard() {
     };
   };
 
- useEffect(() => {
+  useEffect(() => {
     const ctx = gsap.context(() => {
-      // Entrance - slightly slower for a more premium feel
       gsap.fromTo(".floating-node", 
         { scale: 0, opacity: 0 },
         { scale: 1, opacity: 1, stagger: 0.05, duration: 0.8, ease: "power2.out" }
       );
 
-      // Float - SLOWED DOWN
-      gsap.utils.toArray(".floating-node").forEach((node: any) => {
+      // Fix: Cast to HTMLElement[] to avoid 'any' error
+      (gsap.utils.toArray(".floating-node") as HTMLElement[]).forEach((node) => {
         gsap.to(node, {
-          y: Math.random() * 12 - 6, // Reduced distance
-          x: Math.random() * 12 - 6, // Reduced distance
-          duration: 6 + Math.random() * 4, // Increased duration (6-10 seconds)
+          y: Math.random() * 12 - 6,
+          x: Math.random() * 12 - 6,
+          duration: 6 + Math.random() * 4,
           repeat: -1,
           yoyo: true,
           ease: "sine.inOut"
@@ -82,7 +81,7 @@ export default function CreativeBoard() {
             </div>
 
             {/* MEMBER NODES */}
-            {rawBoardData[year]?.map((member: any, index: number) => {
+            {rawBoardData[year]?.map((member: BoardMember, index: number) => {
               const pos = getPosition(index, rawBoardData[year].length);
               const isActive = activeMember === member.NAME;
 
@@ -95,21 +94,22 @@ export default function CreativeBoard() {
                 >
                   <div className="flex flex-col items-center cursor-pointer">
                     <div className={`relative rounded-full overflow-hidden border-2 h-24 w-24 md:h-32 md:w-32 transition-all duration-300 ${isActive ? 'border-purple-400 scale-110 shadow-[0_0_40px_rgba(168,85,247,0.5)]' : 'border-purple-500/30'}`}>
-                      <img 
+                      {/* FIX: Using Next.js Image Component */}
+                      <Image 
                         src={member.IMAGE_SRC} 
                         alt={member.NAME} 
-                        loading="lazy" // Reduces initial load time
-                        className="h-full w-full object-cover"
-                        onError={(e:any) => e.target.src = `https://api.dicebear.com/7.x/initials/svg?seed=${member.NAME}`}
+                        fill
+                        sizes="(max-width: 768px) 96px, 128px"
+                        className="object-cover"
+                        priority={index < 4}
                       />
                       
-                      <div className={`absolute inset-0 bg-purple-950/90 backdrop-blur-md flex items-center justify-center gap-4 transition-opacity ${isActive ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
-                        <a href={member.LINKEDIN} target="_blank" className="p-2 bg-white/10 rounded-full hover:bg-blue-600 text-white"><Linkedin size={18} /></a>
-                        <a href={member.FACEBOOK} target="_blank" className="p-2 bg-white/10 rounded-full hover:bg-blue-800 text-white"><Facebook size={18} /></a>
+                      <div className={`absolute inset-0 bg-purple-950/90 backdrop-blur-md flex items-center justify-center gap-4 transition-opacity z-20 ${isActive ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
+                        <a href={member.LINKEDIN} target="_blank" rel="noopener noreferrer" className="p-2 bg-white/10 rounded-full hover:bg-blue-600 text-white"><Linkedin size={18} /></a>
+                        <a href={member.FACEBOOK} target="_blank" rel="noopener noreferrer" className="p-2 bg-white/10 rounded-full hover:bg-blue-800 text-white"><Facebook size={18} /></a>
                       </div>
                     </div>
 
-                    {/* FIXED NAME TAG: Added w-max and whitespace-nowrap to prevent chopping */}
                     <div className={`mt-4 text-center transition-all duration-300 bg-[#1a0b35]/95 backdrop-blur-md p-2 px-4 rounded-full border border-purple-500/30 w-max min-w-[120px] ${isActive ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 -translate-y-2 scale-95 pointer-events-none'}`}>
                       <p className="text-white font-bold text-xs md:text-sm uppercase tracking-tight whitespace-nowrap">
                         {member.NAME}
