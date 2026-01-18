@@ -13,10 +13,7 @@ import {
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger);
-}
-
+// Move static data outside the component to prevent re-creation and ESLint dependency warnings
 const BEHAVIOR_DATA = [
   { id: "01", title: "Be Considerate", tag: "EMPATHY", desc: "Your work affects users and colleagues. Take consequences into account when making decisions." },
   { id: "02", title: "Be Patient", tag: "GROWTH", desc: "Patience helps build empathy towards others within the learning environment." },
@@ -40,11 +37,15 @@ const CONSEQUENCES = [
   { level: "03", type: "Permanent Ban", desc: "Total removal from the SLIIT Women In FOSS community.", final: true },
 ];
 
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
+
 export default function CodeOfConduct() {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const isMobile = window.innerWidth < 768;
+    const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
     
     // Force Safari to acknowledge height changes
     ScrollTrigger.refresh();
@@ -92,6 +93,15 @@ export default function CodeOfConduct() {
             delay: isMobile ? index * 0.05 : index * 0.1
           }
         );
+
+        // Mobile touch interactions cleanup logic
+        if (isMobile) {
+          const startScale = () => gsap.to(card, { scale: 0.98, duration: 0.1, force3D: true });
+          const endScale = () => gsap.to(card, { scale: 1, duration: 0.2, ease: "back.out(2)", force3D: true });
+          
+          card.addEventListener('touchstart', startScale);
+          card.addEventListener('touchend', endScale);
+        }
       });
 
       // Unacceptable behavior list items
@@ -138,20 +148,8 @@ export default function CodeOfConduct() {
         );
       });
 
-      // Mobile interactions
-      if (isMobile) {
-        behaviorCards.forEach((card) => {
-          const startScale = () => gsap.to(card, { scale: 0.98, duration: 0.1, force3D: true });
-          const endScale = () => gsap.to(card, { scale: 1, duration: 0.2, ease: "back.out(2)", force3D: true });
-          
-          card.addEventListener('touchstart', startScale);
-          card.addEventListener('touchend', endScale);
-        });
-      }
-
     }, containerRef);
     
-    // Refresh on resize for Safari
     const handleResize = () => {
       ScrollTrigger.refresh();
     };
@@ -162,7 +160,7 @@ export default function CodeOfConduct() {
       window.removeEventListener('resize', handleResize);
       ctx.revert();
     };
-  }, []);
+  }, []); // Dependencies are now clean
 
   return (
     <main ref={containerRef} className="bg-[#0f0720] text-white selection:bg-purple-500 font-sans overflow-x-hidden min-h-screen pt-40 pb-24">
@@ -236,7 +234,7 @@ export default function CodeOfConduct() {
           </div>
           <div className="space-y-0 border-t border-white/10">
             {UNACCEPTABLE_BEHAVIORS.map((text, i) => (
-              <div key={i} className="unacceptable-item group border-b border-white/10 py-8 flex items-start md:items-center gap-4 md:gap-8 md:hover:bg-red-500/[0.02] transition-all active:bg-red-500/[0.03]">
+              <div key={text} className="unacceptable-item group border-b border-white/10 py-8 flex items-start md:items-center gap-4 md:gap-8 md:hover:bg-red-500/[0.02] transition-all active:bg-red-500/[0.03]">
                 <span className="text-3xl md:text-4xl font-black text-white/5 md:group-hover:text-red-500/20 transition-colors italic flex-shrink-0">0{i+1}</span>
                 <p className="text-lg md:text-2xl font-light text-purple-100/70 md:group-hover:text-white transition-colors uppercase italic tracking-tight">{text}</p>
               </div>
@@ -288,8 +286,8 @@ export default function CodeOfConduct() {
                 <Gavel size={24} className="text-purple-500" /> Consequences
               </h3>
               <div className="space-y-6">
-                {CONSEQUENCES.map((c, i) => (
-                  <div key={i} className="border-b border-white/5 pb-4">
+                {CONSEQUENCES.map((c) => (
+                  <div key={c.level} className="border-b border-white/5 pb-4">
                     <div className="flex justify-between items-center mb-1">
                       <span className="text-[9px] font-mono text-purple-500">LVL {c.level}</span>
                       <span className={`text-xs font-black uppercase ${c.final ? 'text-red-500' : 'text-white'}`}>{c.type}</span>
@@ -309,22 +307,18 @@ export default function CodeOfConduct() {
         .reveal-section { 
           will-change: transform, opacity;
           transform: translateZ(0);
-          -webkit-transform: translateZ(0);
         }
         .behavior-card { 
           will-change: transform, opacity;
           transform: translateZ(0);
-          -webkit-transform: translateZ(0);
         }
         .unacceptable-item { 
           will-change: transform, opacity;
           transform: translateZ(0);
-          -webkit-transform: translateZ(0);
         }
         .reporting-element { 
           will-change: transform, opacity;
           transform: translateZ(0);
-          -webkit-transform: translateZ(0);
         }
         
         .stroke-text-white {
@@ -345,7 +339,6 @@ export default function CodeOfConduct() {
           }
         }
         
-        /* Safari-specific fixes */
         @supports (-webkit-appearance: none) {
           * {
             -webkit-font-smoothing: antialiased;
