@@ -51,6 +51,9 @@ export default function AboutUsPage() {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    // Check if device is mobile
+    const isMobile = window.innerWidth < 768;
+    
     // gsap.context handles scoping and automatic cleanup of ScrollTriggers
     const ctx = gsap.context(() => {
       const pillarItems = gsap.utils.toArray<HTMLElement>(".pillar-reveal");
@@ -58,15 +61,18 @@ export default function AboutUsPage() {
       pillarItems.forEach((el) => {
         gsap.fromTo(
           el,
-          { y: 50, opacity: 0 },
+          { 
+            y: isMobile ? 20 : 50, // Reduced movement on mobile
+            opacity: 0 
+          },
           {
             y: 0,
             opacity: 1,
-            duration: 1,
+            duration: isMobile ? 0.6 : 1, // Faster animation on mobile
             ease: "power3.out",
             scrollTrigger: {
               trigger: el,
-              start: "top 90%",
+              start: isMobile ? "top 95%" : "top 90%", // Earlier trigger on mobile
               toggleActions: "play none none none",
             },
           }
