@@ -165,9 +165,7 @@ export default function CodeOfConduct() {
             </div>
             <div className="lg:col-span-9">
               <h2 className="text-4xl md:text-6xl font-black uppercase italic tracking-tighter mb-8 leading-none">
-                Ensure <span className="text-purple-400">excellence</span> in{" "}
-                <br className="hidden md:block" />
-                {" "}every interaction.
+                Ensure <span className="text-purple-400">excellence</span> in <br className="hidden md:block" /> every interaction.
               </h2>
               <div className="space-y-6 text-xl md:text-3xl font-light text-purple-100/60 leading-tight max-w-5xl">
                 <p>
