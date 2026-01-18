@@ -11,7 +11,7 @@ import {
   Search
 } from "lucide-react";
 import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -26,26 +26,45 @@ const BEHAVIOR_DATA = [
   { id: "06", title: "Ask for Help", tag: "SUPPORT", desc: "Don't be afraid to ask for help when unsure; we learn together." },
 ];
 
+const UNACCEPTABLE_BEHAVIORS = [
+  "Violent threats directed against another person.",
+  "Discriminatory jokes and harmful language.",
+  "Posting or threatening to post personally identifiable information (Doxing).",
+  "Personal insults and targeted harassment.",
+  "Unwelcome sexual attention in any form."
+];
+
+const CONSEQUENCES = [
+  { level: "01", type: "Warning", desc: "Public or private explanation of negative impact.", final: false },
+  { level: "02", type: "Suspension", desc: "Temporary ban from all future community activities.", final: false },
+  { level: "03", type: "Permanent Ban", desc: "Total removal from the SLIIT Women In FOSS community.", final: true },
+];
+
 export default function CodeOfConduct() {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const isMobile = window.innerWidth < 768;
     
+    // Force Safari to acknowledge height changes
+    ScrollTrigger.refresh();
+    
     const ctx = gsap.context(() => {
       // Main reveal sections
       const reveals = gsap.utils.toArray<HTMLElement>(".reveal-section");
       reveals.forEach((el) => {
         gsap.fromTo(el, 
-          { opacity: 0, y: isMobile ? 30 : 50 }, 
+          { opacity: 0, y: isMobile ? 30 : 50, force3D: true }, 
           {
             opacity: 1, 
-            y: 0, 
+            y: 0,
+            force3D: true,
             duration: isMobile ? 0.7 : 1, 
             ease: "expo.out",
             scrollTrigger: { 
               trigger: el, 
-              start: isMobile ? "top 92%" : "top 85%", 
+              start: isMobile ? "top 92%" : "top 85%",
+              invalidateOnRefresh: true,
               toggleActions: "play none none none" 
             }
           }
@@ -56,16 +75,18 @@ export default function CodeOfConduct() {
       const behaviorCards = gsap.utils.toArray<HTMLElement>(".behavior-card");
       behaviorCards.forEach((card, index) => {
         gsap.fromTo(card,
-          { opacity: 0, scale: 0.9, y: 20 },
+          { opacity: 0, scale: 0.9, y: 20, force3D: true },
           {
             opacity: 1,
             scale: 1,
             y: 0,
+            force3D: true,
             duration: isMobile ? 0.5 : 0.8,
             ease: "back.out(1.2)",
             scrollTrigger: {
               trigger: card,
               start: isMobile ? "top 95%" : "top 90%",
+              invalidateOnRefresh: true,
               toggleActions: "play none none none"
             },
             delay: isMobile ? index * 0.05 : index * 0.1
@@ -77,15 +98,17 @@ export default function CodeOfConduct() {
       const unacceptableItems = gsap.utils.toArray<HTMLElement>(".unacceptable-item");
       unacceptableItems.forEach((item, index) => {
         gsap.fromTo(item,
-          { opacity: 0, x: -30 },
+          { opacity: 0, x: -30, force3D: true },
           {
             opacity: 1,
             x: 0,
+            force3D: true,
             duration: isMobile ? 0.5 : 0.7,
             ease: "power3.out",
             scrollTrigger: {
               trigger: item,
               start: isMobile ? "top 95%" : "top 88%",
+              invalidateOnRefresh: true,
               toggleActions: "play none none none"
             },
             delay: index * 0.1
@@ -97,15 +120,17 @@ export default function CodeOfConduct() {
       const reportingElements = gsap.utils.toArray<HTMLElement>(".reporting-element");
       reportingElements.forEach((el, index) => {
         gsap.fromTo(el,
-          { opacity: 0, y: 20 },
+          { opacity: 0, y: 20, force3D: true },
           {
             opacity: 1,
             y: 0,
+            force3D: true,
             duration: 0.6,
             ease: "power2.out",
             scrollTrigger: {
               trigger: el,
               start: "top 92%",
+              invalidateOnRefresh: true,
               toggleActions: "play none none none"
             },
             delay: index * 0.15
@@ -116,8 +141,8 @@ export default function CodeOfConduct() {
       // Mobile interactions
       if (isMobile) {
         behaviorCards.forEach((card) => {
-          const startScale = () => gsap.to(card, { scale: 0.98, duration: 0.1 });
-          const endScale = () => gsap.to(card, { scale: 1, duration: 0.2, ease: "back.out(2)" });
+          const startScale = () => gsap.to(card, { scale: 0.98, duration: 0.1, force3D: true });
+          const endScale = () => gsap.to(card, { scale: 1, duration: 0.2, ease: "back.out(2)", force3D: true });
           
           card.addEventListener('touchstart', startScale);
           card.addEventListener('touchend', endScale);
@@ -126,7 +151,17 @@ export default function CodeOfConduct() {
 
     }, containerRef);
     
-    return () => ctx.revert();
+    // Refresh on resize for Safari
+    const handleResize = () => {
+      ScrollTrigger.refresh();
+    };
+    
+    window.addEventListener('resize', handleResize);
+    
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      ctx.revert();
+    };
   }, []);
 
   return (
@@ -142,7 +177,7 @@ export default function CodeOfConduct() {
         <header className="mb-24 reveal-section">
           <div className="w-24 h-1 bg-purple-500 mb-8" />
           <span className="text-purple-400 font-mono tracking-[0.4em] text-[10px] uppercase block mb-4">
-            {"Safety // Excellence // Respect"}
+            Safety // Excellence // Respect
           </span>
           <h1 className="text-[12vw] lg:text-[10vw] font-[1000] leading-[0.8] tracking-[-0.08em] uppercase italic mb-12">
             CODE OF <br />
@@ -156,7 +191,7 @@ export default function CodeOfConduct() {
             <div className="lg:col-span-3">
                <ShieldCheck className="text-purple-500 mb-6" size={56} />
                <p className="text-[10px] font-mono text-purple-400 uppercase tracking-widest leading-loose">
-                 {"Scope: Forums, Wiki, Repositories, IRC, Private Correspondence, and Public Meetings."}
+                 Scope: Forums, Wiki, Repositories, IRC, Private Correspondence, and Public Meetings.
                </p>
             </div>
             <div className="lg:col-span-9">
@@ -169,8 +204,7 @@ export default function CodeOfConduct() {
                   Diversity is our strength, but it requires ground rules to ensure we remain an excellent space for collaboration.
                 </p>
                 <p className="text-lg md:text-xl italic border-t border-white/10 pt-6">
-                  {/* Fixed: Escaped quotes and apostrophe */}
-                  {"\"Take it in the spirit in which it's intended — a guide to make it easier to be excellent to one another. Follow it in spirit as much as in the letter.\""}
+                  &quot;Take it in the spirit in which it&apos;s intended — a guide to make it easier to be excellent to one another. Follow it in spirit as much as in the letter.&quot;
                 </p>
               </div>
             </div>
@@ -186,7 +220,7 @@ export default function CodeOfConduct() {
             {BEHAVIOR_DATA.map((item) => (
               <div key={item.id} className="behavior-card p-10 bg-[#0f0720] md:hover:bg-white/[0.02] transition-colors group active:bg-white/[0.03] touch-manipulation">
                 <span className="text-[10px] font-mono text-purple-500 block mb-4 tracking-widest uppercase">
-                  {item.tag} {" // "} {item.id}
+                  {item.tag} // {item.id}
                 </span>
                 <h3 className="text-2xl font-black uppercase italic mb-4 md:group-hover:text-purple-400 transition-colors">{item.title}</h3>
                 <p className="text-purple-100/50 font-light leading-relaxed">{item.desc}</p>
@@ -201,13 +235,7 @@ export default function CodeOfConduct() {
             <h2 className="text-4xl font-black uppercase italic tracking-tighter text-red-500">Unacceptable Behavior</h2>
           </div>
           <div className="space-y-0 border-t border-white/10">
-            {[
-              "Violent threats directed against another person.",
-              "Discriminatory jokes and harmful language.",
-              "Posting or threatening to post personally identifiable information (Doxing).",
-              "Personal insults and targeted harassment.",
-              "Unwelcome sexual attention in any form."
-            ].map((text, i) => (
+            {UNACCEPTABLE_BEHAVIORS.map((text, i) => (
               <div key={i} className="unacceptable-item group border-b border-white/10 py-8 flex items-start md:items-center gap-4 md:gap-8 md:hover:bg-red-500/[0.02] transition-all active:bg-red-500/[0.03]">
                 <span className="text-3xl md:text-4xl font-black text-white/5 md:group-hover:text-red-500/20 transition-colors italic flex-shrink-0">0{i+1}</span>
                 <p className="text-lg md:text-2xl font-light text-purple-100/70 md:group-hover:text-white transition-colors uppercase italic tracking-tight">{text}</p>
@@ -227,10 +255,10 @@ export default function CodeOfConduct() {
                 <div className="space-y-4">
                   <p className="text-[10px] font-mono text-purple-400 uppercase tracking-widest">Mandatory Details:</p>
                   <ul className="space-y-2 text-purple-100/60 text-sm font-light">
-                    <li>{"• Your contact information"}</li>
-                    <li>{"• Specific time and location of incident"}</li>
-                    <li>{"• Detailed context and ongoing status"}</li>
-                    <li>{"• Any other relevant supporting info"}</li>
+                    <li>• Your contact information</li>
+                    <li>• Specific time and location of incident</li>
+                    <li>• Detailed context and ongoing status</li>
+                    <li>• Any other relevant supporting info</li>
                   </ul>
                 </div>
                 <div className="p-6 bg-white/[0.03] border border-white/5">
@@ -239,7 +267,7 @@ export default function CodeOfConduct() {
                     <span className="text-[10px] font-mono uppercase">Response Time</span>
                   </div>
                   <p className="text-sm font-light text-purple-100/70">
-                    {"You will receive an email immediately. We promise action within "}
+                    You will receive an email immediately. We promise action within{' '}
                     <span className="text-white font-bold underline">24 hours</span>.
                   </p>
                 </div>
@@ -247,7 +275,7 @@ export default function CodeOfConduct() {
               <div className="flex flex-col md:flex-row gap-8 items-start md:items-center pt-8 border-t border-white/10">
                 <a href="mailto:infowifsliit@gmail.com" className="text-xl md:text-2xl font-bold hover:text-purple-400 transition-colors break-all">infowifsliit@gmail.com</a>
                 <a 
-                  href={"mailto:infowifsliit@gmail.com?subject=Code%20of%20Conduct%20Violation%20Report&body=Please%20provide%20the%20following%20information%3A%0A%0A1.%20Your%20contact%20information%3A%0A%0A2.%20Time%20and%20location%20of%20incident%3A%0A%0A3.%20Detailed%20description%20of%20what%20happened%3A%0A%0A4.%20Any%20additional%20supporting%20information%3A"}
+                  href="mailto:infowifsliit@gmail.com?subject=Code%20of%20Conduct%20Violation%20Report&body=Please%20provide%20the%20following%20information%3A%0A%0A1.%20Your%20contact%20information%3A%0A%0A2.%20Time%20and%20location%20of%20incident%3A%0A%0A3.%20Detailed%20description%20of%20what%20happened%3A%0A%0A4.%20Any%20additional%20supporting%20information%3A"
                   className="flex items-center justify-between gap-8 md:gap-12 p-5 bg-white text-black font-black uppercase tracking-widest text-[10px] group transition-all hover:bg-purple-500 hover:text-white active:scale-95 w-full md:w-auto"
                 >
                   File Report <Send size={14} className="md:group-hover:translate-x-2 transition-transform" />
@@ -260,11 +288,7 @@ export default function CodeOfConduct() {
                 <Gavel size={24} className="text-purple-500" /> Consequences
               </h3>
               <div className="space-y-6">
-                {[
-                  { level: "01", type: "Warning", desc: "Public or private explanation of negative impact." },
-                  { level: "02", type: "Suspension", desc: "Temporary ban from all future community activities." },
-                  { level: "03", type: "Permanent Ban", desc: "Total removal from the SLIIT Women In FOSS community.", final: true },
-                ].map((c, i) => (
+                {CONSEQUENCES.map((c, i) => (
                   <div key={i} className="border-b border-white/5 pb-4">
                     <div className="flex justify-between items-center mb-1">
                       <span className="text-[9px] font-mono text-purple-500">LVL {c.level}</span>
@@ -282,23 +306,50 @@ export default function CodeOfConduct() {
       </div>
 
       <style jsx global>{`
-        .reveal-section { will-change: transform, opacity; }
-        .behavior-card { will-change: transform, opacity; }
-        .unacceptable-item { will-change: transform, opacity; }
-        .reporting-element { will-change: transform, opacity; }
+        .reveal-section { 
+          will-change: transform, opacity;
+          transform: translateZ(0);
+          -webkit-transform: translateZ(0);
+        }
+        .behavior-card { 
+          will-change: transform, opacity;
+          transform: translateZ(0);
+          -webkit-transform: translateZ(0);
+        }
+        .unacceptable-item { 
+          will-change: transform, opacity;
+          transform: translateZ(0);
+          -webkit-transform: translateZ(0);
+        }
+        .reporting-element { 
+          will-change: transform, opacity;
+          transform: translateZ(0);
+          -webkit-transform: translateZ(0);
+        }
         
         .stroke-text-white {
           color: transparent;
           -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.8);
+          paint-order: stroke fill;
         }
         @media (min-width: 768px) {
-          .stroke-text-white { -webkit-text-stroke: 2px white; }
+          .stroke-text-white { 
+            -webkit-text-stroke: 2px white;
+          }
         }
 
         @media (max-width: 767px) {
           .behavior-card,
           .unacceptable-item {
             -webkit-tap-highlight-color: transparent;
+          }
+        }
+        
+        /* Safari-specific fixes */
+        @supports (-webkit-appearance: none) {
+          * {
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
           }
         }
       `}</style>
