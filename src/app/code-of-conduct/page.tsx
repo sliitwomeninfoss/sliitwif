@@ -113,15 +113,14 @@ export default function CodeOfConduct() {
         );
       });
 
-      // Add mobile tap animation for behavior cards
+      // Mobile interactions
       if (isMobile) {
         behaviorCards.forEach((card) => {
-          card.addEventListener('touchstart', () => {
-            gsap.to(card, { scale: 0.98, duration: 0.1 });
-          });
-          card.addEventListener('touchend', () => {
-            gsap.to(card, { scale: 1, duration: 0.2, ease: "back.out(2)" });
-          });
+          const startScale = () => gsap.to(card, { scale: 0.98, duration: 0.1 });
+          const endScale = () => gsap.to(card, { scale: 1, duration: 0.2, ease: "back.out(2)" });
+          
+          card.addEventListener('touchstart', startScale);
+          card.addEventListener('touchend', endScale);
         });
       }
 
@@ -133,7 +132,6 @@ export default function CodeOfConduct() {
   return (
     <main ref={containerRef} className="bg-[#0f0720] text-white selection:bg-purple-500 font-sans overflow-x-hidden min-h-screen pt-40 pb-24">
       
-      {/* BACKGROUND DECORATION */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none opacity-20">
         <div className="absolute top-[-10%] right-[-10%] w-[500px] h-[500px] bg-purple-600/20 blur-[120px] rounded-full" />
         <div className="absolute bottom-[-10%] left-[-10%] w-[500px] h-[500px] bg-indigo-600/10 blur-[120px] rounded-full" />
@@ -141,11 +139,10 @@ export default function CodeOfConduct() {
 
       <div className="max-w-[1400px] mx-auto px-6 relative z-10">
         
-        {/* 1. HERO HEADER */}
         <header className="mb-24 reveal-section">
           <div className="w-24 h-1 bg-purple-500 mb-8" />
           <span className="text-purple-400 font-mono tracking-[0.4em] text-[10px] uppercase block mb-4">
-            Safety // Excellence // Respect
+            {"Safety // Excellence // Respect"}
           </span>
           <h1 className="text-[12vw] lg:text-[10vw] font-[1000] leading-[0.8] tracking-[-0.08em] uppercase italic mb-12">
             CODE OF <br />
@@ -154,13 +151,12 @@ export default function CodeOfConduct() {
           </h1>
         </header>
 
-        {/* 2. PURPOSE */}
         <section className="reveal-section mb-40 border-l border-purple-500/30 pl-8 md:pl-16">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
             <div className="lg:col-span-3">
                <ShieldCheck className="text-purple-500 mb-6" size={56} />
                <p className="text-[10px] font-mono text-purple-400 uppercase tracking-widest leading-loose">
-                 Scope: Forums, Wiki, Repositories, IRC, Private Correspondence, and Public Meetings.
+                 {"Scope: Forums, Wiki, Repositories, IRC, Private Correspondence, and Public Meetings."}
                </p>
             </div>
             <div className="lg:col-span-9">
@@ -173,6 +169,7 @@ export default function CodeOfConduct() {
                   Diversity is our strength, but it requires ground rules to ensure we remain an excellent space for collaboration.
                 </p>
                 <p className="text-lg md:text-xl italic border-t border-white/10 pt-6">
+                  {/* Fixed: Escaped quotes and apostrophe */}
                   {"\"Take it in the spirit in which it's intended — a guide to make it easier to be excellent to one another. Follow it in spirit as much as in the letter.\""}
                 </p>
               </div>
@@ -180,7 +177,6 @@ export default function CodeOfConduct() {
           </div>
         </section>
 
-        {/* 3. EXPECTED BEHAVIOR */}
         <section className="reveal-section mb-40">
           <div className="flex items-center gap-4 mb-12">
             <UserCheck size={32} className="text-purple-500" />
@@ -189,7 +185,9 @@ export default function CodeOfConduct() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-white/10 border border-white/10">
             {BEHAVIOR_DATA.map((item) => (
               <div key={item.id} className="behavior-card p-10 bg-[#0f0720] md:hover:bg-white/[0.02] transition-colors group active:bg-white/[0.03] touch-manipulation">
-                <span className="text-[10px] font-mono text-purple-500 block mb-4 tracking-widest uppercase">{item.tag} // {item.id}</span>
+                <span className="text-[10px] font-mono text-purple-500 block mb-4 tracking-widest uppercase">
+                  {item.tag} {" // "} {item.id}
+                </span>
                 <h3 className="text-2xl font-black uppercase italic mb-4 md:group-hover:text-purple-400 transition-colors">{item.title}</h3>
                 <p className="text-purple-100/50 font-light leading-relaxed">{item.desc}</p>
               </div>
@@ -197,7 +195,6 @@ export default function CodeOfConduct() {
           </div>
         </section>
 
-        {/* 4. UNACCEPTABLE BEHAVIORS */}
         <section className="reveal-section mb-40">
           <div className="flex items-center gap-4 mb-12">
             <AlertOctagon size={32} className="text-red-500" />
@@ -219,7 +216,6 @@ export default function CodeOfConduct() {
           </div>
         </section>
 
-        {/* 5. REPORTING & CONSEQUENCES */}
         <section className="reveal-section">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
             
@@ -231,10 +227,10 @@ export default function CodeOfConduct() {
                 <div className="space-y-4">
                   <p className="text-[10px] font-mono text-purple-400 uppercase tracking-widest">Mandatory Details:</p>
                   <ul className="space-y-2 text-purple-100/60 text-sm font-light">
-                    <li>• Your contact information</li>
-                    <li>• Specific time and location of incident</li>
-                    <li>• Detailed context and ongoing status</li>
-                    <li>• Any other relevant supporting info</li>
+                    <li>{"• Your contact information"}</li>
+                    <li>{"• Specific time and location of incident"}</li>
+                    <li>{"• Detailed context and ongoing status"}</li>
+                    <li>{"• Any other relevant supporting info"}</li>
                   </ul>
                 </div>
                 <div className="p-6 bg-white/[0.03] border border-white/5">
@@ -242,7 +238,10 @@ export default function CodeOfConduct() {
                     <Clock size={16} className="text-purple-400" />
                     <span className="text-[10px] font-mono uppercase">Response Time</span>
                   </div>
-                  <p className="text-sm font-light text-purple-100/70">You will receive an email immediately. We promise action within <span className="text-white font-bold underline">24 hours</span>.</p>
+                  <p className="text-sm font-light text-purple-100/70">
+                    {"You will receive an email immediately. We promise action within "}
+                    <span className="text-white font-bold underline">24 hours</span>.
+                  </p>
                 </div>
               </div>
               <div className="flex flex-col md:flex-row gap-8 items-start md:items-center pt-8 border-t border-white/10">
