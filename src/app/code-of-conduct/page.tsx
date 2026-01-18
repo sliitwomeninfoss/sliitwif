@@ -45,6 +45,7 @@ export default function CodeOfConduct() {
 
   useEffect(() => {
     const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
+    
     ScrollTrigger.refresh();
     
     const ctx = gsap.context(() => {
@@ -90,8 +91,13 @@ export default function CodeOfConduct() {
         );
 
         if (isMobile) {
-          const startScale = () => gsap.to(card, { scale: 0.98, duration: 0.1, force3D: true });
-          const endScale = () => gsap.to(card, { scale: 1, duration: 0.2, ease: "back.out(2)", force3D: true });
+          const startScale = () => {
+            gsap.to(card, { scale: 0.98, duration: 0.1, force3D: true });
+          };
+          const endScale = () => {
+            gsap.to(card, { scale: 1, duration: 0.2, ease: "back.out(2)", force3D: true });
+          };
+          
           card.addEventListener("touchstart", startScale);
           card.addEventListener("touchend", endScale);
         }
@@ -138,6 +144,7 @@ export default function CodeOfConduct() {
           }
         );
       });
+
     }, containerRef);
     
     const handleResize = () => {
@@ -145,6 +152,7 @@ export default function CodeOfConduct() {
     };
     
     window.addEventListener("resize", handleResize);
+    
     return () => {
       window.removeEventListener("resize", handleResize);
       ctx.revert();
@@ -189,7 +197,7 @@ export default function CodeOfConduct() {
                   Diversity is our strength, but it requires ground rules to ensure we remain an excellent space for collaboration.
                 </p>
                 <p className="text-lg md:text-xl italic border-t border-white/10 pt-6">
-                  &quot;Take it in the spirit in which it&apos;s intended — a guide to make it easier to be excellent to one another. Follow it in spirit as much as in the letter.&quot;
+                  &quot;Take it in the spirit in which it&apos;s intended &mdash; a guide to make it easier to be excellent to one another. Follow it in spirit as much as in the letter.&quot;
                 </p>
               </div>
             </div>
@@ -221,7 +229,7 @@ export default function CodeOfConduct() {
           </div>
           <div className="space-y-0 border-t border-white/10">
             {UNACCEPTABLE_BEHAVIORS.map((text, i) => (
-              <div key={text} className="unacceptable-item group border-b border-white/10 py-8 flex items-start md:items-center gap-4 md:gap-8 md:hover:bg-red-500/[0.02] transition-all active:bg-red-500/[0.03]">
+              <div key={text.substring(0, 20)} className="unacceptable-item group border-b border-white/10 py-8 flex items-start md:items-center gap-4 md:gap-8 md:hover:bg-red-500/[0.02] transition-all active:bg-red-500/[0.03]">
                 <span className="text-3xl md:text-4xl font-black text-white/5 md:group-hover:text-red-500/20 transition-colors italic flex-shrink-0">0{i+1}</span>
                 <p className="text-lg md:text-2xl font-light text-purple-100/70 md:group-hover:text-white transition-colors uppercase italic tracking-tight">{text}</p>
               </div>
@@ -239,10 +247,10 @@ export default function CodeOfConduct() {
                 <div className="space-y-4">
                   <p className="text-[10px] font-mono text-purple-400 uppercase tracking-widest">Mandatory Details:</p>
                   <ul className="space-y-2 text-purple-100/60 text-sm font-light">
-                    <li>• Your contact information</li>
-                    <li>• Specific time and location of incident</li>
-                    <li>• Detailed context and ongoing status</li>
-                    <li>• Any other relevant supporting info</li>
+                    <li>&bull; Your contact information</li>
+                    <li>&bull; Specific time and location of incident</li>
+                    <li>&bull; Detailed context and ongoing status</li>
+                    <li>&bull; Any other relevant supporting info</li>
                   </ul>
                 </div>
                 <div className="p-6 bg-white/[0.03] border border-white/5">
