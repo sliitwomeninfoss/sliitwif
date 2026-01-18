@@ -91,7 +91,7 @@ export default function AboutUsPage() {
       {/* 1. EDITORIAL HEADER SECTION */}
       <section className="relative pt-24 pb-16 md:pt-32 md:pb-24 px-4 md:px-6 border-b border-white/5">
         <div className="absolute top-10 -left-5 text-[25vw] font-[1000] text-white/[0.02] select-none leading-none tracking-tighter pointer-events-none uppercase hidden sm:block">
-          FOSS
+          Women In FOSS
         </div>
 
         <div className="max-w-[1400px] mx-auto relative z-10">
