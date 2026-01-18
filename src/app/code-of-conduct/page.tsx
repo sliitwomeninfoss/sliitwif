@@ -154,7 +154,7 @@ export default function CodeOfConduct() {
           </h1>
         </header>
 
-        {/* 2. REDESIGNED PURPOSE (THE MANIFESTO) */}
+        {/* 2. PURPOSE */}
         <section className="reveal-section mb-40 border-l border-purple-500/30 pl-8 md:pl-16">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
             <div className="lg:col-span-3">
@@ -173,14 +173,14 @@ export default function CodeOfConduct() {
                   Diversity is our strength, but it requires ground rules to ensure we remain an excellent space for collaboration.
                 </p>
                 <p className="text-lg md:text-xl italic border-t border-white/10 pt-6">
-                  &ldquo;Take it in the spirit in which it&rsquo;s intended — a guide to make it easier to be excellent to one another. Follow it in spirit as much as in the letter.&rdquo;
+                  {"\"Take it in the spirit in which it's intended — a guide to make it easier to be excellent to one another. Follow it in spirit as much as in the letter.\""}
                 </p>
               </div>
             </div>
           </div>
         </section>
 
-        {/* 3. EXPECTED BEHAVIOR (GRID STYLE) */}
+        {/* 3. EXPECTED BEHAVIOR */}
         <section className="reveal-section mb-40">
           <div className="flex items-center gap-4 mb-12">
             <UserCheck size={32} className="text-purple-500" />
@@ -197,7 +197,7 @@ export default function CodeOfConduct() {
           </div>
         </section>
 
-        {/* 4. UNACCEPTABLE BEHAVIORS (PILLARS STYLE) */}
+        {/* 4. UNACCEPTABLE BEHAVIORS */}
         <section className="reveal-section mb-40">
           <div className="flex items-center gap-4 mb-12">
             <AlertOctagon size={32} className="text-red-500" />
@@ -219,11 +219,10 @@ export default function CodeOfConduct() {
           </div>
         </section>
 
-        {/* 5. REPORTING & CONSEQUENCES (BENTO BOX STYLE) */}
+        {/* 5. REPORTING & CONSEQUENCES */}
         <section className="reveal-section">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
             
-            {/* Reporting Guide */}
             <div className="reporting-element lg:col-span-8 p-8 md:p-12 border border-purple-500/20 bg-purple-500/[0.02]">
               <h3 className="text-2xl md:text-3xl font-black uppercase italic tracking-tighter mb-8 flex items-center gap-3">
                 <Search size={24} className="text-purple-500" /> Reporting Guide
@@ -249,7 +248,7 @@ export default function CodeOfConduct() {
               <div className="flex flex-col md:flex-row gap-8 items-start md:items-center pt-8 border-t border-white/10">
                 <a href="mailto:infowifsliit@gmail.com" className="text-xl md:text-2xl font-bold hover:text-purple-400 transition-colors break-all">infowifsliit@gmail.com</a>
                 <a 
-                  href="mailto:infowifsliit@gmail.com?subject=Code%20of%20Conduct%20Violation%20Report&body=Please%20provide%20the%20following%20information%3A%0A%0A1.%20Your%20contact%20information%3A%0A%0A2.%20Time%20and%20location%20of%20incident%3A%0A%0A3.%20Detailed%20description%20of%20what%20happened%3A%0A%0A4.%20Any%20additional%20supporting%20information%3A"
+                  href={"mailto:infowifsliit@gmail.com?subject=Code%20of%20Conduct%20Violation%20Report&body=Please%20provide%20the%20following%20information%3A%0A%0A1.%20Your%20contact%20information%3A%0A%0A2.%20Time%20and%20location%20of%20incident%3A%0A%0A3.%20Detailed%20description%20of%20what%20happened%3A%0A%0A4.%20Any%20additional%20supporting%20information%3A"}
                   className="flex items-center justify-between gap-8 md:gap-12 p-5 bg-white text-black font-black uppercase tracking-widest text-[10px] group transition-all hover:bg-purple-500 hover:text-white active:scale-95 w-full md:w-auto"
                 >
                   File Report <Send size={14} className="md:group-hover:translate-x-2 transition-transform" />
@@ -257,7 +256,6 @@ export default function CodeOfConduct() {
               </div>
             </div>
 
-            {/* Consequences */}
             <div className="reporting-element lg:col-span-4 p-8 md:p-12 border border-white/10 bg-white/[0.02]">
               <h3 className="text-xl md:text-2xl font-black uppercase italic tracking-tighter mb-8 flex items-center gap-3">
                 <Gavel size={24} className="text-purple-500" /> Consequences
@@ -298,7 +296,6 @@ export default function CodeOfConduct() {
           .stroke-text-white { -webkit-text-stroke: 2px white; }
         }
 
-        /* Smooth touch interactions */
         @media (max-width: 767px) {
           .behavior-card,
           .unacceptable-item {
