@@ -13,7 +13,6 @@ import {
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-// Move static data outside the component to prevent re-creation and ESLint dependency warnings
 const BEHAVIOR_DATA = [
   { id: "01", title: "Be Considerate", tag: "EMPATHY", desc: "Your work affects users and colleagues. Take consequences into account when making decisions." },
   { id: "02", title: "Be Patient", tag: "GROWTH", desc: "Patience helps build empathy towards others within the learning environment." },
@@ -47,11 +46,9 @@ export default function CodeOfConduct() {
   useEffect(() => {
     const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
     
-    // Force Safari to acknowledge height changes
     ScrollTrigger.refresh();
     
     const ctx = gsap.context(() => {
-      // Main reveal sections
       const reveals = gsap.utils.toArray<HTMLElement>(".reveal-section");
       reveals.forEach((el) => {
         gsap.fromTo(el, 
@@ -72,7 +69,6 @@ export default function CodeOfConduct() {
         );
       });
 
-      // Behavior cards stagger animation
       const behaviorCards = gsap.utils.toArray<HTMLElement>(".behavior-card");
       behaviorCards.forEach((card, index) => {
         gsap.fromTo(card,
@@ -94,7 +90,6 @@ export default function CodeOfConduct() {
           }
         );
 
-        // Mobile touch interactions cleanup logic
         if (isMobile) {
           const startScale = () => gsap.to(card, { scale: 0.98, duration: 0.1, force3D: true });
           const endScale = () => gsap.to(card, { scale: 1, duration: 0.2, ease: "back.out(2)", force3D: true });
@@ -104,7 +99,6 @@ export default function CodeOfConduct() {
         }
       });
 
-      // Unacceptable behavior list items
       const unacceptableItems = gsap.utils.toArray<HTMLElement>(".unacceptable-item");
       unacceptableItems.forEach((item, index) => {
         gsap.fromTo(item,
@@ -126,7 +120,6 @@ export default function CodeOfConduct() {
         );
       });
 
-      // Reporting section elements
       const reportingElements = gsap.utils.toArray<HTMLElement>(".reporting-element");
       reportingElements.forEach((el, index) => {
         gsap.fromTo(el,
@@ -147,7 +140,6 @@ export default function CodeOfConduct() {
           }
         );
       });
-
     }, containerRef);
     
     const handleResize = () => {
@@ -155,23 +147,20 @@ export default function CodeOfConduct() {
     };
     
     window.addEventListener('resize', handleResize);
-    
     return () => {
       window.removeEventListener('resize', handleResize);
       ctx.revert();
     };
-  }, []); // Dependencies are now clean
+  }, []);
 
   return (
     <main ref={containerRef} className="bg-[#0f0720] text-white selection:bg-purple-500 font-sans overflow-x-hidden min-h-screen pt-40 pb-24">
-      
       <div className="fixed inset-0 overflow-hidden pointer-events-none opacity-20">
         <div className="absolute top-[-10%] right-[-10%] w-[500px] h-[500px] bg-purple-600/20 blur-[120px] rounded-full" />
         <div className="absolute bottom-[-10%] left-[-10%] w-[500px] h-[500px] bg-indigo-600/10 blur-[120px] rounded-full" />
       </div>
 
       <div className="max-w-[1400px] mx-auto px-6 relative z-10">
-        
         <header className="mb-24 reveal-section">
           <div className="w-24 h-1 bg-purple-500 mb-8" />
           <span className="text-purple-400 font-mono tracking-[0.4em] text-[10px] uppercase block mb-4">
@@ -244,7 +233,6 @@ export default function CodeOfConduct() {
 
         <section className="reveal-section">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-            
             <div className="reporting-element lg:col-span-8 p-8 md:p-12 border border-purple-500/20 bg-purple-500/[0.02]">
               <h3 className="text-2xl md:text-3xl font-black uppercase italic tracking-tighter mb-8 flex items-center gap-3">
                 <Search size={24} className="text-purple-500" /> Reporting Guide
@@ -265,7 +253,7 @@ export default function CodeOfConduct() {
                     <span className="text-[10px] font-mono uppercase">Response Time</span>
                   </div>
                   <p className="text-sm font-light text-purple-100/70">
-                    You will receive an email immediately. We promise action within{' '}
+                    You will receive an email immediately. We promise action within{" "}
                     <span className="text-white font-bold underline">24 hours</span>.
                   </p>
                 </div>
@@ -290,60 +278,35 @@ export default function CodeOfConduct() {
                   <div key={c.level} className="border-b border-white/5 pb-4">
                     <div className="flex justify-between items-center mb-1">
                       <span className="text-[9px] font-mono text-purple-500">LVL {c.level}</span>
-                      <span className={`text-xs font-black uppercase ${c.final ? 'text-red-500' : 'text-white'}`}>{c.type}</span>
+                      <span className={`text-xs font-black uppercase ${c.final ? "text-red-500" : "text-white"}`}>{c.type}</span>
                     </div>
                     <p className="text-xs text-purple-100/40 font-light">{c.desc}</p>
                   </div>
                 ))}
               </div>
             </div>
-
           </div>
         </section>
-
       </div>
 
       <style jsx global>{`
-        .reveal-section { 
+        .reveal-section, .behavior-card, .unacceptable-item, .reporting-element { 
           will-change: transform, opacity;
           transform: translateZ(0);
         }
-        .behavior-card { 
-          will-change: transform, opacity;
-          transform: translateZ(0);
-        }
-        .unacceptable-item { 
-          will-change: transform, opacity;
-          transform: translateZ(0);
-        }
-        .reporting-element { 
-          will-change: transform, opacity;
-          transform: translateZ(0);
-        }
-        
         .stroke-text-white {
           color: transparent;
           -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.8);
           paint-order: stroke fill;
         }
         @media (min-width: 768px) {
-          .stroke-text-white { 
-            -webkit-text-stroke: 2px white;
-          }
+          .stroke-text-white { -webkit-text-stroke: 2px white; }
         }
-
         @media (max-width: 767px) {
-          .behavior-card,
-          .unacceptable-item {
-            -webkit-tap-highlight-color: transparent;
-          }
+          .behavior-card, .unacceptable-item { -webkit-tap-highlight-color: transparent; }
         }
-        
         @supports (-webkit-appearance: none) {
-          * {
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-          }
+          * { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
         }
       `}</style>
     </main>
