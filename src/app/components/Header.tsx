@@ -14,11 +14,8 @@ export default function Header() {
 
   // Optimized scroll listener with useCallback
   const handleScroll = useCallback(() => {
-    // Don't update scrolled state when mobile menu is open
-    if (!menuOpen) {
-      setScrolled(window.scrollY > 20);
-    }
-  }, [menuOpen]);
+    setScrolled(window.scrollY > 20);
+  }, []);
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
@@ -80,15 +77,6 @@ export default function Header() {
               priority // Optimization: Logos should load first
             />
           </motion.div>
-          
-          <div className="flex flex-col">
-            <h1 className="text-white font-[1000] text-2xl md:text-3xl tracking-tighter uppercase leading-none italic">
-              WIF<span className="text-purple-500">.</span>
-            </h1>
-            <span className="text-[10px] text-white/40 font-mono tracking-[0.3em] uppercase mt-1">
-              SLIIT Chapter
-            </span>
-          </div>
         </Link>
 
         {/* DESKTOP NAVIGATION */}
