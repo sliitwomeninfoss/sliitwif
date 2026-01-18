@@ -45,7 +45,6 @@ export default function CodeOfConduct() {
 
   useEffect(() => {
     const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
-    
     ScrollTrigger.refresh();
     
     const ctx = gsap.context(() => {
@@ -93,9 +92,8 @@ export default function CodeOfConduct() {
         if (isMobile) {
           const startScale = () => gsap.to(card, { scale: 0.98, duration: 0.1, force3D: true });
           const endScale = () => gsap.to(card, { scale: 1, duration: 0.2, ease: "back.out(2)", force3D: true });
-          
-          card.addEventListener('touchstart', startScale);
-          card.addEventListener('touchend', endScale);
+          card.addEventListener("touchstart", startScale);
+          card.addEventListener("touchend", endScale);
         }
       });
 
@@ -146,9 +144,9 @@ export default function CodeOfConduct() {
       ScrollTrigger.refresh();
     };
     
-    window.addEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
     return () => {
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener("resize", handleResize);
       ctx.revert();
     };
   }, []);
