@@ -3,9 +3,7 @@
 import React, { useEffect, useRef } from "react";
 import { 
   ShieldCheck, 
-  MessageSquareWarning, 
   AlertOctagon, 
-  Scale, 
   Send,
   Gavel,
   Clock,
@@ -145,9 +143,6 @@ export default function CodeOfConduct() {
         
         {/* 1. HERO HEADER */}
         <header className="mb-24 reveal-section">
-            <div className="absolute top-10 -left-5 text-[25vw] font-[1000] text-white/[0.02] select-none leading-none tracking-tighter pointer-events-none uppercase hidden sm:block">
-          Women In FOSS
-        </div>
           <div className="w-24 h-1 bg-purple-500 mb-8" />
           <span className="text-purple-400 font-mono tracking-[0.4em] text-[10px] uppercase block mb-4">
             Safety // Excellence // Respect
@@ -170,7 +165,9 @@ export default function CodeOfConduct() {
             </div>
             <div className="lg:col-span-9">
               <h2 className="text-4xl md:text-6xl font-black uppercase italic tracking-tighter mb-8 leading-none">
-                Ensure <span className="text-purple-400">excellence</span> in <br className="hidden md:block"/> every interaction.
+                Ensure <span className="text-purple-400">excellence</span> in{" "}
+                <br className="hidden md:block" />
+                {" "}every interaction.
               </h2>
               <div className="space-y-6 text-xl md:text-3xl font-light text-purple-100/60 leading-tight max-w-5xl">
                 <p>
@@ -178,7 +175,7 @@ export default function CodeOfConduct() {
                   Diversity is our strength, but it requires ground rules to ensure we remain an excellent space for collaboration.
                 </p>
                 <p className="text-lg md:text-xl italic border-t border-white/10 pt-6">
-                  "Take it in the spirit in which it's intended — a guide to make it easier to be excellent to one another. Follow it in spirit as much as in the letter."
+                  &ldquo;Take it in the spirit in which it&rsquo;s intended — a guide to make it easier to be excellent to one another. Follow it in spirit as much as in the letter.&rdquo;
                 </p>
               </div>
             </div>
@@ -253,9 +250,12 @@ export default function CodeOfConduct() {
               </div>
               <div className="flex flex-col md:flex-row gap-8 items-start md:items-center pt-8 border-t border-white/10">
                 <a href="mailto:infowifsliit@gmail.com" className="text-xl md:text-2xl font-bold hover:text-purple-400 transition-colors break-all">infowifsliit@gmail.com</a>
-                <button className="flex items-center justify-between gap-8 md:gap-12 p-5 bg-white text-black font-black uppercase tracking-widest text-[10px] group transition-all hover:bg-purple-500 hover:text-white active:scale-95 w-full md:w-auto">
+                <a 
+                  href="mailto:infowifsliit@gmail.com?subject=Code%20of%20Conduct%20Violation%20Report&body=Please%20provide%20the%20following%20information%3A%0A%0A1.%20Your%20contact%20information%3A%0A%0A2.%20Time%20and%20location%20of%20incident%3A%0A%0A3.%20Detailed%20description%20of%20what%20happened%3A%0A%0A4.%20Any%20additional%20supporting%20information%3A"
+                  className="flex items-center justify-between gap-8 md:gap-12 p-5 bg-white text-black font-black uppercase tracking-widest text-[10px] group transition-all hover:bg-purple-500 hover:text-white active:scale-95 w-full md:w-auto"
+                >
                   File Report <Send size={14} className="md:group-hover:translate-x-2 transition-transform" />
-                </button>
+                </a>
               </div>
             </div>
 
