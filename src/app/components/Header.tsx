@@ -14,20 +14,35 @@ export default function Header() {
 
   // Optimized scroll listener with useCallback
   const handleScroll = useCallback(() => {
-    setScrolled(window.scrollY > 20);
-  }, []);
+    // Don't update scrolled state when mobile menu is open
+    if (!menuOpen) {
+      setScrolled(window.scrollY > 20);
+    }
+  }, [menuOpen]);
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, [handleScroll]);
 
-  // Prevent scrolling when mobile menu is open
+  // Prevent scrolling when mobile menu is open and lock scroll position
   useEffect(() => {
     if (menuOpen) {
+      // Lock body scroll
       document.body.style.overflow = "hidden";
+      // Lock body position to prevent iOS Safari bounce
+      document.body.style.position = "fixed";
+      document.body.style.width = "100%";
+      document.body.style.top = `-${window.scrollY}px`;
     } else {
+      // Get the scroll position before unlocking
+      const scrollY = document.body.style.top;
       document.body.style.overflow = "unset";
+      document.body.style.position = "";
+      document.body.style.width = "";
+      document.body.style.top = "";
+      // Restore scroll position
+      window.scrollTo(0, parseInt(scrollY || "0") * -1);
     }
   }, [menuOpen]);
 
@@ -44,7 +59,7 @@ export default function Header() {
   return (
     <header 
       className={`fixed top-0 w-full z-[100] transition-all duration-500 ${
-        scrolled ? "bg-[#0f0720]/90 backdrop-blur-2xl border-b border-white/5 py-4" : "bg-transparent py-8"
+        scrolled && !menuOpen ? "bg-[#0f0720]/90 backdrop-blur-2xl border-b border-white/5 py-4" : "bg-transparent py-8"
       }`}
     >
       <div className="max-w-[1500px] mx-auto px-6 md:px-10 flex items-center justify-between">
@@ -134,13 +149,13 @@ export default function Header() {
               animate={{ opacity: 1, clipPath: "circle(150% at 90% 10%)" }}
               exit={{ opacity: 0, clipPath: "circle(0% at 90% 10%)" }}
               transition={{ duration: 0.8, ease: [0.87, 0, 0.13, 1] }}
-              className="fixed inset-0 bg-[#0a0515] z-[100] flex flex-col justify-center px-8"
+              className="fixed inset-0 bg-[#0a0515] z-[100] flex flex-col justify-center px-8 overflow-y-auto overscroll-none"
             >
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full text-center opacity-[0.02] pointer-events-none select-none">
                 <span className="text-[35vw] font-black text-white leading-none uppercase italic">WIF</span>
               </div>
 
-              <div className="flex flex-col gap-6 relative z-10">
+              <div className="flex flex-col gap-6 relative z-10 py-24">
                 {links.map((link, i) => (
                   <motion.div
                     initial={{ opacity: 0, x: -30 }}
