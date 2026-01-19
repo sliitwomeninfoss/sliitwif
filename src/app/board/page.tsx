@@ -1,78 +1,73 @@
 "use client";
 
-import React, { useEffect, useState, useMemo } from "react";
-import { gsap } from "gsap";
+import React, { useState, useMemo, useRef } from "react";
 import { ChevronDown, Facebook, Linkedin } from "lucide-react";
 import { rawBoardData, type BoardMember } from "./boardConfig";
 import Image from "next/image";
 
 export default function CreativeBoard() {
+  const containerRef = useRef<HTMLDivElement>(null);
   const availableYears = useMemo(() => Object.keys(rawBoardData).sort((a, b) => Number(b) - Number(a)), []);
+  
   const [year, setYear] = useState(availableYears[0]);
   const [isOpen, setIsOpen] = useState(false);
   const [activeMember, setActiveMember] = useState<string | null>(null);
 
   const getPosition = (index: number, total: number) => {
     const angle = (index / total) * 2 * Math.PI - Math.PI / 2;
-    const radiusX = 38; 
-    const radiusY = 40; 
+    const radiusX = 28; 
+    const radiusY = 30; 
     return {
       top: `${50 + radiusY * Math.sin(angle)}%`,
       left: `${50 + radiusX * Math.cos(angle)}%`,
     };
   };
 
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.fromTo(".floating-node", 
-        { scale: 0, opacity: 0 },
-        { scale: 1, opacity: 1, stagger: 0.05, duration: 0.8, ease: "power2.out" }
-      );
-
-      // Fix: Cast to HTMLElement[] to avoid 'any' error
-      (gsap.utils.toArray(".floating-node") as HTMLElement[]).forEach((node) => {
-        gsap.to(node, {
-          y: Math.random() * 12 - 6,
-          x: Math.random() * 12 - 6,
-          duration: 6 + Math.random() * 4,
-          repeat: -1,
-          yoyo: true,
-          ease: "sine.inOut"
-        });
-      });
-    });
-    return () => ctx.revert();
-  }, [year]);
-
   return (
-    <section className="relative bg-[#0f0720] min-h-screen py-20 px-4 overflow-hidden flex items-center justify-center">
-      <div className="max-w-7xl mx-auto w-full relative z-10">
-        <div className="flex flex-col lg:flex-row items-center gap-12">
-          
-          <div className="w-full lg:w-1/3 text-center lg:text-left z-20">
-            <h2 className="text-6xl md:text-7xl lg:text-8xl font-black tracking-tighter uppercase italic text-white leading-[0.8]">
-              THE <br/> <span className="text-transparent stroke-text-purple">CORE</span> <br/> TEAM
-            </h2>
-            <div className="h-1.5 w-24 bg-purple-500 mt-10 mb-4 mx-auto lg:mx-0" />
-          </div>
+    <main ref={containerRef} className="bg-[#0f0720] text-white selection:bg-purple-500 font-sans overflow-x-hidden min-h-screen pt-40 pb-24 relative border-none">
+      <div className="fixed inset-0 overflow-hidden pointer-events-none opacity-20">
+        <div className="absolute top-[-10%] right-[-10%] w-[500px] h-[500px] bg-purple-600/20 blur-[120px] rounded-full" />
+        <div className="absolute bottom-[-10%] left-[-10%] w-[500px] h-[500px] bg-indigo-600/10 blur-[120px] rounded-full" />
+      </div>
 
-          <div className="w-full lg:w-2/3 relative h-[600px] md:h-[750px] flex items-center justify-center">
+      <div className="max-w-[1400px] mx-auto px-6 relative z-10">
+        <div className="flex flex-col lg:flex-row items-start gap-12">
+          
+          <header className="w-full lg:w-1/3">
+            <div className="w-24 h-1 bg-purple-500 mb-8" />
+            <span className="text-purple-400 font-mono tracking-[0.4em] text-[10px] uppercase block mb-4">
+              Leadership // Vision // Community
+            </span>
+            <h2 className="text-[10vw] lg:text-[7vw] font-[1000] leading-[0.8] tracking-[-0.08em] uppercase italic mb-8">
+              THE <br />
+              <span className="text-transparent stroke-text-white">CORE</span> <br />
+              TEAM<span className="text-purple-500 not-italic">.</span>
+            </h2>
+            <p className="text-purple-100/50 font-light leading-relaxed max-w-sm">
+              The driving force behind the SLIIT Women In FOSS community, dedicated to open-source excellence and empowerment.
+            </p>
+          </header>
+
+          <div className="w-full lg:w-2/3 relative h-[600px] md:h-[800px] flex items-center justify-center">
             
-            {/* CENTRAL YEAR SELECTOR */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[60]">
               <button 
                 onClick={() => setIsOpen(!isOpen)}
-                className="flex flex-col items-center justify-center w-32 h-32 md:w-40 md:h-40 bg-purple-900/40 backdrop-blur-xl border-2 border-purple-500/50 rounded-full text-white hover:bg-purple-500/20 transition-all shadow-2xl"
+                className="flex flex-col items-center justify-center w-32 h-32 md:w-40 md:h-40 bg-purple-900/20 backdrop-blur-xl border border-purple-500/30 rounded-full text-white hover:border-purple-500 transition-all shadow-2xl active:scale-95"
               >
-                <span className="text-[10px] uppercase tracking-[0.3em] text-purple-400 font-bold">Batch</span>
-                <span className="text-3xl md:text-4xl font-black">{year}</span>
-                <ChevronDown className={`w-5 h-5 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
+                <span className="text-[9px] uppercase tracking-[0.4em] text-purple-400 font-mono mb-1"></span>
+                <span className="text-3xl md:text-4xl font-black italic tracking-tighter">{year}</span>
+                <ChevronDown className={`w-4 h-4 mt-2 text-purple-500 transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`} />
               </button>
 
               {isOpen && (
-                <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-28 bg-[#1a0b35] border border-purple-500/30 rounded-xl overflow-hidden shadow-2xl z-[100]">
+                <div className="absolute top-full left-1/2 -translate-x-1/2 mt-4 w-32 bg-[#1a0b35] border border-white/10 rounded-xl overflow-hidden shadow-2xl z-[100]">
                   {availableYears.map((y) => (
-                    <button key={y} onClick={() => { setYear(y); setIsOpen(false); }} className="w-full py-2 text-white hover:bg-purple-600/40 transition-colors border-b border-purple-500/10 last:border-0 font-bold">
+                    <button 
+                      key={y} 
+                      onClick={() => { setYear(y); setIsOpen(false); }} 
+                      className="w-full py-3 text-sm text-white hover:bg-purple-600 transition-colors border-b border-white/5 last:border-0 font-bold uppercase tracking-widest"
+                    >
                       {y}
                     </button>
                   ))}
@@ -80,7 +75,6 @@ export default function CreativeBoard() {
               )}
             </div>
 
-            {/* MEMBER NODES */}
             {rawBoardData[year]?.map((member: BoardMember, index: number) => {
               const pos = getPosition(index, rawBoardData[year].length);
               const isActive = activeMember === member.NAME;
@@ -88,33 +82,37 @@ export default function CreativeBoard() {
               return (
                 <div 
                   key={member.NAME} 
-                  className={`floating-node absolute transition-transform duration-500 ease-out ${isActive ? 'z-[70]' : 'z-10'}`}
-                  style={{ top: pos.top, left: pos.left, transform: 'translate(-50%, -50%)' }}
+                  className={`absolute transition-all duration-300 animate-bloom ${isActive ? "z-[70]" : "z-10"}`}
+                  style={{ 
+                    top: pos.top, 
+                    left: pos.left, 
+                    transform: "translate(-50%, -50%)",
+                    animationDelay: `${index * 0.08}s` 
+                  } as React.CSSProperties}
                   onClick={() => setActiveMember(isActive ? null : member.NAME)}
                 >
                   <div className="flex flex-col items-center cursor-pointer">
-                    <div className={`relative rounded-full overflow-hidden border-2 h-24 w-24 md:h-32 md:w-32 transition-all duration-300 ${isActive ? 'border-purple-400 scale-110 shadow-[0_0_40px_rgba(168,85,247,0.5)]' : 'border-purple-500/30'}`}>
-                      {/* FIX: Using Next.js Image Component */}
+                    <div className={`relative rounded-full overflow-hidden border transition-all duration-300 h-16 w-16 md:h-24 md:w-24 ${isActive ? "border-purple-400 scale-125 shadow-[0_0_30px_rgba(168,85,247,0.4)]" : "border-white/10 hover:border-purple-500/50 hover:scale-105"}`}>
                       <Image 
                         src={member.IMAGE_SRC} 
                         alt={member.NAME} 
                         fill
-                        sizes="(max-width: 768px) 96px, 128px"
+                        sizes="(max-width: 768px) 64px, 96px"
                         className="object-cover"
                         priority={index < 4}
                       />
                       
-                      <div className={`absolute inset-0 bg-purple-950/90 backdrop-blur-md flex items-center justify-center gap-4 transition-opacity z-20 ${isActive ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
-                        <a href={member.LINKEDIN} target="_blank" rel="noopener noreferrer" className="p-2 bg-white/10 rounded-full hover:bg-blue-600 text-white"><Linkedin size={18} /></a>
-                        <a href={member.FACEBOOK} target="_blank" rel="noopener noreferrer" className="p-2 bg-white/10 rounded-full hover:bg-blue-800 text-white"><Facebook size={18} /></a>
+                      <div className={`absolute inset-0 bg-black/60 flex items-center justify-center gap-3 transition-opacity z-20 ${isActive ? "opacity-100" : "opacity-0 pointer-events-none"}`}>
+                        <a href={member.LINKEDIN} target="_blank" rel="noopener noreferrer" className="p-2 bg-white text-black rounded-full hover:bg-purple-500 hover:text-white transition-colors"><Linkedin size={12} /></a>
+                        <a href={member.FACEBOOK} target="_blank" rel="noopener noreferrer" className="p-2 bg-white text-black rounded-full hover:bg-purple-500 hover:text-white transition-colors"><Facebook size={12} /></a>
                       </div>
                     </div>
 
-                    <div className={`mt-4 text-center transition-all duration-300 bg-[#1a0b35]/95 backdrop-blur-md p-2 px-4 rounded-full border border-purple-500/30 w-max min-w-[120px] ${isActive ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 -translate-y-2 scale-95 pointer-events-none'}`}>
-                      <p className="text-white font-bold text-xs md:text-sm uppercase tracking-tight whitespace-nowrap">
+                    <div className={`mt-4 text-center transition-all duration-300 bg-white text-black p-1 px-3 italic font-black uppercase tracking-tighter w-max min-w-[100px] ${isActive ? "opacity-100 translate-y-0 scale-100" : "opacity-0 -translate-y-2 scale-95 pointer-events-none"}`}>
+                      <p className="text-[9px] md:text-xs whitespace-nowrap">
                         {member.NAME}
                       </p>
-                      <p className="text-purple-400 text-[9px] uppercase tracking-widest mt-0.5 font-medium whitespace-nowrap">
+                      <p className="text-[7px] tracking-[0.2em] mt-0.5 font-mono text-purple-600 block not-italic">
                         {member.ROLE}
                       </p>
                     </div>
@@ -126,9 +124,31 @@ export default function CreativeBoard() {
         </div>
       </div>
 
-      <style jsx>{`
-        .stroke-text-purple { color: transparent; -webkit-text-stroke: 1.5px #a855f7; }
+      <style jsx global>{`
+        .stroke-text-white {
+          color: transparent;
+          -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.8);
+        }
+        @keyframes bloom {
+          0% { 
+            opacity: 0; 
+            margin-top: calc(50% - var(--target-top, 50%));
+            margin-left: calc(50% - var(--target-left, 50%));
+            transform: translate(-50%, -50%) scale(0);
+          }
+          100% { 
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+          }
+        }
+        .animate-bloom {
+          opacity: 0;
+          animation: bloom 0.7s cubic-bezier(0.2, 1, 0.3, 1) forwards;
+        }
+        @media (min-width: 768px) {
+          .stroke-text-white { -webkit-text-stroke: 2px white; }
+        }
       `}</style>
-    </section>
+    </main>
   );
 }
