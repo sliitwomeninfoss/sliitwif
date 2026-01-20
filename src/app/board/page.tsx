@@ -1,152 +1,183 @@
 "use client";
 
-import React, { useState, useMemo, useRef } from "react";
-import { ChevronDown, Facebook, Linkedin } from "lucide-react";
-import { rawBoardData, type BoardMember } from "./boardConfig";
+import React, { useState, useMemo } from 'react';
+import { Linkedin, Facebook, Zap, ArrowUpRight } from "lucide-react";
 import Image from "next/image";
 
-export default function CreativeBoard() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const availableYears = useMemo(() => Object.keys(rawBoardData).sort((a, b) => Number(b) - Number(a)), []);
-  
-  const [year, setYear] = useState(availableYears[0]);
-  const [isOpen, setIsOpen] = useState(false);
-  const [activeMember, setActiveMember] = useState<string | null>(null);
+// --- Types ---
+export interface BoardMember {
+  role: string;
+  name: string;
+  imageSrc: string;
+  facebook: string;
+  linkedin: string;
+}
 
-  const getPosition = (index: number, total: number) => {
-    const angle = (index / total) * 2 * Math.PI - Math.PI / 2;
-    const radiusX = 28; 
-    const radiusY = 30; 
-    return {
-      top: `${50 + radiusY * Math.sin(angle)}%`,
-      left: `${50 + radiusX * Math.cos(angle)}%`,
-    };
-  };
+const rawBoardData: Record<string, BoardMember[]> = {
+  "2021": [
+    { role: "CLUB LEAD", name: "Sewvandi Wickramasinghe", imageSrc: "/sliitwif/assets/2021/Sewvandi.JPG", facebook: "https://www.facebook.com/sewvandi.wickramasinghe.3", linkedin: "https://www.linkedin.com/in/sewvandi-promodya-wickramasinghe/" },
+    { role: "DEVELOPING TEAM LEAD", name: "Hansi Pabasara", imageSrc: "/sliitwif/assets/2021/Hansi.jpg", facebook: "#", linkedin: "#" },
+    { role: "WEB AND GRAPHIC TEAM LEAD", name: "Uvini Wijesinghe", imageSrc: "/sliitwif/assets/2021/Uvini.jpg", facebook: "#", linkedin: "https://www.linkedin.com/in/uvini-wijesinghe/" },
+    { role: "CONTENT WRITING TEAM LEAD", name: "Thathsarani Wickramaarachchi", imageSrc: "/sliitwif/assets/2021/Thathsarani.jpg", facebook: "https://www.facebook.com/thathsarani.wickramaarachchi", linkedin: "https://www.linkedin.com/in/thathsarani-wickramaarachchi/" },
+    { role: "MEMBERSHIP AND RECRUITING LEAD", name: "Nishiki Yapa", imageSrc: "/sliitwif/assets/2021/Nishiki.jpeg", facebook: "https://www.facebook.com/nishiki.yapa.7", linkedin: "https://www.linkedin.com/in/nishiki-yapa-361778168/" },
+    { role: "TECHNICAL LEAD", name: "Renu Harshatha", imageSrc: "/sliitwif/assets/2021/Renu.jpg", facebook: "https://www.facebook.com/renu.harshatha", linkedin: "https://www.linkedin.com/in/renu.harshatha/" },
+    { role: "MARKETING AND PUBLICITY LEAD", name: "Oshadi Ranathunga", imageSrc: "/sliitwif/assets/2021/Oshadi.jpeg", facebook: "https://www.facebook.com/dilini.ranathunga.520", linkedin: "#" }
+  ],
+  "2022": [
+    { role: "CLUB LEAD", name: "Bhagya Indimagedara", imageSrc: "/sliitwif/assets/2022/Bhagya.jpeg", facebook: "https://web.facebook.com/kithminiii/", linkedin: "https://www.linkedin.com/in/bhagya-indimagedara/" },
+    { role: "DEVELOPMENT LEAD", name: "Dulya Perera", imageSrc: "/sliitwif/assets/2022/Dulya.jpg", facebook: "https://www.facebook.com/dul.perera.56/", linkedin: "https://www.linkedin.com/in/dulya-perera-188ab31b9" },
+    { role: "DESIGN LEAD", name: "Sandali Kalavitigoda", imageSrc: "/sliitwif/assets/2022/Sanali.jpg", facebook: "#", linkedin: "https://www.linkedin.com/in/sandali-kalavitigoda/" },
+    { role: "CONTENT WRITING LEAD", name: "Sheikha Hanna", imageSrc: "/sliitwif/assets/2022/Sheikha hannah.jpeg", facebook: "#", linkedin: "https://www.linkedin.com/in/sheikha-hanna-7127761b5/" },
+    { role: "PROJECT COORDINATOR", name: "Dulakshi Hansani", imageSrc: "/sliitwif/assets/2022/Dulakshi.jpeg", facebook: "#", linkedin: "https://www.linkedin.com/in/dulakshi-senevirathne-439bb1215" },
+    { role: "EVENT COORDINATOR", name: "Methmi Nugawela", imageSrc: "/sliitwif/assets/2022/Methmi.png", facebook: "#", linkedin: "https://www.linkedin.com/in/methmi-nugawela/" },
+    { role: "MEMBERSHIP LEAD", name: "Senara Perera", imageSrc: "/sliitwif/assets/2022/Senara.jpg", facebook: "#", linkedin: "https://www.linkedin.com/in/senaraperera/" },
+    { role: "MARKETING LEAD", name: "Modeesha Kalani", imageSrc: "/sliitwif/assets/2022/Modeesha.jpeg", facebook: "https://www.facebook.com/modeesha.kalani.3", linkedin: "https://www.linkedin.com/in/modeesha-kalani-b22043199" }
+  ],
+  "2023": [
+    { role: "COMMUNITY LEAD", name: "Sheikha Hanna", imageSrc: "/sliitwif/assets/2023/SheikhaHanna.jpeg", facebook: "https://web.facebook.com/art.mode.7739/?_rdc=1&_rdr", linkedin: "https://www.linkedin.com/in/sheikha-hanna-7127761b5/" },
+    { role: "DEVELOPMENT LEAD", name: "Sandalika Ariyarathna", imageSrc: "/sliitwif/assets/2023/Sandalika.jpg", facebook: "https://www.facebook.com/profile.php?id=100009407160156", linkedin: "https://www.linkedin.com/in/dilini-sandalika96" },
+    { role: "DESIGN LEAD", name: "Shavidini Ekanayake", imageSrc: "/sliitwif/assets/2023/Shavidini.png", facebook: "https://web.facebook.com/shavi.dilunika/", linkedin: "https://www.linkedin.com/in/shavidini-ekanayake-9368a51ba/" },
+    { role: "CONTENT WRITING LEAD", name: "AKILA PERERA", imageSrc: "/sliitwif/assets/2023/AkilaPerera.jpeg", facebook: "#", linkedin: "#" },
+    { role: "EVENT COORDINATOR", name: "Kavindu Chethani", imageSrc: "/sliitwif/assets/2023/Chethani.jpg", facebook: "#", linkedin: "#" },
+    { role: "MARKETING LEAD", name: "Irushi Gunawardana", imageSrc: "/sliitwif/assets/2023/Irushi .jpg", facebook: "#", linkedin: "#" }
+  ],
+  "2024": [
+    { role: "COMMUNITY LEAD", name: "AKILA PERERA", imageSrc: "/sliitwif/assets/2024/AkilaPerera.jpeg", facebook: "#", linkedin: "#" },
+    { role: "DEVELOPMENT LEAD", name: "Sandalika Ariyarathna", imageSrc: "/sliitwif/assets/2024/Sandalika.jpg", facebook: "https://www.facebook.com/profile.php?id=100009407160156", linkedin: "https://www.linkedin.com/in/dilini-sandalika96" },
+    { role: "DESIGN LEAD", name: "Shavidini Ekanayake", imageSrc: "/sliitwif/assets/2024/Shavidini.png", facebook: "https://web.facebook.com/shavi.dilunika/", linkedin: "https://www.linkedin.com/in/shavidini-ekanayake-9368a51ba/" },
+    { role: "CONTENT WRITING LEAD", name: "Sarah Iyoob", imageSrc: "/sliitwif/assets/2024/Sarah.jpeg", facebook: "#", linkedin: "https://www.linkedin.com/in/sarah-ayoob-306231232/" },
+    { role: "EVENT COORDINATOR", name: "Dhanushi Piyaratne", imageSrc: "/sliitwif/assets/2024/Dhanushi.jpg", facebook: "#", linkedin: "#" },
+    { role: "MARKETING LEAD", name: "Irushi Gunawardana", imageSrc: "/sliitwif/assets/2024/Irushi.jpg", facebook: "#", linkedin: "https://www.linkedin.com/in/irushi-gunawardana-941893250" }
+  ],
+  "2025": [
+    { role: "PRESIDENT", name: "Irushi Gunawardana", imageSrc: "/sliitwif/assets/2025/irushi.jpeg", facebook: "#", linkedin: "https://www.linkedin.com/in/irushigunawardana/" },
+    { role: "VICE PRESIDENT", name: "Leashaniya Krishnapillai", imageSrc: "/sliitwif/assets/2025/Leashaniya Krishnapillai.jpg", facebook: "#", linkedin: "https://www.linkedin.com/in/leashaniya-krishnapillai-36b20a247/" },
+    { role: "SECRETARY", name: "Dinithi Wickramaarachchi", imageSrc: "/sliitwif/assets/2025/Dinithi_Wickramaarachchi_cvphoto.png", facebook: "#", linkedin: "https://www.linkedin.com/in/dinithi-wickramaarachchi/" },
+    { role: "ASSISTANT SECRETARY", name: "Maleesha Wijerathne", imageSrc: "/sliitwif/assets/2025/Maleesha_Photo.jpg", facebook: "#", linkedin: "https://www.linkedin.com/in/maleesha-wijerathne-46b397249" },
+    { role: "DEV LEAD", name: "Nujaba Irfan", imageSrc: "/sliitwif/assets/2025/Nujaba_Irfan.jpeg", facebook: "#", linkedin: "https://www.linkedin.com/in/nujaba-irfan/" },
+    { role: "DESIGN LEAD", name: "Gimhani Navodya", imageSrc: "/sliitwif/assets/2025/Gimhani navodya.jpg", facebook: "#", linkedin: "https://www.linkedin.com/in/gimhaninavodya/" },
+    { role: "PROJECT COORDINATOR", name: "Manushi Katipearachchi", imageSrc: "/sliitwif/assets/2025/ManushiKatipearachchi.jpg", facebook: "https://www.facebook.com/profile.php?id=100092984103364", linkedin: "https://www.linkedin.com/in/manushi-katipearachchi-b8481627a/" },
+    { role: "EVENT COORDINATOR", name: "Dilni Nishshanka ", imageSrc: "/sliitwif/assets/2025/Dilni Nishshanka.jpg", facebook: "#", linkedin: "https://www.linkedin.com/in/dilni-nishshanka-b889b82b1/" }
+  ]
+};
+
+export default function BoardPage() {
+  const years = useMemo(() => Object.keys(rawBoardData).reverse(), []);
+  const [activeYear, setActiveYear] = useState(years[0]);
 
   return (
-    <main ref={containerRef} className="bg-[#0f0720] text-white selection:bg-purple-500 font-sans overflow-x-hidden min-h-screen pt-40 pb-24 relative border-none">
-      <div className="fixed inset-0 overflow-hidden pointer-events-none opacity-20">
-        <div className="absolute top-[-10%] right-[-10%] w-[500px] h-[500px] bg-purple-600/20 blur-[120px] rounded-full" />
-        <div className="absolute bottom-[-10%] left-[-10%] w-[500px] h-[500px] bg-indigo-600/10 blur-[120px] rounded-full" />
+    <main className="bg-[#0b041a] text-white selection:bg-purple-500 font-sans min-h-screen pt-32 pb-24 relative overflow-x-hidden">
+      
+      {/* AMBIENCE */}
+      <div className="fixed inset-0 pointer-events-none opacity-20">
+        <div className="absolute top-[-5%] right-[-5%] w-[600px] h-[600px] bg-purple-600/30 blur-[150px] rounded-full" />
       </div>
 
-      <div className="max-w-[1400px] mx-auto px-6 relative z-10">
-        <div className="flex flex-col lg:flex-row items-start gap-12">
-          
-          <header className="w-full lg:w-1/3">
-            <div className="w-24 h-1 bg-purple-500 mb-8" />
-            <span className="text-purple-400 font-mono tracking-[0.4em] text-[10px] uppercase block mb-4">
-              Leadership // Vision // Community
-            </span>
-            <h2 className="text-[10vw] lg:text-[7vw] font-[1000] leading-[0.8] tracking-[-0.08em] uppercase italic mb-8">
-              THE <br />
-              <span className="text-transparent stroke-text-white">CORE</span> <br />
-              TEAM<span className="text-purple-500 not-italic">.</span>
-            </h2>
-            <p className="text-purple-100/50 font-light leading-relaxed max-w-sm">
-              The driving force behind the SLIIT Women In FOSS community, dedicated to open-source excellence and empowerment.
-            </p>
-          </header>
+      <div className="max-w-[1300px] mx-auto px-8 relative z-10">
+        
+        <header className="mb-20">
+          <div className="w-16 h-1 bg-purple-500 mb-6" />
+          <span className="text-purple-400 font-mono tracking-[0.4em] text-[10px] uppercase block mb-3">
+            Board Members // Vision
+          </span>
+          <h1 className="text-[10vw] lg:text-[7vw] font-[1000] leading-[0.8] tracking-[-0.08em] uppercase italic mb-12">
+            THE <br />
+            <span className="text-transparent stroke-text-white">FORCE</span>
+            <span className="text-purple-500 not-italic">.</span>
+          </h1>
 
-          <div className="w-full lg:w-2/3 relative h-[600px] md:h-[800px] flex items-center justify-center">
-            
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[60]">
-              <button 
-                onClick={() => setIsOpen(!isOpen)}
-                className="flex flex-col items-center justify-center w-32 h-32 md:w-40 md:h-40 bg-purple-900/20 backdrop-blur-xl border border-purple-500/30 rounded-full text-white hover:border-purple-500 transition-all shadow-2xl active:scale-95"
+          <nav className="flex flex-wrap gap-4">
+            {years.map((year) => (
+              <button
+                key={year}
+                type="button"
+                onClick={() => setActiveYear(year)}
+                className={`px-8 py-2.5 transition-all duration-300 ${
+                  activeYear === year 
+                  ? "bg-white text-black font-black italic uppercase text-xs shadow-lg" 
+                  : "bg-white/5 text-white/40 hover:bg-white/10 text-xs uppercase font-bold"
+                }`}
               >
-                <span className="text-[9px] uppercase tracking-[0.4em] text-purple-400 font-mono mb-1"></span>
-                <span className="text-3xl md:text-4xl font-black italic tracking-tighter">{year}</span>
-                <ChevronDown className={`w-4 h-4 mt-2 text-purple-500 transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`} />
+                {year}
               </button>
+            ))}
+          </nav>
+        </header>
 
-              {isOpen && (
-                <div className="absolute top-full left-1/2 -translate-x-1/2 mt-4 w-32 bg-[#1a0b35] border border-white/10 rounded-xl overflow-hidden shadow-2xl z-[100]">
-                  {availableYears.map((y) => (
-                    <button 
-                      key={y} 
-                      onClick={() => { setYear(y); setIsOpen(false); }} 
-                      className="w-full py-3 text-sm text-white hover:bg-purple-600 transition-colors border-b border-white/5 last:border-0 font-bold uppercase tracking-widest"
-                    >
-                      {y}
-                    </button>
-                  ))}
+        {/* SPACED GRID */}
+        <div className="flex flex-wrap justify-center gap-y-16 gap-x-10">
+          {rawBoardData[activeYear].map((member, index) => (
+            <div 
+              key={`${activeYear}-${member.name}-${index}`}
+              className="bg-white/[0.02] border border-white/5 p-6 rounded-2xl flex flex-col group transition-all duration-500 hover:border-purple-500/30 hover:bg-white/[0.04] w-[calc(50%-20px)] md:w-[calc(33.33%-27px)] lg:w-[calc(20%-32px)] max-w-[210px]"
+            >
+              {/* Image Box - Removed Grayscale */}
+              <div className="relative aspect-square rounded-xl overflow-hidden mb-6 shadow-2xl">
+                <Image 
+                  src={member.imageSrc} 
+                  alt={member.name}
+                  fill
+                  className="object-cover transition-transform duration-700 group-hover:scale-110"
+                  sizes="(max-width: 768px) 30vw, 12vw"
+                  unoptimized
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-40" />
+              </div>
+
+              {/* Text Info */}
+              <div className="flex flex-col flex-grow text-center">
+                <div className="flex items-center justify-center gap-1.5 mb-2">
+                  <Zap size={8} className="text-purple-500 fill-purple-500" />
+                  <span className="text-purple-400 font-mono text-[8px] uppercase tracking-[0.2em] leading-none">
+                    {member.role}
+                  </span>
                 </div>
-              )}
-            </div>
+                
+                <h3 className="text-xs md:text-[13px] font-black uppercase italic tracking-tight leading-tight mb-6 min-h-[2.5em] flex items-center justify-center">
+                  {member.name}
+                </h3>
 
-            {rawBoardData[year]?.map((member: BoardMember, index: number) => {
-              const pos = getPosition(index, rawBoardData[year].length);
-              const isActive = activeMember === member.NAME;
-
-              return (
-                <div 
-                  key={member.NAME} 
-                  className={`absolute transition-all duration-300 animate-bloom ${isActive ? "z-[70]" : "z-10"}`}
-                  style={{ 
-                    top: pos.top, 
-                    left: pos.left, 
-                    transform: "translate(-50%, -50%)",
-                    animationDelay: `${index * 0.08}s` 
-                  } as React.CSSProperties}
-                  onClick={() => setActiveMember(isActive ? null : member.NAME)}
-                >
-                  <div className="flex flex-col items-center cursor-pointer">
-                    <div className={`relative rounded-full overflow-hidden border transition-all duration-300 h-16 w-16 md:h-24 md:w-24 ${isActive ? "border-purple-400 scale-125 shadow-[0_0_30px_rgba(168,85,247,0.4)]" : "border-white/10 hover:border-purple-500/50 hover:scale-105"}`}>
-                      <Image 
-                        src={member.IMAGE_SRC} 
-                        alt={member.NAME} 
-                        fill
-                        sizes="(max-width: 768px) 64px, 96px"
-                        className="object-cover"
-                        priority={index < 4}
-                      />
-                      
-                      <div className={`absolute inset-0 bg-black/60 flex items-center justify-center gap-3 transition-opacity z-20 ${isActive ? "opacity-100" : "opacity-0 pointer-events-none"}`}>
-                        <a href={member.LINKEDIN} target="_blank" rel="noopener noreferrer" className="p-2 bg-white text-black rounded-full hover:bg-purple-500 hover:text-white transition-colors"><Linkedin size={12} /></a>
-                        <a href={member.FACEBOOK} target="_blank" rel="noopener noreferrer" className="p-2 bg-white text-black rounded-full hover:bg-purple-500 hover:text-white transition-colors"><Facebook size={12} /></a>
-                      </div>
-                    </div>
-
-                    <div className={`mt-4 text-center transition-all duration-300 bg-white text-black p-1 px-3 italic font-black uppercase tracking-tighter w-max min-w-[100px] ${isActive ? "opacity-100 translate-y-0 scale-100" : "opacity-0 -translate-y-2 scale-95 pointer-events-none"}`}>
-                      <p className="text-[9px] md:text-xs whitespace-nowrap">
-                        {member.NAME}
-                      </p>
-                      <p className="text-[7px] tracking-[0.2em] mt-0.5 font-mono text-purple-600 block not-italic">
-                        {member.ROLE}
-                      </p>
-                    </div>
+                {/* Socials - ESLint Friendly (rel="noopener noreferrer") */}
+                <div className="mt-auto pt-4 border-t border-white/10 flex items-center justify-between">
+                  <div className="flex gap-4">
+                    {member.linkedin !== "#" && (
+                      <a 
+                        href={member.linkedin} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="text-white/30 hover:text-white transition-colors"
+                        aria-label={`${member.name} LinkedIn`}
+                      >
+                        <Linkedin size={15} />
+                      </a>
+                    )}
+                    {member.facebook !== "#" && (
+                      <a 
+                        href={member.facebook} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="text-white/30 hover:text-white transition-colors"
+                        aria-label={`${member.name} Facebook`}
+                      >
+                        <Facebook size={15} />
+                      </a>
+                    )}
                   </div>
+                  <ArrowUpRight size={12} className="text-white/10 group-hover:text-purple-500 transition-colors" />
                 </div>
-              );
-            })}
-          </div>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
 
       <style jsx global>{`
         .stroke-text-white {
           color: transparent;
-          -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.8);
-        }
-        @keyframes bloom {
-          0% { 
-            opacity: 0; 
-            margin-top: calc(50% - var(--target-top, 50%));
-            margin-left: calc(50% - var(--target-left, 50%));
-            transform: translate(-50%, -50%) scale(0);
-          }
-          100% { 
-            opacity: 1;
-            transform: translate(-50%, -50%) scale(1);
-          }
-        }
-        .animate-bloom {
-          opacity: 0;
-          animation: bloom 0.7s cubic-bezier(0.2, 1, 0.3, 1) forwards;
+          -webkit-text-stroke: 1px rgba(255, 255, 255, 0.3);
         }
         @media (min-width: 768px) {
-          .stroke-text-white { -webkit-text-stroke: 2px white; }
+          .stroke-text-white { -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.4); }
         }
       `}</style>
     </main>
