@@ -1,0 +1,35 @@
+{
+    "__Comment_1": "Add all the webinars in sorted order.(Add new events at the beginning of an array.)",
+    "Webinars": [
+        {
+            "title": "Bringing more women into Open source contributions",
+            "image": "/sliitwif/assets/events/women into open source.jpg",
+            "youtube_link": "https://www.youtube.com/watch?v=NBni9QeRAUE"
+        },
+        {
+            "title": "Postman API 101 Workshop",
+            "image": "/sliitwif/assets/events/postman.jpg",
+            "youtube_link": "https://youtu.be/Tb_MxTF9xzc"
+        },
+        {
+            "title": "Bridging the Gap between Graduation and your first UX Job",
+            "image": "/sliitwif/assets/events/UX-Job-Bridging.jpg",
+            "youtube_link": "https://youtu.be/6gkcddMncfo"
+        },
+        {
+            "title": "Modern DevOps",
+            "image": "/sliitwif/assets/events/Modern Devops.jpeg",
+            "youtube_link": "https://www.youtube.com/watch?v=OGLJJgxSe6g"
+        },
+        {
+            "title": "A Chat with Angelica",
+            "image": "/sliitwif/assets/events/A Chat With Angelicaa.jpg",
+            "youtube_link": "https://www.youtube.com/watch?v=GhkYqMtN8iE"
+        },
+        {
+            "title": "AWS Introduction for Developers",
+            "image": "/sliitwif/assets/events/AWS.jpg",
+            "youtube_link": "https://www.youtube.com/watch?v=-rzL0Pu4Ma4"
+        }
+    ]
+}
