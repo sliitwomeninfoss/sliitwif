@@ -36,7 +36,6 @@ if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-// Reusable Card Component
 const ItemCard = ({ item }: { item: Item }) => (
   <div className="flex-shrink-0 w-[320px] md:w-[480px] group cursor-pointer">
     <div className="relative aspect-[16/10] overflow-hidden rounded-2xl bg-white/5 border border-white/10 transition-all duration-500 group-hover:border-purple-500/50">
@@ -86,7 +85,7 @@ export default function WomenInFOSS() {
         });
       }
 
-      // 3. Main Hero Reveal
+      // 3. Main Hero Reveal (The Sliding Door Effect)
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: containerRef.current,
@@ -155,6 +154,7 @@ export default function WomenInFOSS() {
       
       {/* SECTION 1: HERO & BEYOND THE CODE */}
       <section ref={containerRef} className="relative h-screen w-full overflow-hidden">
+        {/* Background Layer (Deep) */}
         <div className="absolute inset-0 flex items-center justify-center bg-[#0f0720] px-6">
           <div className="absolute inset-0 flex flex-col justify-around opacity-[0.02] select-none pointer-events-none leading-none">
             {[...Array(6)].map((_, i) => (
@@ -190,25 +190,26 @@ export default function WomenInFOSS() {
                   <p className="text-sm md:text-base text-purple-100/60 leading-relaxed italic font-light">
                     At SLIIT Women in FOSS, we believe code is just the beginning. We focus on the ecosystem of innovation—mentorship, public speaking, technical leadership, and the collaborative spirit of Open Source. 
                   </p>
-                  <div className="hidden sm:grid grid-cols-2 gap-4 pt-4 border-t border-white/5">
-                    <div>
-                      <h4 className="text-purple-400 font-black text-xl tracking-tighter uppercase leading-none">Advocacy</h4>
-                      <p className="text-[9px] text-white/40 uppercase tracking-widest mt-1">Diverse Voices</p>
-                    </div>
-                    <div>
-                      <h4 className="text-purple-400 font-black text-xl tracking-tighter uppercase leading-none">Excellence</h4>
-                      <p className="text-[9px] text-white/40 uppercase tracking-widest mt-1">Technical Impact</p>
-                    </div>
-                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
 
+        {/* Foreground Reveal Layer (White Background with DARKER Grids) */}
         <header ref={heroRef} className="absolute inset-0 z-20 flex items-center justify-center bg-white overflow-hidden" style={{ clipPath: 'polygon(0 0, 100% 0, 100% 50%, 0 50%, 0 50%, 100% 50%, 100% 100%, 0 100%)' }}>
-          <div ref={gridRef} className="absolute inset-0 opacity-[0.12] pointer-events-none select-none h-[140%]">
-            <div className="absolute inset-0" style={{ backgroundImage: `radial-gradient(#4c1d95 0.5px, transparent 0.5px), linear-gradient(to right, #4c1d95 0.5px, transparent 0.5px), linear-gradient(to bottom, #4c1d95 0.5px, transparent 0.5px)`, backgroundSize: '40px 40px' }} />
+          <div ref={gridRef} className="absolute inset-0 opacity-[0.25] pointer-events-none select-none h-[140%]">
+            <div 
+                className="absolute inset-0" 
+                style={{ 
+                    backgroundImage: `
+                        radial-gradient(#1a0b2e 1px, transparent 1px), 
+                        linear-gradient(to right, #1a0b2e 0.8px, transparent 0.8px), 
+                        linear-gradient(to bottom, #1a0b2e 0.8px, transparent 0.8px)
+                    `, 
+                    backgroundSize: '40px 40px' 
+                }} 
+            />
           </div>
           <div className="relative text-center w-full px-4 z-10">
             <div ref={upperTextRef}>
@@ -320,9 +321,8 @@ export default function WomenInFOSS() {
         </div>
       </section>
 
-      {/* --- HORIZONTAL SECTIONS (Reduced Gaps) --- */}
+      {/* --- HORIZONTAL SECTIONS --- */}
 
-      {/* PAST EVENTS */}
       <section className="horizontal-container bg-[#0f0720] overflow-hidden">
         <div className="h-screen flex flex-col justify-center">
           <div className="px-6 md:px-20 mb-10">
@@ -338,7 +338,6 @@ export default function WomenInFOSS() {
         </div>
       </section>
 
-      {/* WEBINARS */}
       <section className="horizontal-container bg-[#0f0720] overflow-hidden border-t border-white/5">
         <div className="h-screen flex flex-col justify-center">
           <div className="px-6 md:px-20 mb-10">
@@ -354,7 +353,6 @@ export default function WomenInFOSS() {
         </div>
       </section>
 
-      {/* BLOGS */}
       <section className="horizontal-container bg-[#0f0720] overflow-hidden border-t border-white/5">
         <div className="h-screen flex flex-col justify-center">
           <div className="px-6 md:px-20 mb-10">
