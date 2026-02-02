@@ -2,10 +2,9 @@
 
 import React, { useEffect, useRef } from "react";
 import Link from "next/link";
-import { ArrowRight, Mic } from "lucide-react";
-import eventsData from "../events/Events.json";
+import { ArrowRight, Youtube, Play } from "lucide-react";
+import webinarsData from "../events/Webinars.json";
 
-// GSAP Import
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -13,26 +12,20 @@ if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-// Ensure the data structure is typed or safely accessed
-interface EventItem {
+interface WebinarItem {
   title: string;
-  date: string;
   image: string;
-  speaker: string;
-  description: string;
+  youtube_link: string;
 }
 
-const PAST_EVENTS: EventItem[] = (eventsData.Events || []).slice(0, 5);
+// Newest first, limit to 5
+const PAST_WEBINARS: WebinarItem[] = (webinarsData.Webinars || []).slice(0, 5);
 
-export default function PastEventsSection() {
+export default function PastWebinarsSection() {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // 1. ESLint Fix: Context handles scope and cleanup. 
-    // useEffect is safer for Next.js SSR than useLayoutEffect
     const ctx = gsap.context(() => {
-      
-      // Reveal Header
       gsap.from(".section-header", {
         y: 30,
         opacity: 0,
@@ -44,8 +37,7 @@ export default function PastEventsSection() {
         },
       });
 
-      // Staggered reveal for cards
-      gsap.from(".event-card", {
+      gsap.from(".webinar-card", {
         x: 40,
         opacity: 0,
         duration: 0.8,
@@ -56,77 +48,83 @@ export default function PastEventsSection() {
           start: "top 85%",
         },
       });
-
     }, containerRef);
 
     return () => ctx.revert();
   }, []);
 
   return (
-    <section 
-      ref={containerRef} 
+    <section
+      ref={containerRef}
       className="bg-[#0f0720] py-16 md:py-24 border-t border-white/5 overflow-hidden"
     >
       <div className="px-4 md:px-12">
-        {/* Magazine Header */}
+        {/* Header */}
         <div className="section-header flex flex-col md:flex-row md:items-baseline justify-between mb-10 border-b border-white/10 pb-6">
-          <div className="mb-4 md:mb-0">
-            <p className="text-purple-500 font-mono text-[9px] md:text-[10px] tracking-[0.3em] uppercase mb-1">
-              Archive_Vol.01
+          <div>
+            <p className="text-purple-500 font-mono text-[10px] tracking-[0.3em] uppercase mb-1">
+              Archive_Vol.02
             </p>
             <h2 className="text-3xl sm:text-4xl md:text-6xl font-black uppercase italic tracking-tighter text-white">
-              Past <span className="text-purple-500">Events</span>
+              Past <span className="text-purple-500">Webinars</span>
             </h2>
           </div>
         </div>
 
-        {/* The Scroll Track - Optimized for Mobile Touch */}
+        {/* Scroll Track */}
         <div className="scroll-track flex gap-4 md:gap-8 overflow-x-auto pb-8 scrollbar-hide snap-x snap-mandatory px-2">
-          {PAST_EVENTS.map((event, i) => (
-            <div 
-              key={`${event.title}-${i}`} 
-              className="event-card min-w-[75vw] sm:min-w-[300px] md:min-w-[350px] snap-center md:snap-start group"
+          {PAST_WEBINARS.map((webinar) => (
+            <a
+              key={webinar.youtube_link} // ✅ unique key
+              href={webinar.youtube_link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="webinar-card min-w-[75vw] sm:min-w-[300px] md:min-w-[350px] snap-center md:snap-start group"
             >
               <div className="relative h-44 md:h-56 mb-5 overflow-hidden bg-purple-900/20 rounded-sm">
-                <div className="absolute top-3 left-3 z-10 bg-white text-black px-2 py-1 text-[9px] md:text-[10px] font-black uppercase italic shadow-lg">
-                  {event.date}
-                </div>
                 <img
-                  src={event.image}
-                  alt={event.title}
+                  src={webinar.image}
+                  alt={webinar.title}
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-70 group-hover:opacity-100"
                   loading="lazy"
                 />
+
+                {/* Play Overlay */}
+                <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition">
+                  <Play size={42} className="text-white" />
+                </div>
               </div>
 
               <div className="space-y-3 px-1">
-                <div className="flex items-center gap-2">
-                  <Mic size={12} className="text-purple-500 shrink-0" />
-                  <span className="text-[10px] font-mono font-bold text-purple-300/80 uppercase tracking-tight">
-                    {event.speaker}
+                <div className="flex items-center gap-2 text-purple-400">
+                  <Youtube size={14} />
+                  <span className="text-[10px] font-mono uppercase tracking-widest">
+                    Webinar
                   </span>
                 </div>
+
                 <h3 className="text-xl md:text-2xl font-black uppercase leading-[0.9] text-white tracking-tighter group-hover:text-purple-400 transition-colors">
-                  {event.title}
+                  {webinar.title}
                 </h3>
-                <p className="text-white/40 text-xs leading-relaxed line-clamp-2 font-light italic">
-                  {event.description}
+
+                <p className="text-white/40 text-xs italic">
+                  Watch on YouTube →
                 </p>
               </div>
-            </div>
+            </a>
           ))}
 
-          {/* End-of-scroll "View All" Card for Mobile */}
+          {/* View All */}
           <Link
             href="/events"
-            className="event-card min-w-[60vw] sm:min-w-[200px] flex items-center justify-center border border-dashed border-white/10 group hover:border-purple-500/50 transition-colors cursor-pointer snap-center"
+            className="webinar-card min-w-[60vw] sm:min-w-[200px] flex items-center justify-center border border-dashed border-white/10 group hover:border-purple-500/50 transition-colors snap-center"
           >
             <div className="text-center p-6">
               <p className="text-[10px] font-black uppercase tracking-widest text-white/30 group-hover:text-purple-400">
-                Full<br className="hidden md:block" /> Archive
+                Full<br /> Archive
               </p>
               <div className="mt-4 w-10 h-10 rounded-full border border-white/10 flex items-center justify-center mx-auto group-hover:border-purple-500 transition-colors">
-                <ArrowRight className="text-white/20 group-hover:text-purple-400" size={18} />
+                <ArrowRight size={18} className="text-white/20 group-hover:text-purple-400" />
               </div>
             </div>
           </Link>
