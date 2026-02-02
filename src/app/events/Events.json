@@ -6,6 +6,41 @@
     "__Comment_2": "Add all events in sorted order.(Add new events at the beginning of an array.)",
     "Events": [
         {
+            "title": "Psychology of getting hacked",
+            "image": "/sliitwif/assets/events/Psychology of Hacking.jpeg",
+            "description": "Cyber Security Undergraduate Sayuni Bulathgama discusses the human element and psychological factors involved in cybersecurity breaches.",
+            "date": "23rd January 2026",
+            "speaker": "Sayuni Bulathgama"
+        },
+        {
+            "title": "Hidden World of App Algorithms",
+            "image": "/sliitwif/assets/events/App Algorithms.jpeg",
+            "description": "AI Undergraduate Ravini Gajanayake explores the complex and often invisible algorithms that power modern applications.",
+            "date": "21st October 2025",
+            "speaker": "Ravini Gajanayake"
+        },
+        {
+            "title": "From Bugs to Breakthroughs: Why Software Projects Fail and How Teams Succeed",
+            "image": "/sliitwif/assets/events/Bugs to Breakthroughs.jpeg",
+            "description": "A deep dive into software project dynamics and team success strategies led by IT Undergraduate Chanithi Perera.",
+            "date": "28th August 2025",
+            "speaker": "Chanithi Perera"
+        },
+          {
+            "title": "Getting Started with Project Management: A Guide for Future Leaders",
+            "image": "/sliitwif/assets/events/Project Management.jpeg",
+            "description": "Maleesha Wijerathne, an IT Undergraduate, shares essential insights into the world of project management for aspiring tech leaders.",
+            "date": "20th May 2025",
+            "speaker": "Maleesha Wijerathne"
+        },
+         {
+            "title": "Beyond Pixels: The Art of UI UX",
+            "image": "/sliitwif/assets/events/Beyound Pixels.jpeg",
+            "description": "A session by She Talks Tech focused on the artistry and principles of UI/UX design.",
+            "date": "21st March 2025",
+            "speaker": "Nujaba Irfan"
+        },
+        {
             "title": "Bringing more women into Open source contributions",
             "image": "/sliitwif/assets/events/women into open source.jpg",
             "description": "Goals to empower women to join more Open Source Contributions🔥.",
