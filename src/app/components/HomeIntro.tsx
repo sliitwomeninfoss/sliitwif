@@ -322,8 +322,9 @@ export default function WomenInFOSS() {
       </section>
 
       {/* --- HORIZONTAL SECTIONS --- */}
-
+    
       <PastEventsSection />
+      
 
       <section className="horizontal-container bg-[#0f0720] overflow-hidden border-t border-white/5">
         <div className="h-screen flex flex-col justify-center">
