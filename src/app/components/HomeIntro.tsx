@@ -6,6 +6,7 @@ import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 import Image from 'next/image';
 import PastEventsSection from "./PastEventsSection";
 import WEBINARSection from "./PastWebinars";
+import BLOGSSection from "./PastBlogs";
 // --- TYPE DEFINITIONS ---
 interface Item {
   title: string;
@@ -328,23 +329,7 @@ export default function WomenInFOSS() {
 
       <WEBINARSection />
       
-
-
-      <section className="horizontal-container bg-[#0f0720] overflow-hidden border-t border-white/5">
-        <div className="h-screen flex flex-col justify-center">
-          <div className="px-6 md:px-20 mb-10">
-            <span className="text-purple-400 font-mono tracking-[0.4em] text-[10px] uppercase block mb-2">05_INSIGHTS</span>
-            <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter leading-none">The Blog</h2>
-          </div>
-          <div className="scroll-track flex gap-10 px-6 md:px-[10vw] items-center w-max">
-            {BLOGS.map((blog, i) => <ItemCard key={i} item={blog} />)}
-            <div className="flex-shrink-0 w-[400px] px-20">
-              <button className="text-3xl font-black italic uppercase text-white/20 hover:text-purple-400 transition-colors">Read More —&gt;</button>
-            </div>
-          </div>
-        </div>
-      </section>
-
+      <BLOGSSection />
       <style jsx>{`
         .stroke-text-white { color: transparent; -webkit-text-stroke: 1.5px rgba(255,255,255,0.8); }
         @media (min-width: 768px) { .stroke-text-white { -webkit-text-stroke: 2px white; } }
