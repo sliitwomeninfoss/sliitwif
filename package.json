@@ -10,6 +10,10 @@
     "deploy": "npm run build && gh-pages -d out"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^7.1.0",
+    "@fortawesome/free-brands-svg-icons": "^7.1.0",
+    "@fortawesome/free-solid-svg-icons": "^7.1.0",
+    "@fortawesome/react-fontawesome": "^3.1.1",
     "@studio-freight/lenis": "^1.0.42",
     "autoprefixer": "^10.4.21",
     "framer-motion": "^12.25.0",
