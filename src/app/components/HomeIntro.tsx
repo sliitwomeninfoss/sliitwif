@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 import Image from 'next/image';
@@ -21,11 +21,16 @@ export default function WomenInFOSS() {
   const magSectionRef = useRef<HTMLElement>(null);
   const mascotImgRef = useRef<HTMLImageElement>(null);
 
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      const hasSeenReveal = sessionStorage.getItem('wif_hero_revealed');
+  // New state to prevent the "Flash of Unwanted Content"
+  const [hasRevealed, setHasRevealed] = useState<boolean | null>(null);
 
-      // 1. Background Grid Animation
+  useEffect(() => {
+    // 1. Check session storage immediately on mount
+    const checkReveal = sessionStorage.getItem('wif_hero_revealed') === 'true';
+    setHasRevealed(checkReveal);
+
+    const ctx = gsap.context(() => {
+      // 2. Background Grid Animation (Always runs)
       gsap.to(gridRef.current, {
         y: -60,
         duration: 25,
@@ -34,7 +39,7 @@ export default function WomenInFOSS() {
         ease: 'sine.inOut'
       });
 
-      // 2. Mascot Float
+      // 3. Mascot Float (Always runs)
       if (mascotImgRef.current) {
         gsap.to(mascotImgRef.current, {
           y: -20,
@@ -45,8 +50,8 @@ export default function WomenInFOSS() {
         });
       }
 
-      // 3. Hero Reveal
-      if (!hasSeenReveal) {
+      // 4. Hero Reveal Logic
+      if (!checkReveal) {
         const tl = gsap.timeline({
           scrollTrigger: {
             trigger: containerRef.current,
@@ -57,6 +62,8 @@ export default function WomenInFOSS() {
             anticipatePin: 1,
             onLeave: () => {
               sessionStorage.setItem('wif_hero_revealed', 'true');
+              // We don't force a state change here to avoid a re-render 
+              // mid-scroll, but the session is set for the next visit.
             }
           }
         });
@@ -76,11 +83,11 @@ export default function WomenInFOSS() {
           0.4
         );
       } else {
-        gsap.set(heroRef.current, { display: 'none' });
+        // If already revealed, ensure the underlying items are visible
         gsap.set(".reveal-item", { y: 0, opacity: 1 });
       }
 
-      // 4. Magazine Reveal
+      // 5. Magazine Reveal
       gsap.from(".mag-reveal", {
         scrollTrigger: {
           trigger: magSectionRef.current,
@@ -94,6 +101,7 @@ export default function WomenInFOSS() {
         ease: "power4.out"
       });
       
+      // 6. Horizontal Sections
       const horizontalSections = gsap.utils.toArray<HTMLElement>('.horizontal-container');
       horizontalSections.forEach((section) => {
         const track = section.querySelector<HTMLElement>('.scroll-track');
@@ -120,9 +128,13 @@ export default function WomenInFOSS() {
   return (
     <main className="bg-[#0f0720] text-white selection:bg-purple-500 font-sans overflow-x-hidden">
       
-      <section ref={containerRef} className="relative h-screen w-full overflow-hidden">
+      {/* Container height becomes auto if already revealed to prevent dead scroll space */}
+      <section 
+        ref={containerRef} 
+        className={`relative w-full overflow-hidden ${hasRevealed ? 'h-auto py-20' : 'h-screen'}`}
+      >
         {/* DEEP BACKGROUND */}
-        <div className="absolute inset-0 flex items-center justify-center bg-[#0f0720] px-6">
+        <div className={`absolute inset-0 flex items-center justify-center bg-[#0f0720] px-6 ${hasRevealed ? 'relative' : ''}`}>
           <div className="absolute inset-0 flex flex-col justify-around opacity-[0.02] select-none pointer-events-none leading-none">
             {[...Array(6)].map((_, i) => (
               <span key={i} className={`text-[12vw] font-black whitespace-nowrap ${i % 2 === 0 ? '-ml-20' : '-mr-20 text-right'}`}>
@@ -163,38 +175,42 @@ export default function WomenInFOSS() {
           </div>
         </div>
 
-        {/* REVEAL LAYER - DARK PURPLE ACCENTS */}
-        <header ref={heroRef} className="absolute inset-0 z-20 flex items-center justify-center bg-white overflow-hidden" style={{ clipPath: 'polygon(0 0, 100% 0, 100% 50%, 0 50%, 0 50%, 100% 50%, 100% 100%, 0 100%)' }}>
-          
-          {/* Subtle vignette for depth */}
-          <div className="absolute inset-0 bg-[radial-gradient(circle,transparent_40%,rgba(147,51,234,0.05)_100%)]" />
-          
-          <div ref={gridRef} className="absolute inset-0 opacity-[0.6] pointer-events-none select-none h-[150%]">
-            <div 
-                className="absolute inset-0" 
-                style={{ 
-                    backgroundImage: `
-                        linear-gradient(to right, #581c87 1.2px, transparent 1.2px), 
-                        linear-gradient(to bottom, #581c87 1.2px, transparent 1.2px)
-                    `, 
-                    backgroundSize: '50px 50px' 
-                }} 
-            />
-          </div>
+        {/* REVEAL LAYER - Hidden immediately if hasRevealed is true */}
+        {!hasRevealed && (
+          <header 
+            ref={heroRef} 
+            className="absolute inset-0 z-20 flex items-center justify-center bg-white overflow-hidden" 
+            style={{ clipPath: 'polygon(0 0, 100% 0, 100% 50%, 0 50%, 0 50%, 100% 50%, 100% 100%, 0 100%)' }}
+          >
+            <div className="absolute inset-0 bg-[radial-gradient(circle,transparent_40%,rgba(147,51,234,0.05)_100%)]" />
+            
+            <div ref={gridRef} className="absolute inset-0 opacity-[0.6] pointer-events-none select-none h-[150%]">
+              <div 
+                  className="absolute inset-0" 
+                  style={{ 
+                      backgroundImage: `
+                          linear-gradient(to right, #581c87 1.2px, transparent 1.2px), 
+                          linear-gradient(to bottom, #581c87 1.2px, transparent 1.2px)
+                      `, 
+                      backgroundSize: '50px 50px' 
+                  }} 
+              />
+            </div>
 
-          <div className="relative text-center w-full px-4 z-10">
-            <div ref={upperTextRef}>
+            <div className="relative text-center w-full px-4 z-10">
+              <div ref={upperTextRef}>
+                  <h1 className="text-[13vw] md:text-[10vw] font-[1000] text-purple-950 leading-[0.8] tracking-[-0.05em] uppercase">
+                    SLIIT<br/>WOMEN<br/>IN FOSS
+                  </h1>
+              </div>
+              <div ref={lowerTextRef} className="absolute inset-0 pointer-events-none px-4">
                 <h1 className="text-[13vw] md:text-[10vw] font-[1000] text-purple-950 leading-[0.8] tracking-[-0.05em] uppercase">
-                  SLIIT<br/>WOMEN<br/>IN FOSS
+                    SLIIT<br/>WOMEN<br/>IN FOSS
                 </h1>
+              </div>
             </div>
-            <div ref={lowerTextRef} className="absolute inset-0 pointer-events-none px-4">
-              <h1 className="text-[13vw] md:text-[10vw] font-[1000] text-purple-950 leading-[0.8] tracking-[-0.05em] uppercase">
-                  SLIIT<br/>WOMEN<br/>IN FOSS
-              </h1>
-            </div>
-          </div>
-        </header>
+          </header>
+        )}
       </section>
 
       {/* IDENTITY SECTION */}
