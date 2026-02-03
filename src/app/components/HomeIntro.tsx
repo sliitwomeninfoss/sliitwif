@@ -7,76 +7,34 @@ import Image from 'next/image';
 import PastEventsSection from "./PastEventsSection";
 import WEBINARSection from "./PastWebinars";
 import BLOGSSection from "./PastBlogs";
-// --- TYPE DEFINITIONS ---
-interface Item {
-  title: string;
-  year: string;
-  img: string;
-}
-
-// --- DATA ---
-const PAST_EVENTS: Item[] = [
-  { title: 'Open Source Summit', year: '2024', img: 'https://images.unsplash.com/photo-1540575861501-7cf05a4b125a?q=80&w=800' },
-  { title: 'Code with WIF', year: '2023', img: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=800' },
-  { title: 'Git Mastery Lab', year: '2023', img: 'https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=800' },
-  { title: 'FOSS Awareness', year: '2022', img: 'https://images.unsplash.com/photo-1591115765373-520b7a2d7a59?q=80&w=800' },
-];
-
-const WEBINARS: Item[] = [
-  { title: 'GSoC Guide 2024', year: '2024', img: 'https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?q=80&w=800' },
-  { title: 'UI/UX in FOSS', year: '2024', img: 'https://images.unsplash.com/photo-1586717791821-3f44a563eb4c?q=80&w=800' },
-  { title: 'Cloud Native 101', year: '2023', img: 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?q=80&w=800' },
-];
-
-const BLOGS: Item[] = [
-  { title: 'The Power of PRs', year: '2024', img: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=800' },
-  { title: 'Success Stories', year: '2024', img: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=800' },
-  { title: 'Mentorship Matters', year: '2023', img: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=800' },
-];
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-const ItemCard = ({ item }: { item: Item }) => (
-  <div className="flex-shrink-0 w-[320px] md:w-[480px] group cursor-pointer">
-    <div className="relative aspect-[16/10] overflow-hidden rounded-2xl bg-white/5 border border-white/10 transition-all duration-500 group-hover:border-purple-500/50">
-      <Image 
-        src={item.img} 
-        alt={item.title} 
-        fill 
-        className="object-cover transition-transform duration-700 group-hover:scale-105 grayscale group-hover:grayscale-0 opacity-60 group-hover:opacity-100"
-      />
-      <div className="absolute inset-0 bg-gradient-to-t from-[#0f0720] via-[#0f0720]/20 to-transparent" />
-      <div className="absolute bottom-8 left-8 right-8">
-        <span className="text-purple-400 font-mono text-[10px] tracking-[0.3em] uppercase mb-2 block">{item.year}</span>
-        <h3 className="text-2xl md:text-3xl font-black uppercase tracking-tighter leading-none group-hover:text-purple-300 transition-colors">{item.title}</h3>
-      </div>
-    </div>
-  </div>
-);
-
 export default function WomenInFOSS() {
-  const containerRef = useRef(null);
-  const heroRef = useRef(null);
-  const upperTextRef = useRef(null);
-  const lowerTextRef = useRef(null);
-  const gridRef = useRef(null);
-  const magSectionRef = useRef(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const heroRef = useRef<HTMLElement>(null);
+  const upperTextRef = useRef<HTMLDivElement>(null);
+  const lowerTextRef = useRef<HTMLDivElement>(null);
+  const gridRef = useRef<HTMLDivElement>(null);
+  const magSectionRef = useRef<HTMLElement>(null);
   const mascotImgRef = useRef<HTMLImageElement>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
+      const hasSeenReveal = sessionStorage.getItem('wif_hero_revealed');
+
       // 1. Background Grid Animation
       gsap.to(gridRef.current, {
-        y: -40,
-        duration: 20,
+        y: -60,
+        duration: 25,
         repeat: -1,
         yoyo: true,
         ease: 'sine.inOut'
       });
 
-      // 2. Floating Mascot Animation
+      // 2. Mascot Float
       if (mascotImgRef.current) {
         gsap.to(mascotImgRef.current, {
           y: -20,
@@ -87,34 +45,42 @@ export default function WomenInFOSS() {
         });
       }
 
-      // 3. Main Hero Reveal (The Sliding Door Effect)
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: 'top top',
-          end: '+=150%', 
-          scrub: 1,
-          pin: true,
-          anticipatePin: 1,
-        }
-      });
+      // 3. Hero Reveal
+      if (!hasSeenReveal) {
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: 'top top',
+            end: '+=150%',
+            scrub: 1,
+            pin: true,
+            anticipatePin: 1,
+            onLeave: () => {
+              sessionStorage.setItem('wif_hero_revealed', 'true');
+            }
+          }
+        });
 
-      tl.to(heroRef.current, {
-        clipPath: 'polygon(0 0, 100% 0, 100% 0%, 0 0%, 0 100%, 100% 100%, 100% 100%, 0 100%)',
-        ease: 'power2.inOut',
-        duration: 1
-      }, 0);
+        tl.to(heroRef.current, {
+          clipPath: 'polygon(0 0, 100% 0, 100% 0%, 0 0%, 0 100%, 100% 100%, 100% 100%, 0 100%)',
+          ease: 'power2.inOut',
+          duration: 1
+        }, 0);
 
-      tl.to(upperTextRef.current, { yPercent: -100, opacity: 0, ease: 'power2.inOut' }, 0);
-      tl.to(lowerTextRef.current, { yPercent: 100, opacity: 0, ease: 'power2.inOut' }, 0);
+        tl.to(upperTextRef.current, { yPercent: -100, opacity: 0, ease: 'power2.inOut' }, 0);
+        tl.to(lowerTextRef.current, { yPercent: 100, opacity: 0, ease: 'power2.inOut' }, 0);
 
-      tl.fromTo(".reveal-item", 
-        { y: 40, opacity: 0 }, 
-        { y: 0, opacity: 1, stagger: 0.1, ease: 'power3.out' }, 
-        0.4
-      );
+        tl.fromTo(".reveal-item", 
+          { y: 40, opacity: 0 }, 
+          { y: 0, opacity: 1, stagger: 0.1, ease: 'power3.out' }, 
+          0.4
+        );
+      } else {
+        gsap.set(heroRef.current, { display: 'none' });
+        gsap.set(".reveal-item", { y: 0, opacity: 1 });
+      }
 
-      // 4. Magazine Section Reveals
+      // 4. Magazine Reveal
       gsap.from(".mag-reveal", {
         scrollTrigger: {
           trigger: magSectionRef.current,
@@ -154,9 +120,8 @@ export default function WomenInFOSS() {
   return (
     <main className="bg-[#0f0720] text-white selection:bg-purple-500 font-sans overflow-x-hidden">
       
-      {/* SECTION 1: HERO & BEYOND THE CODE */}
       <section ref={containerRef} className="relative h-screen w-full overflow-hidden">
-        {/* Background Layer (Deep) */}
+        {/* DEEP BACKGROUND */}
         <div className="absolute inset-0 flex items-center justify-center bg-[#0f0720] px-6">
           <div className="absolute inset-0 flex flex-col justify-around opacity-[0.02] select-none pointer-events-none leading-none">
             {[...Array(6)].map((_, i) => (
@@ -198,21 +163,25 @@ export default function WomenInFOSS() {
           </div>
         </div>
 
-        {/* Foreground Reveal Layer (White Background with DARKER Grids) */}
+        {/* REVEAL LAYER - DARK PURPLE ACCENTS */}
         <header ref={heroRef} className="absolute inset-0 z-20 flex items-center justify-center bg-white overflow-hidden" style={{ clipPath: 'polygon(0 0, 100% 0, 100% 50%, 0 50%, 0 50%, 100% 50%, 100% 100%, 0 100%)' }}>
-          <div ref={gridRef} className="absolute inset-0 opacity-[0.25] pointer-events-none select-none h-[140%]">
+          
+          {/* Subtle vignette for depth */}
+          <div className="absolute inset-0 bg-[radial-gradient(circle,transparent_40%,rgba(147,51,234,0.05)_100%)]" />
+          
+          <div ref={gridRef} className="absolute inset-0 opacity-[0.6] pointer-events-none select-none h-[150%]">
             <div 
                 className="absolute inset-0" 
                 style={{ 
                     backgroundImage: `
-                        radial-gradient(#1a0b2e 1px, transparent 1px), 
-                        linear-gradient(to right, #1a0b2e 0.8px, transparent 0.8px), 
-                        linear-gradient(to bottom, #1a0b2e 0.8px, transparent 0.8px)
+                        linear-gradient(to right, #581c87 1.2px, transparent 1.2px), 
+                        linear-gradient(to bottom, #581c87 1.2px, transparent 1.2px)
                     `, 
-                    backgroundSize: '40px 40px' 
+                    backgroundSize: '50px 50px' 
                 }} 
             />
           </div>
+
           <div className="relative text-center w-full px-4 z-10">
             <div ref={upperTextRef}>
                 <h1 className="text-[13vw] md:text-[10vw] font-[1000] text-purple-950 leading-[0.8] tracking-[-0.05em] uppercase">
@@ -228,7 +197,7 @@ export default function WomenInFOSS() {
         </header>
       </section>
 
-      {/* SECTION 2: EDITORIAL CONTENT */}
+      {/* IDENTITY SECTION */}
       <section ref={magSectionRef} className="relative bg-[#0f0720] pt-32 pb-48 px-6 -mt-1">
         <div className="absolute top-20 -left-10 text-[25vw] font-black text-white/[0.02] select-none leading-none tracking-tighter pointer-events-none uppercase">Identity</div>
         
@@ -273,7 +242,6 @@ export default function WomenInFOSS() {
           </div>
         </div>
 
-        {/* MARQUEE DIVIDER */}
         <div className="absolute bottom-0 left-0 w-full overflow-hidden whitespace-nowrap bg-white/5 border-y border-white/10 py-5 rotate-[-1deg] z-30 backdrop-blur-md">
           <div className="flex animate-marquee font-bold text-xl uppercase tracking-[0.2em] text-purple-400/80">
             {[...Array(8)].map((_, i) => (
@@ -285,7 +253,7 @@ export default function WomenInFOSS() {
         </div>
       </section>
 
-      {/* SECTION 3: MASCOT FEATURE (NIFI) */}
+      {/* MASCOT SECTION */}
       <section className="relative py-32 px-6 bg-[#0f0720]">
         <div className="max-w-6xl mx-auto">
           <div className="relative group overflow-hidden bg-gradient-to-br from-purple-900/10 to-transparent border border-white/10 rounded-[2rem] md:rounded-[4rem] p-8 md:p-20">
@@ -313,7 +281,7 @@ export default function WomenInFOSS() {
                 <div className="space-y-6 text-purple-100/70 text-lg leading-relaxed max-w-lg mx-auto lg:mx-0">
                   <p>Nifi is thrilled to be a part of women tech enthusiasts as our <span className="text-white font-bold italic">cute, fluffy</span> official mascot.</p>
                 </div>
-                <button className="group relative px-10 py-5 bg-white text-black font-black uppercase tracking-widest text-xs overflow-hidden hover:text-white transition-colors duration-300">
+                <button type="button" className="group relative px-10 py-5 bg-white text-black font-black uppercase tracking-widest text-xs overflow-hidden hover:text-white transition-colors duration-300">
                   <span className="relative z-10">Join the Community</span>
                   <div className="absolute inset-0 bg-purple-600 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-expo" />
                 </button>
@@ -323,13 +291,10 @@ export default function WomenInFOSS() {
         </div>
       </section>
 
-      {/* --- HORIZONTAL SECTIONS --- */}
-    
       <PastEventsSection />
-
       <WEBINARSection />
-      
       <BLOGSSection />
+
       <style jsx>{`
         .stroke-text-white { color: transparent; -webkit-text-stroke: 1.5px rgba(255,255,255,0.8); }
         @media (min-width: 768px) { .stroke-text-white { -webkit-text-stroke: 2px white; } }
