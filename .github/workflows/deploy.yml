@@ -28,6 +28,9 @@ jobs:
 
       - name: Build Next.js (static export)
         run: npm run build
+        env:
+          # This pulls the key from GitHub Secrets and bakes it into the static JS
+          NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY: ${{ secrets.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY }}
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
