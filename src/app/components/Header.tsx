@@ -107,7 +107,7 @@ export default function Header() {
         {/* CTA BUTTON */}
         <div className="hidden lg:block">
           <Link 
-            href="/contact"
+            href="/registrations"
             className="relative group inline-block px-8 py-3 bg-white text-black font-black uppercase tracking-widest text-[10px] overflow-hidden transition-all duration-500 rounded-full"
           >
             <span className="relative z-10">Get Involved</span>
