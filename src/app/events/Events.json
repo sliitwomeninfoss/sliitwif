@@ -7,105 +7,105 @@
     "Events": [
         {
             "title": "Psychology of getting hacked",
-            "image": "/sliitwif/assets/events/Psychology of Hacking.jpeg",
+            "image": "/assets/events/Psychology of Hacking.jpeg",
             "description": "Cyber Security Undergraduate Sayuni Bulathgama discusses the human element and psychological factors involved in cybersecurity breaches.",
             "date": "23rd January 2026",
             "speaker": "Sayuni Bulathgama"
         },
         {
             "title": "Hidden World of App Algorithms",
-            "image": "/sliitwif/assets/events/App Algorithms.jpeg",
+            "image": "/assets/events/App Algorithms.jpeg",
             "description": "AI Undergraduate Ravini Gajanayake explores the complex and often invisible algorithms that power modern applications.",
             "date": "21st October 2025",
             "speaker": "Ravini Gajanayake"
         },
         {
             "title": "From Bugs to Breakthroughs: Why Software Projects Fail and How Teams Succeed",
-            "image": "/sliitwif/assets/events/Bugs to Breakthroughs.jpeg",
+            "image": "/assets/events/Bugs to Breakthroughs.jpeg",
             "description": "A deep dive into software project dynamics and team success strategies led by IT Undergraduate Chanithi Perera.",
             "date": "28th August 2025",
             "speaker": "Chanithi Perera"
         },
           {
             "title": "Getting Started with Project Management: A Guide for Future Leaders",
-            "image": "/sliitwif/assets/events/Project Management.jpeg",
+            "image": "/assets/events/Project Management.jpeg",
             "description": "Maleesha Wijerathne, an IT Undergraduate, shares essential insights into the world of project management for aspiring tech leaders.",
             "date": "20th May 2025",
             "speaker": "Maleesha Wijerathne"
         },
          {
             "title": "Beyond Pixels: The Art of UI UX",
-            "image": "/sliitwif/assets/events/Beyound Pixels.jpeg",
+            "image": "/assets/events/Beyound Pixels.jpeg",
             "description": "A session by She Talks Tech focused on the artistry and principles of UI/UX design.",
             "date": "21st March 2025",
             "speaker": "Nujaba Irfan"
         },
         {
             "title": "Bringing more women into Open source contributions",
-            "image": "/sliitwif/assets/events/women into open source.jpg",
+            "image": "/assets/events/women into open source.jpg",
             "description": "Goals to empower women to join more Open Source Contributions🔥.",
             "date": "20th March 2022",
             "speaker": "Mwendwa Bundi Emma"
         },
         {
             "title": "Postman API 101 Workshop",
-            "image": "/sliitwif/assets/events/postman.jpg",
+            "image": "/assets/events/postman.jpg",
             "description": "Learn everything you need to know about Postman API and refresh your knowledge and areas on the basics 🔥.",
             "date": "18th February 2022",
             "speaker": "Kaveesha Gimhana"
         },
         {
             "title": "Bridging the Gap between Graduation and your first UX Job",
-            "image": "/sliitwif/assets/events/UX-Job-Bridging.jpg",
+            "image": "/assets/events/UX-Job-Bridging.jpg",
             "description": "What it takes to cross over the bridge of a fresh graduate and a professional UX designer.",
             "date": "27th November 2021",
             "speaker": "Nadeeka Athukorala"
         },
         {
             "title": "Modern DevOps",
-            "image": "/sliitwif/assets/events/Modern Devops.jpeg",
+            "image": "/assets/events/Modern Devops.jpeg",
             "description": "A live quarantine tech talk, on 'Modern Devops'.",
             "date": "15th September 2021",
             "speaker": "Nilesh Jayanandana"
         },
         {
             "title": "her <Hello World/> v1.0 Groom Up Sessions",
-            "image": "/sliitwif/assets/events/Her_Hello World__Groomup Sessions.jpg",
+            "image": "/assets/events/Her_Hello World__Groomup Sessions.jpg",
             "description": "The GROOM UP SESSIONS for her <Hello World/>v1.0 are here!",
             "date": "8th August 2021",
             "speaker": "Hackathon Speakers"
         },
         {
             "title": "A Chat with Angelica",
-            "image": "/sliitwif/assets/events/A Chat With Angelicaa.jpg",
+            "image": "/assets/events/A Chat With Angelicaa.jpg",
             "description": "The live quarantine tech talk, 'A chat with Angelica'.",
             "date": "28th May 2021",
             "speaker": "Angelica Hill"
         },
         {
             "title": "A Smooth Sea Never Made A Skilled Sailor",
-            "image": "/sliitwif/assets/events/A Smooth sea never .jpg",
+            "image": "/assets/events/A Smooth sea never .jpg",
             "description": "The live quarantine tech talk, 'A Smooth Sea Never Made a Skilled Sailor'.",
             "date": "19th March 2021",
             "speaker": "Dimuthu De Silva"
         },
         {
             "title": "Introduction for Developers",
-            "image": "/sliitwif/assets/events/AWS.jpg",
+            "image": "/assets/events/AWS.jpg",
             "description": "Would you be interested in AWS? It's time to immerse in a world of AWS.",
             "date": "9th February 2021",
             "speaker": "Arshad Zackeriya"
         },
         {
             "title": "A Girl's Pathway To Become An IT Professional",
-            "image": "/sliitwif/assets/events/A Girl’s Pathway To Become An IT Professional.jpg",
+            "image": "/assets/events/A Girl’s Pathway To Become An IT Professional.jpg",
             "description": "Are you a girl striving to become an IT expert?",
             "date": "16th January 2021",
             "speaker": "Nuwini Chamindi"
         },
         {
             "title": "Let's Talk EQ",
-            "image": "/sliitwif/assets/events/Lets Talk EQ.jpg",
+            "image": "/assets/events/Lets Talk EQ.jpg",
             "description": "EQ is nothing, but the ability to process your emotions along with others and influence them.",
             "date": "20th December 2020",
             "speaker": "Renu Harshatha"

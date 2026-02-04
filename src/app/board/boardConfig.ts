@@ -12,49 +12,49 @@ export const rawBoardData: Record<string, BoardMember[]> = {
         {
             "ROLE": "CLUB LEAD",
             "NAME": "Sewvandi Wickramasinghe",
-            "IMAGE_SRC": "/sliitwif/assets/2021/Sewvandi.JPG",
+            "IMAGE_SRC": "/assets/2021/Sewvandi.JPG",
             "FACEBOOK": "https://www.facebook.com/sewvandi.wickramasinghe.3",
             "LINKEDIN": "https://www.linkedin.com/in/sewvandi-promodya-wickramasinghe/"
         },
         {
             "ROLE": "DEVELOPING TEAM LEAD",
             "NAME": "Hansi Pabasara",
-            "IMAGE_SRC": "/sliitwif/assets/2021/Hansi.jpg",
+            "IMAGE_SRC": "/assets/2021/Hansi.jpg",
             "FACEBOOK": "#",
             "LINKEDIN": "#"
         },
         {
             "ROLE": "WEB AND GRAPHIC TEAM LEAD",
             "NAME": "Uvini Wijesinghe",
-            "IMAGE_SRC": "/sliitwif/assets/2021/Uvini.jpg",
+            "IMAGE_SRC": "/assets/2021/Uvini.jpg",
             "FACEBOOK": "#",
             "LINKEDIN": "https://www.linkedin.com/in/uvini-wijesinghe/"
         },
         {
             "ROLE": "CONTENT WRITING TEAM LEAD",
             "NAME": "Thathsarani Wickramaarachchi",
-            "IMAGE_SRC": "/sliitwif/assets/2021/Thathsarani.jpg",
+            "IMAGE_SRC": "/assets/2021/Thathsarani.jpg",
             "FACEBOOK": "https://www.facebook.com/thathsarani.wickramaarachchi",
             "LINKEDIN": "https://www.linkedin.com/in/thathsarani-wickramaarachchi/"
         },
         {
             "ROLE": "MEMBERSHIP AND RECRUITING LEAD",
             "NAME": "Nishiki Yapa",
-            "IMAGE_SRC": "/sliitwif/assets/2021/Nishiki.jpeg",
+            "IMAGE_SRC": "/assets/2021/Nishiki.jpeg",
             "FACEBOOK": "https://www.facebook.com/nishiki.yapa.7",
             "LINKEDIN": "https://www.linkedin.com/in/nishiki-yapa-361778168/"
         },
         {
             "ROLE": "TECHNICAL_LEAD",
             "NAME": "Renu Harshatha",
-            "IMAGE_SRC": "/sliitwif/assets/2021/Renu.jpg",
+            "IMAGE_SRC": "/assets/2021/Renu.jpg",
             "FACEBOOK": "https://www.facebook.com/renu.harshatha",
             "LINKEDIN": "https://www.linkedin.com/in/renu-harshatha/"
         },
         {
             "ROLE": "MARKETING_AND_PUBLICITY_LEAD",
             "NAME": "Oshadi Ranathunga",
-            "IMAGE_SRC": "/sliitwif/assets/2021/Oshadi.jpeg",
+            "IMAGE_SRC": "/assets/2021/Oshadi.jpeg",
             "FACEBOOK": "https://www.facebook.com/dilini.ranathunga.520",
             "LINKEDIN": "#"
         }
@@ -63,56 +63,56 @@ export const rawBoardData: Record<string, BoardMember[]> = {
         {
             "ROLE": "CLUB LEAD",
             "NAME": "Bhagya Indimagedara",
-            "IMAGE_SRC": "/sliitwif/assets/2022/Bhagya.jpeg",
+            "IMAGE_SRC": "/assets/2022/Bhagya.jpeg",
             "FACEBOOK": "https://web.facebook.com/kithminiii/",
             "LINKEDIN": "https://www.linkedin.com/in/bhagya-indimagedara/"
         },
         {
             "ROLE": "DEVELOPMENT LEAD",
             "NAME": "Dulya Perera",
-            "IMAGE_SRC": "/sliitwif/assets/2022/Dulya.jpg",
+            "IMAGE_SRC": "/assets/2022/Dulya.jpg",
             "FACEBOOK": "https://www.facebook.com/dul.perera.56/",
             "LINKEDIN": "https://www.linkedin.com/in/dulya-perera-188ab31b9"
         },
         {
             "ROLE": "DESIGN LEAD",
             "NAME": "Sandali Kalavitigoda",
-            "IMAGE_SRC": "/sliitwif/assets/2022/Sanali.jpg",
+            "IMAGE_SRC": "/assets/2022/Sanali.jpg",
             "FACEBOOK": "#",
             "LINKEDIN": "https://www.linkedin.com/in/sandali-kalavitigoda/"
         },
         {
             "ROLE": "CONTENT WRITING LEAD",
             "NAME": "Sheikha Hanna",
-            "IMAGE_SRC": "/sliitwif/assets/2022/Sheikha hannah.jpeg",
+            "IMAGE_SRC": "/assets/2022/Sheikha hannah.jpeg",
             "FACEBOOK": "#",
             "LINKEDIN": "https://www.linkedin.com/in/sheikha-hanna-7127761b5/"
         },
         {
             "ROLE": "PROJECT COORDINATOR",
             "NAME": "Dulakshi Hansani",
-            "IMAGE_SRC": "/sliitwif/assets/2022/Dulakshi.jpeg",
+            "IMAGE_SRC": "/assets/2022/Dulakshi.jpeg",
             "FACEBOOK": "#",
             "LINKEDIN": "https://www.linkedin.com/in/dulakshi-senevirathne-439bb1215"
         },
         {
             "ROLE": "EVENT COORDINATOR",
             "NAME": "Methmi Nugawela",
-            "IMAGE_SRC": "/sliitwif/assets/2022/Methmi.png",
+            "IMAGE_SRC": "/assets/2022/Methmi.png",
             "FACEBOOK": "#",
             "LINKEDIN": "https://www.linkedin.com/in/methmi-nugawela/"
         },
         {
             "ROLE": "MEMBERSHIP AND RECRUITMENT LEAD",
             "NAME": "Senara Perera",
-            "IMAGE_SRC": "/sliitwif/assets/2022/Senara.jpg",
+            "IMAGE_SRC": "/assets/2022/Senara.jpg",
             "FACEBOOK": "#",
             "LINKEDIN": "https://www.linkedin.com/in/senaraperera/"
         },
         {
             "ROLE": "MARKETING LEAD",
             "NAME": "Modeesha Kalani",
-            "IMAGE_SRC": "/sliitwif/assets/2022/Modeesha.jpeg",
+            "IMAGE_SRC": "/assets/2022/Modeesha.jpeg",
             "FACEBOOK": "https://www.facebook.com/modeesha.kalani.3",
             "LINKEDIN": "https://www.linkedin.com/in/modeesha-kalani-b22043199"
         }
@@ -121,42 +121,42 @@ export const rawBoardData: Record<string, BoardMember[]> = {
         {
             "ROLE": "COMMUNITY LEAD",
             "NAME": "Sheikha Hanna",
-            "IMAGE_SRC": "/sliitwif/assets/2023/SheikhaHanna.jpeg",
+            "IMAGE_SRC": "/assets/2023/SheikhaHanna.jpeg",
             "FACEBOOK": "https://web.facebook.com/art.mode.7739/?_rdc=1&_rdr",
             "LINKEDIN": "https://www.linkedin.com/in/sheikha-hanna-7127761b5/"
         },
         {
             "ROLE": "DEVELOPMENT LEAD",
             "NAME": "Sandalika Ariyarathna",
-            "IMAGE_SRC": "/sliitwif/assets/2023/Sandalika.jpg",
+            "IMAGE_SRC": "/assets/2023/Sandalika.jpg",
             "FACEBOOK": "https://www.facebook.com/profile.php?id=100009407160156",
             "LINKEDIN": "https://www.linkedin.com/in/dilini-sandalika96"
         },
         {
             "ROLE": "DESIGN LEAD",
             "NAME": "Shavidini Ekanayake",
-            "IMAGE_SRC": "/sliitwif/assets/2023/Shavidini.png",
+            "IMAGE_SRC": "/assets/2023/Shavidini.png",
             "FACEBOOK": "https://web.facebook.com/shavi.dilunika/",
             "LINKEDIN": "https://www.linkedin.com/in/shavidini-ekanayake-9368a51ba/"
         },
         {
             "ROLE": "CONTENT WRITING LEAD",
             "NAME": "AKILA PERERA",
-            "IMAGE_SRC": "/sliitwif/assets/2023/AkilaPerera.jpeg",
+            "IMAGE_SRC": "/assets/2023/AkilaPerera.jpeg",
             "FACEBOOK": "#",
             "LINKEDIN": "#"
         },
         {
             "ROLE": "EVENT COORDINATOR",
             "NAME": "Kavindu Chethani",
-            "IMAGE_SRC": "/sliitwif/assets/2023/Chethani.jpg",
+            "IMAGE_SRC": "/assets/2023/Chethani.jpg",
             "FACEBOOK": "#",
             "LINKEDIN": "#"
         },
         {
             "ROLE": "MARKETING LEAD",
             "NAME": "Irushi Gunawardana",
-            "IMAGE_SRC": "/sliitwif/assets/2023/Irushi .jpg",
+            "IMAGE_SRC": "/assets/2023/Irushi .jpg",
             "FACEBOOK": "#",
             "LINKEDIN": "#"
         }
@@ -165,42 +165,42 @@ export const rawBoardData: Record<string, BoardMember[]> = {
         {
             "ROLE": "COMMUNITY LEAD",
             "NAME": "AKILA PERERA",
-            "IMAGE_SRC": "/sliitwif/assets/2024/AkilaPerera.jpeg",
+            "IMAGE_SRC": "/assets/2024/AkilaPerera.jpeg",
             "FACEBOOK": "#",
             "LINKEDIN": "#"
         },
         {
             "ROLE": "DEVELOPMENT LEAD",
             "NAME": "Sandalika Ariyarathna",
-            "IMAGE_SRC": "/sliitwif/assets/2024/Sandalika.jpg",
+            "IMAGE_SRC": "/assets/2024/Sandalika.jpg",
             "FACEBOOK": "https://www.facebook.com/profile.php?id=100009407160156",
             "LINKEDIN": "https://www.linkedin.com/in/dilini-sandalika96"
         },
         {
             "ROLE": "DESIGN LEAD",
             "NAME": "Shavidini Ekanayake",
-            "IMAGE_SRC": "/sliitwif/assets/2024/Shavidini.png",
+            "IMAGE_SRC": "/assets/2024/Shavidini.png",
             "FACEBOOK": "https://web.facebook.com/shavi.dilunika/",
             "LINKEDIN": "https://www.linkedin.com/in/shavidini-ekanayake-9368a51ba/"
         },
         {
             "ROLE": "CONTENT WRITING LEAD",
             "NAME": "Sarah Iyoob",
-            "IMAGE_SRC": "/sliitwif/assets/2024/Sarah.jpeg",
+            "IMAGE_SRC": "/assets/2024/Sarah.jpeg",
             "FACEBOOK": "#",
             "LINKEDIN": " https://www.linkedin.com/in/sarah-ayoob-306231232/"
         },
         {
             "ROLE": "EVENT COORDINATOR",
             "NAME": "Dhanushi Piyaratne",
-            "IMAGE_SRC": "/sliitwif/assets/2024/Dhanushi.jpg",
+            "IMAGE_SRC": "/assets/2024/Dhanushi.jpg",
             "FACEBOOK": "#",
             "LINKEDIN": "#"
         },
         {
             "ROLE": "MARKETING LEAD",
             "NAME": "Irushi Gunawardana",
-            "IMAGE_SRC": "/sliitwif/assets/2024/Irushi.jpg",
+            "IMAGE_SRC": "/assets/2024/Irushi.jpg",
             "FACEBOOK": "#",
             "LINKEDIN": "linkedin.com/in/irushi-gunawardana- 941893250"
         }
@@ -209,55 +209,55 @@ export const rawBoardData: Record<string, BoardMember[]> = {
         {
             "ROLE": "PRESIDENT",
             "NAME": "Irushi Gunawardana",
-            "IMAGE_SRC": "/sliitwif/assets/2025/irushi.jpeg",
+            "IMAGE_SRC": "/assets/2025/irushi.jpeg",
             "FACEBOOK": "#",
             "LINKEDIN": "https://www.linkedin.com/in/irushigunawardana/"
         },
         {
             "ROLE": "VICE PRESIDENT",
             "NAME": "Leashaniya Krishnapillai",
-            "IMAGE_SRC": "/sliitwif/assets/2025/Leashaniya Krishnapillai.jpg",
+            "IMAGE_SRC": "/assets/2025/Leashaniya Krishnapillai.jpg",
             "FACEBOOK": "#",
             "LINKEDIN": "https://www.linkedin.com/in/leashaniya-krishnapillai-36b20a247/"
         },
         {
             "ROLE": "SECRETARY",
             "NAME": "Dinithi Wickramaarachchi",
-            "IMAGE_SRC": "/sliitwif/assets/2025/Dinithi_Wickramaarachchi_cvphoto.png",
+            "IMAGE_SRC": "/assets/2025/Dinithi_Wickramaarachchi_cvphoto.png",
             "FACEBOOK": "#",
             "LINKEDIN": "https://www.linkedin.com/in/dinithi-wickramaarachchi/"
         },
         {
             "ROLE": "ASSITANT SECRETARY",
             "NAME": "Maleesha Wijerathne",
-            "IMAGE_SRC": "/sliitwif/assets/2025/Maleesha_Photo.jpg",
+            "IMAGE_SRC": "/assets/2025/Maleesha_Photo.jpg",
             "FACEBOOK": "#",
             "LINKEDIN": "https://www.linkedin.com/in/maleesha-wijerathne-46b397249"
         },
         {
             "ROLE": "DEV LEAD",
             "NAME": "Nujaba Irfan",
-            "IMAGE_SRC": "/sliitwif/assets/2025/Nujaba_Irfan.jpeg",
+            "IMAGE_SRC": "/assets/2025/Nujaba_Irfan.jpeg",
             "FACEBOOK": "#",
             "LINKEDIN": "https://www.linkedin.com/in/nujaba-irfan/"
         },
         {
             "ROLE": "DESIGN LEAD",
             "NAME": "Gimhani Navodya",
-            "IMAGE_SRC": "/sliitwif/assets/2025/Gimhani navodya.jpg",
+            "IMAGE_SRC": "/assets/2025/Gimhani navodya.jpg",
             "FACEBOOK": "#",
             "LINKEDIN": "https://www.linkedin.com/in/gimhaninavodya/"
         }, {
             "ROLE": "PROJECT COORDINATOR",
             "NAME": "Manushi Katipearachchi",
-            "IMAGE_SRC": "/sliitwif/assets/2025/ManushiKatipearachchi.jpg",
+            "IMAGE_SRC": "/assets/2025/ManushiKatipearachchi.jpg",
             "FACEBOOK": "https://www.facebook.com/profile.php?id=100092984103364",
             "LINKEDIN": " https://www.linkedin.com/in/manushi-katipearachchi-b8481627a/?trk=opento_sprofile_goalscard"
         },
         {
             "ROLE": "EVENT COORDINATOR",
             "NAME": "Dilni Nishshanka ",
-            "IMAGE_SRC": "/sliitwif/assets/2025/Dilni Nishshanka.jpg",
+            "IMAGE_SRC": "/assets/2025/Dilni Nishshanka.jpg",
             "FACEBOOK": "#",
             "LINKEDIN": "https://www.linkedin.com/in/dilni-nishshanka-b889b82b1/"
         }

@@ -15,49 +15,49 @@ export interface BoardMember {
 
 const rawBoardData: Record<string, BoardMember[]> = {
   "2021": [
-    { role: "CLUB LEAD", name: "Sewvandi Wickramasinghe", imageSrc: "/sliitwif/assets/2021/Sewvandi.JPG", facebook: "https://www.facebook.com/sewvandi.wickramasinghe.3", linkedin: "https://www.linkedin.com/in/sewvandi-promodya-wickramasinghe/" },
-    { role: "DEVELOPING TEAM LEAD", name: "Hansi Pabasara", imageSrc: "/sliitwif/assets/2021/Hansi.jpg", facebook: "#", linkedin: "#" },
-    { role: "WEB AND GRAPHIC TEAM LEAD", name: "Uvini Wijesinghe", imageSrc: "/sliitwif/assets/2021/Uvini.jpg", facebook: "#", linkedin: "https://www.linkedin.com/in/uvini-wijesinghe/" },
-    { role: "CONTENT WRITING TEAM LEAD", name: "Thathsarani Wickramaarachchi", imageSrc: "/sliitwif/assets/2021/Thathsarani.jpg", facebook: "https://www.facebook.com/thathsarani.wickramaarachchi", linkedin: "https://www.linkedin.com/in/thathsarani-wickramaarachchi/" },
-    { role: "MEMBERSHIP AND RECRUITING LEAD", name: "Nishiki Yapa", imageSrc: "/sliitwif/assets/2021/Nishiki.jpeg", facebook: "https://www.facebook.com/nishiki.yapa.7", linkedin: "https://www.linkedin.com/in/nishiki-yapa-361778168/" },
-    { role: "TECHNICAL LEAD", name: "Renu Harshatha", imageSrc: "/sliitwif/assets/2021/Renu.jpg", facebook: "https://www.facebook.com/renu.harshatha", linkedin: "https://www.linkedin.com/in/renu.harshatha/" },
-    { role: "MARKETING AND PUBLICITY LEAD", name: "Oshadi Ranathunga", imageSrc: "/sliitwif/assets/2021/Oshadi.jpeg", facebook: "https://www.facebook.com/dilini.ranathunga.520", linkedin: "#" }
+    { role: "CLUB LEAD", name: "Sewvandi Wickramasinghe", imageSrc: "/assets/2021/Sewvandi.JPG", facebook: "https://www.facebook.com/sewvandi.wickramasinghe.3", linkedin: "https://www.linkedin.com/in/sewvandi-promodya-wickramasinghe/" },
+    { role: "DEVELOPING TEAM LEAD", name: "Hansi Pabasara", imageSrc: "/assets/2021/Hansi.jpg", facebook: "#", linkedin: "#" },
+    { role: "WEB AND GRAPHIC TEAM LEAD", name: "Uvini Wijesinghe", imageSrc: "/assets/2021/Uvini.jpg", facebook: "#", linkedin: "https://www.linkedin.com/in/uvini-wijesinghe/" },
+    { role: "CONTENT WRITING TEAM LEAD", name: "Thathsarani Wickramaarachchi", imageSrc: "/assets/2021/Thathsarani.jpg", facebook: "https://www.facebook.com/thathsarani.wickramaarachchi", linkedin: "https://www.linkedin.com/in/thathsarani-wickramaarachchi/" },
+    { role: "MEMBERSHIP AND RECRUITING LEAD", name: "Nishiki Yapa", imageSrc: "/assets/2021/Nishiki.jpeg", facebook: "https://www.facebook.com/nishiki.yapa.7", linkedin: "https://www.linkedin.com/in/nishiki-yapa-361778168/" },
+    { role: "TECHNICAL LEAD", name: "Renu Harshatha", imageSrc: "/assets/2021/Renu.jpg", facebook: "https://www.facebook.com/renu.harshatha", linkedin: "https://www.linkedin.com/in/renu.harshatha/" },
+    { role: "MARKETING AND PUBLICITY LEAD", name: "Oshadi Ranathunga", imageSrc: "/assets/2021/Oshadi.jpeg", facebook: "https://www.facebook.com/dilini.ranathunga.520", linkedin: "#" }
   ],
   "2022": [
-    { role: "CLUB LEAD", name: "Bhagya Indimagedara", imageSrc: "/sliitwif/assets/2022/Bhagya.jpeg", facebook: "https://web.facebook.com/kithminiii/", linkedin: "https://www.linkedin.com/in/bhagya-indimagedara/" },
-    { role: "DEVELOPMENT LEAD", name: "Dulya Perera", imageSrc: "/sliitwif/assets/2022/Dulya.jpg", facebook: "https://www.facebook.com/dul.perera.56/", linkedin: "https://www.linkedin.com/in/dulya-perera-188ab31b9" },
-    { role: "DESIGN LEAD", name: "Sandali Kalavitigoda", imageSrc: "/sliitwif/assets/2022/Sanali.jpg", facebook: "#", linkedin: "https://www.linkedin.com/in/sandali-kalavitigoda/" },
-    { role: "CONTENT WRITING LEAD", name: "Sheikha Hanna", imageSrc: "/sliitwif/assets/2022/Sheikha hannah.jpeg", facebook: "#", linkedin: "https://www.linkedin.com/in/sheikha-hanna-7127761b5/" },
-    { role: "PROJECT COORDINATOR", name: "Dulakshi Hansani", imageSrc: "/sliitwif/assets/2022/Dulakshi.jpeg", facebook: "#", linkedin: "https://www.linkedin.com/in/dulakshi-senevirathne-439bb1215" },
-    { role: "EVENT COORDINATOR", name: "Methmi Nugawela", imageSrc: "/sliitwif/assets/2022/Methmi.png", facebook: "#", linkedin: "https://www.linkedin.com/in/methmi-nugawela/" },
-    { role: "MEMBERSHIP LEAD", name: "Senara Perera", imageSrc: "/sliitwif/assets/2022/Senara.jpg", facebook: "#", linkedin: "https://www.linkedin.com/in/senaraperera/" },
-    { role: "MARKETING LEAD", name: "Modeesha Kalani", imageSrc: "/sliitwif/assets/2022/Modeesha.jpeg", facebook: "https://www.facebook.com/modeesha.kalani.3", linkedin: "https://www.linkedin.com/in/modeesha-kalani-b22043199" }
+    { role: "CLUB LEAD", name: "Bhagya Indimagedara", imageSrc: "/assets/2022/Bhagya.jpeg", facebook: "https://web.facebook.com/kithminiii/", linkedin: "https://www.linkedin.com/in/bhagya-indimagedara/" },
+    { role: "DEVELOPMENT LEAD", name: "Dulya Perera", imageSrc: "/assets/2022/Dulya.jpg", facebook: "https://www.facebook.com/dul.perera.56/", linkedin: "https://www.linkedin.com/in/dulya-perera-188ab31b9" },
+    { role: "DESIGN LEAD", name: "Sandali Kalavitigoda", imageSrc: "/assets/2022/Sanali.jpg", facebook: "#", linkedin: "https://www.linkedin.com/in/sandali-kalavitigoda/" },
+    { role: "CONTENT WRITING LEAD", name: "Sheikha Hanna", imageSrc: "/assets/2022/Sheikha hannah.jpeg", facebook: "#", linkedin: "https://www.linkedin.com/in/sheikha-hanna-7127761b5/" },
+    { role: "PROJECT COORDINATOR", name: "Dulakshi Hansani", imageSrc: "/assets/2022/Dulakshi.jpeg", facebook: "#", linkedin: "https://www.linkedin.com/in/dulakshi-senevirathne-439bb1215" },
+    { role: "EVENT COORDINATOR", name: "Methmi Nugawela", imageSrc: "/assets/2022/Methmi.png", facebook: "#", linkedin: "https://www.linkedin.com/in/methmi-nugawela/" },
+    { role: "MEMBERSHIP LEAD", name: "Senara Perera", imageSrc: "/assets/2022/Senara.jpg", facebook: "#", linkedin: "https://www.linkedin.com/in/senaraperera/" },
+    { role: "MARKETING LEAD", name: "Modeesha Kalani", imageSrc: "/assets/2022/Modeesha.jpeg", facebook: "https://www.facebook.com/modeesha.kalani.3", linkedin: "https://www.linkedin.com/in/modeesha-kalani-b22043199" }
   ],
   "2023": [
-    { role: "COMMUNITY LEAD", name: "Sheikha Hanna", imageSrc: "/sliitwif/assets/2023/SheikhaHanna.jpeg", facebook: "https://web.facebook.com/art.mode.7739/?_rdc=1&_rdr", linkedin: "https://www.linkedin.com/in/sheikha-hanna-7127761b5/" },
-    { role: "DEVELOPMENT LEAD", name: "Sandalika Ariyarathna", imageSrc: "/sliitwif/assets/2023/Sandalika.jpg", facebook: "https://www.facebook.com/profile.php?id=100009407160156", linkedin: "https://www.linkedin.com/in/dilini-sandalika96" },
-    { role: "DESIGN LEAD", name: "Shavidini Ekanayake", imageSrc: "/sliitwif/assets/2023/Shavidini.png", facebook: "https://web.facebook.com/shavi.dilunika/", linkedin: "https://www.linkedin.com/in/shavidini-ekanayake-9368a51ba/" },
-    { role: "CONTENT WRITING LEAD", name: "AKILA PERERA", imageSrc: "/sliitwif/assets/2023/AkilaPerera.jpeg", facebook: "#", linkedin: "#" },
-    { role: "EVENT COORDINATOR", name: "Kavindu Chethani", imageSrc: "/sliitwif/assets/2023/Chethani.jpg", facebook: "#", linkedin: "#" },
-    { role: "MARKETING LEAD", name: "Irushi Gunawardana", imageSrc: "/sliitwif/assets/2023/Irushi .jpg", facebook: "#", linkedin: "#" }
+    { role: "COMMUNITY LEAD", name: "Sheikha Hanna", imageSrc: "/assets/2023/SheikhaHanna.jpeg", facebook: "https://web.facebook.com/art.mode.7739/?_rdc=1&_rdr", linkedin: "https://www.linkedin.com/in/sheikha-hanna-7127761b5/" },
+    { role: "DEVELOPMENT LEAD", name: "Sandalika Ariyarathna", imageSrc: "/assets/2023/Sandalika.jpg", facebook: "https://www.facebook.com/profile.php?id=100009407160156", linkedin: "https://www.linkedin.com/in/dilini-sandalika96" },
+    { role: "DESIGN LEAD", name: "Shavidini Ekanayake", imageSrc: "/assets/2023/Shavidini.png", facebook: "https://web.facebook.com/shavi.dilunika/", linkedin: "https://www.linkedin.com/in/shavidini-ekanayake-9368a51ba/" },
+    { role: "CONTENT WRITING LEAD", name: "AKILA PERERA", imageSrc: "/assets/2023/AkilaPerera.jpeg", facebook: "#", linkedin: "#" },
+    { role: "EVENT COORDINATOR", name: "Kavindu Chethani", imageSrc: "/assets/2023/Chethani.jpg", facebook: "#", linkedin: "#" },
+    { role: "MARKETING LEAD", name: "Irushi Gunawardana", imageSrc: "/assets/2023/Irushi .jpg", facebook: "#", linkedin: "#" }
   ],
   "2024": [
-    { role: "COMMUNITY LEAD", name: "AKILA PERERA", imageSrc: "/sliitwif/assets/2024/AkilaPerera.jpeg", facebook: "#", linkedin: "#" },
-    { role: "DEVELOPMENT LEAD", name: "Sandalika Ariyarathna", imageSrc: "/sliitwif/assets/2024/Sandalika.jpg", facebook: "https://www.facebook.com/profile.php?id=100009407160156", linkedin: "https://www.linkedin.com/in/dilini-sandalika96" },
-    { role: "DESIGN LEAD", name: "Shavidini Ekanayake", imageSrc: "/sliitwif/assets/2024/Shavidini.png", facebook: "https://web.facebook.com/shavi.dilunika/", linkedin: "https://www.linkedin.com/in/shavidini-ekanayake-9368a51ba/" },
-    { role: "CONTENT WRITING LEAD", name: "Sarah Iyoob", imageSrc: "/sliitwif/assets/2024/Sarah.jpeg", facebook: "#", linkedin: "https://www.linkedin.com/in/sarah-ayoob-306231232/" },
-    { role: "EVENT COORDINATOR", name: "Dhanushi Piyaratne", imageSrc: "/sliitwif/assets/2024/Dhanushi.jpg", facebook: "#", linkedin: "#" },
-    { role: "MARKETING LEAD", name: "Irushi Gunawardana", imageSrc: "/sliitwif/assets/2024/Irushi.jpg", facebook: "#", linkedin: "https://www.linkedin.com/in/irushi-gunawardana-941893250" }
+    { role: "COMMUNITY LEAD", name: "AKILA PERERA", imageSrc: "/assets/2024/AkilaPerera.jpeg", facebook: "#", linkedin: "#" },
+    { role: "DEVELOPMENT LEAD", name: "Sandalika Ariyarathna", imageSrc: "/assets/2024/Sandalika.jpg", facebook: "https://www.facebook.com/profile.php?id=100009407160156", linkedin: "https://www.linkedin.com/in/dilini-sandalika96" },
+    { role: "DESIGN LEAD", name: "Shavidini Ekanayake", imageSrc: "/assets/2024/Shavidini.png", facebook: "https://web.facebook.com/shavi.dilunika/", linkedin: "https://www.linkedin.com/in/shavidini-ekanayake-9368a51ba/" },
+    { role: "CONTENT WRITING LEAD", name: "Sarah Iyoob", imageSrc: "/assets/2024/Sarah.jpeg", facebook: "#", linkedin: "https://www.linkedin.com/in/sarah-ayoob-306231232/" },
+    { role: "EVENT COORDINATOR", name: "Dhanushi Piyaratne", imageSrc: "/assets/2024/Dhanushi.jpg", facebook: "#", linkedin: "#" },
+    { role: "MARKETING LEAD", name: "Irushi Gunawardana", imageSrc: "/assets/2024/Irushi.jpg", facebook: "#", linkedin: "https://www.linkedin.com/in/irushi-gunawardana-941893250" }
   ],
   "2025": [
-    { role: "PRESIDENT", name: "Irushi Gunawardana", imageSrc: "/sliitwif/assets/2025/irushi.jpeg", facebook: "#", linkedin: "https://www.linkedin.com/in/irushigunawardana/" },
-    { role: "VICE PRESIDENT", name: "Leashaniya Krishnapillai", imageSrc: "/sliitwif/assets/2025/Leashaniya Krishnapillai.jpg", facebook: "#", linkedin: "https://www.linkedin.com/in/leashaniya-krishnapillai-36b20a247/" },
-    { role: "SECRETARY", name: "Dinithi Wickramaarachchi", imageSrc: "/sliitwif/assets/2025/Dinithi_Wickramaarachchi_cvphoto.png", facebook: "#", linkedin: "https://www.linkedin.com/in/dinithi-wickramaarachchi/" },
-    { role: "ASSISTANT SECRETARY", name: "Maleesha Wijerathne", imageSrc: "/sliitwif/assets/2025/Maleesha_Photo.jpg", facebook: "#", linkedin: "https://www.linkedin.com/in/maleesha-wijerathne-46b397249" },
-    { role: "DEV LEAD", name: "Nujaba Irfan", imageSrc: "/sliitwif/assets/2025/Nujaba_Irfan.jpeg", facebook: "#", linkedin: "https://www.linkedin.com/in/nujaba-irfan/" },
-    { role: "DESIGN LEAD", name: "Gimhani Navodya", imageSrc: "/sliitwif/assets/2025/Gimhani navodya.jpg", facebook: "#", linkedin: "https://www.linkedin.com/in/gimhaninavodya/" },
-    { role: "PROJECT COORDINATOR", name: "Manushi Katipearachchi", imageSrc: "/sliitwif/assets/2025/ManushiKatipearachchi.jpg", facebook: "https://www.facebook.com/profile.php?id=100092984103364", linkedin: "https://www.linkedin.com/in/manushi-katipearachchi-b8481627a/" },
-    { role: "EVENT COORDINATOR", name: "Dilni Nishshanka ", imageSrc: "/sliitwif/assets/2025/Dilni Nishshanka.jpg", facebook: "#", linkedin: "https://www.linkedin.com/in/dilni-nishshanka-b889b82b1/" }
+    { role: "PRESIDENT", name: "Irushi Gunawardana", imageSrc: "/assets/2025/irushi.jpeg", facebook: "#", linkedin: "https://www.linkedin.com/in/irushigunawardana/" },
+    { role: "VICE PRESIDENT", name: "Leashaniya Krishnapillai", imageSrc: "/assets/2025/Leashaniya Krishnapillai.jpg", facebook: "#", linkedin: "https://www.linkedin.com/in/leashaniya-krishnapillai-36b20a247/" },
+    { role: "SECRETARY", name: "Dinithi Wickramaarachchi", imageSrc: "/assets/2025/Dinithi_Wickramaarachchi_cvphoto.png", facebook: "#", linkedin: "https://www.linkedin.com/in/dinithi-wickramaarachchi/" },
+    { role: "ASSISTANT SECRETARY", name: "Maleesha Wijerathne", imageSrc: "/assets/2025/Maleesha_Photo.jpg", facebook: "#", linkedin: "https://www.linkedin.com/in/maleesha-wijerathne-46b397249" },
+    { role: "DEV LEAD", name: "Nujaba Irfan", imageSrc: "/assets/2025/Nujaba_Irfan.jpeg", facebook: "#", linkedin: "https://www.linkedin.com/in/nujaba-irfan/" },
+    { role: "DESIGN LEAD", name: "Gimhani Navodya", imageSrc: "/assets/2025/Gimhani navodya.jpg", facebook: "#", linkedin: "https://www.linkedin.com/in/gimhaninavodya/" },
+    { role: "PROJECT COORDINATOR", name: "Manushi Katipearachchi", imageSrc: "/assets/2025/ManushiKatipearachchi.jpg", facebook: "https://www.facebook.com/profile.php?id=100092984103364", linkedin: "https://www.linkedin.com/in/manushi-katipearachchi-b8481627a/" },
+    { role: "EVENT COORDINATOR", name: "Dilni Nishshanka ", imageSrc: "/assets/2025/Dilni Nishshanka.jpg", facebook: "#", linkedin: "https://www.linkedin.com/in/dilni-nishshanka-b889b82b1/" }
   ]
 };
 

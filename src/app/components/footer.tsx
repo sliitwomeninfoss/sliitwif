@@ -51,7 +51,7 @@ export default function Footer() {
           <div className="flex flex-col items-center md:items-start gap-4">
             <Link href="/" aria-label="Go to homepage">
               <Image 
-                src="/sliitwif/assets/logo.png"
+                src="/assets/logo.png"
                 alt="SLIIT Women In FOSS Logo" 
                 width={80} 
                 height={32}
