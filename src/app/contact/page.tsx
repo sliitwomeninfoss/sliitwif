@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useCallback } from "react";
-import { MapPin, Phone, Mail, Send, Zap, CheckCircle2 } from "lucide-react";
+import { MapPin, Phone, Mail, Send, Zap, CheckCircle2, AlertCircle } from "lucide-react";
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -11,6 +11,7 @@ export default function ContactPage() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const handleChange = useCallback((
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -22,21 +23,54 @@ export default function ContactPage() {
     }));
   }, []);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!formData.name || !formData.email || !formData.message) return;
+    
+    const accessKey = process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY;
+
+    if (!accessKey) {
+      setError("Configuration Error: Access Key is missing.");
+      return;
+    }
+
+    if (!formData.name || !formData.email || !formData.message) {
+      setError("Please fill in all required fields.");
+      return;
+    }
 
     setIsSubmitting(true);
-    
-    // Simulate API Call
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-    
-    setIsSubmitting(false);
-    setIsSuccess(true);
-    setFormData({ name: "", email: "", message: "" });
-    
-    // Reset success message after 5 seconds
-    setTimeout(() => setIsSuccess(false), 5000);
+    setError(null);
+
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          access_key: accessKey,
+          name: formData.name,
+          email: formData.email,
+          message: formData.message,
+          from_name: "Contact Form Website",
+        }),
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        setIsSuccess(true);
+        setFormData({ name: "", email: "", message: "" });
+        setTimeout(() => setIsSuccess(false), 5000);
+      } else {
+        setError(result.message || "Transmission failed.");
+      }
+    } catch (err) {
+      setError("An unexpected error occurred. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -66,24 +100,24 @@ export default function ContactPage() {
           {/* INFO CARDS */}
           <div className="lg:col-span-4 space-y-6">
             {[
-              { icon: MapPin, title: "Location", detail: "SLIIT MALABE" },
-              { icon: Phone, title: "Call Us", detail: "+94 74 178 9977" },
-              { icon: Mail, title: "Email Us", detail: "infowifsliit@gmail.com" },
-            ].map((item) => (
+              { Icon: MapPin, title: "Location", detail: "SLIIT MALABE" },
+              { Icon: Phone, title: "Call Us", detail: "+94 74 178 9977" },
+              { Icon: Mail, title: "Email Us", detail: "infowifsliit@gmail.com" },
+            ].map(({ Icon, title, detail }) => (
               <div
-                key={item.title}
+                key={title}
                 className="group bg-white/[0.02] border border-white/5 p-8 rounded-2xl transition-all duration-500 hover:border-purple-500/30 hover:bg-white/[0.04]"
               >
                 <div className="flex items-center gap-4 mb-4">
                   <div className="p-3 bg-purple-500/10 rounded-lg text-purple-500">
-                    <item.icon size={20} />
+                    <Icon size={20} />
                   </div>
                   <h3 className="text-[10px] font-mono uppercase tracking-[0.2em] text-white/30">
-                    {item.title}
+                    {title}
                   </h3>
                 </div>
                 <p className="text-lg font-black italic uppercase tracking-tight text-white group-hover:text-purple-400 transition-colors">
-                  {item.detail}
+                  {detail}
                 </p>
               </div>
             ))}
@@ -136,6 +170,12 @@ export default function ContactPage() {
                   className="w-full px-0 py-4 bg-transparent border-b border-white/10 text-white placeholder-white/5 focus:outline-none focus:border-purple-500 transition-colors font-black uppercase italic text-xl resize-none"
                 />
               </div>
+
+              {error && (
+                <div className="flex items-center gap-2 text-red-400 text-xs font-mono uppercase tracking-widest">
+                  <AlertCircle size={14} /> {error}
+                </div>
+              )}
 
               <button
                 type="submit"
