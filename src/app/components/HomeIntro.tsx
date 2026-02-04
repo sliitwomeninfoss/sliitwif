@@ -7,6 +7,7 @@ import Image from 'next/image';
 import PastEventsSection from "./PastEventsSection";
 import WEBINARSection from "./PastWebinars";
 import BLOGSSection from "./PastBlogs";
+import Link from 'next/link';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
@@ -297,10 +298,22 @@ export default function WomenInFOSS() {
                 <div className="space-y-6 text-purple-100/70 text-lg leading-relaxed max-w-lg mx-auto lg:mx-0">
                   <p>Nifi is thrilled to be a part of women tech enthusiasts as our <span className="text-white font-bold italic">cute, fluffy</span> official mascot.</p>
                 </div>
-                <button type="button" className="group relative px-10 py-5 bg-white text-black font-black uppercase tracking-widest text-xs overflow-hidden hover:text-white transition-colors duration-300">
-                  <span className="relative z-10">Join the Community</span>
-                  <div className="absolute inset-0 bg-purple-600 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-expo" />
-                </button>
+               <div className="reveal-element flex flex-wrap justify-center lg:justify-start gap-4 pt-4">
+                {/* Wrapped the button in a Link component */}
+                <Link href="/registrations"> 
+                  <button 
+                    type="button" 
+                    className="group relative px-10 py-5 bg-white text-black font-black uppercase tracking-widest text-xs overflow-hidden transition-colors duration-300"
+                  >
+                    <span className="relative z-10 group-hover:text-white transition-colors duration-300">
+                      Join the Community
+                    </span>
+                    <div 
+                      className="absolute inset-0 bg-purple-600 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-expo" 
+                    />
+                  </button>
+                </Link>
+              </div>
               </div>
             </div>
           </div>
