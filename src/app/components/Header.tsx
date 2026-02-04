@@ -64,7 +64,7 @@ export default function Header() {
             className="relative"
           >
             <Image
-              src="/sliitwif/assets/logo.png"
+              src="/assets/logo.png"
               alt="SLIIT WIF Logo"
               width={65}
               height={65}

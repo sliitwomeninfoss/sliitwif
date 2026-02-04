@@ -27,7 +27,7 @@ interface MediumPost {
 const MEDIUM_RSS_URL =
   "https://api.rss2json.com/v1/api.json?rss_url=https://medium.com/feed/sliitwif";
 
-const FALLBACK_IMAGE = "/sliitwif/assets/logo.png";
+const FALLBACK_IMAGE = "/assets/logo.png";
 
 /* ---------------- COMPONENT ---------------- */
 export default function BlogPreviewSection() {

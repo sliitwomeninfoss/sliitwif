@@ -292,7 +292,7 @@ export default function WomenInFOSS() {
                 <div className="absolute inset-0 bg-purple-500/20 blur-[100px] rounded-full scale-90 group-hover:scale-110 transition-transform duration-1000" />
                 <Image 
                   ref={mascotImgRef}
-                  src="/sliitwif/images/mascot-nifi.png" 
+                  src="/images/mascot-nifi.png" 
                   alt="Nifi Mascot" 
                   width={500}
                   height={500}
