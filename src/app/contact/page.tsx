@@ -101,7 +101,7 @@ export default function ContactPage() {
           <div className="lg:col-span-4 space-y-6">
             {[
               { Icon: MapPin, title: "Location", detail: "SLIIT MALABE" },
-              { Icon: Phone, title: "Call Us", detail: "+94 74 178 9977" },
+              { Icon: Phone, title: "Call Us", detail: "+94 76 320 1664" },
               { Icon: Mail, title: "Email Us", detail: "infowifsliit@gmail.com" },
             ].map(({ Icon, title, detail }) => (
               <div
