@@ -2,9 +2,9 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   output: "export",
-  images: { unoptimized: true },
-  basePath: "/sliitwif",
-  assetPrefix: "/sliitwif/",
+  images: {
+    unoptimized: true,
+  },
 };
 
 export default nextConfig;
