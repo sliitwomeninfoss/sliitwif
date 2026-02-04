@@ -22,25 +22,28 @@ export default function WomenInFOSS() {
   const magSectionRef = useRef<HTMLElement>(null);
   const mascotImgRef = useRef<HTMLImageElement>(null);
 
-  // New state to prevent the "Flash of Unwanted Content"
-  const [hasRevealed, setHasRevealed] = useState<boolean | null>(null);
+  // Initialize state directly to prevent Flash of Unwanted Content (FOUC)
+  const [hasRevealed, setHasRevealed] = useState<boolean>(() => {
+    if (typeof window !== 'undefined') {
+      return sessionStorage.getItem('wif_hero_revealed') === 'true';
+    }
+    return false;
+  });
 
   useEffect(() => {
-    // 1. Check session storage immediately on mount
-    const checkReveal = sessionStorage.getItem('wif_hero_revealed') === 'true';
-    setHasRevealed(checkReveal);
-
     const ctx = gsap.context(() => {
-      // 2. Background Grid Animation (Always runs)
-      gsap.to(gridRef.current, {
-        y: -60,
-        duration: 25,
-        repeat: -1,
-        yoyo: true,
-        ease: 'sine.inOut'
-      });
+      // 1. Background Grid Animation
+      if (gridRef.current) {
+        gsap.to(gridRef.current, {
+          y: -60,
+          duration: 25,
+          repeat: -1,
+          yoyo: true,
+          ease: 'sine.inOut'
+        });
+      }
 
-      // 3. Mascot Float (Always runs)
+      // 2. Mascot Float
       if (mascotImgRef.current) {
         gsap.to(mascotImgRef.current, {
           y: -20,
@@ -51,8 +54,8 @@ export default function WomenInFOSS() {
         });
       }
 
-      // 4. Hero Reveal Logic
-      if (!checkReveal) {
+      // 3. Hero Reveal Logic
+      if (!hasRevealed) {
         const tl = gsap.timeline({
           scrollTrigger: {
             trigger: containerRef.current,
@@ -63,20 +66,26 @@ export default function WomenInFOSS() {
             anticipatePin: 1,
             onLeave: () => {
               sessionStorage.setItem('wif_hero_revealed', 'true');
-              // We don't force a state change here to avoid a re-render 
-              // mid-scroll, but the session is set for the next visit.
+              setHasRevealed(true);
             }
           }
         });
 
-        tl.to(heroRef.current, {
-          clipPath: 'polygon(0 0, 100% 0, 100% 0%, 0 0%, 0 100%, 100% 100%, 100% 100%, 0 100%)',
-          ease: 'power2.inOut',
-          duration: 1
-        }, 0);
+        if (heroRef.current) {
+          tl.to(heroRef.current, {
+            clipPath: 'polygon(0 0, 100% 0, 100% 0%, 0 0%, 0 100%, 100% 100%, 100% 100%, 0 100%)',
+            ease: 'power2.inOut',
+            duration: 1
+          }, 0);
+        }
 
-        tl.to(upperTextRef.current, { yPercent: -100, opacity: 0, ease: 'power2.inOut' }, 0);
-        tl.to(lowerTextRef.current, { yPercent: 100, opacity: 0, ease: 'power2.inOut' }, 0);
+        if (upperTextRef.current) {
+          tl.to(upperTextRef.current, { yPercent: -100, opacity: 0, ease: 'power2.inOut' }, 0);
+        }
+        
+        if (lowerTextRef.current) {
+          tl.to(lowerTextRef.current, { yPercent: 100, opacity: 0, ease: 'power2.inOut' }, 0);
+        }
 
         tl.fromTo(".reveal-item", 
           { y: 40, opacity: 0 }, 
@@ -84,25 +93,26 @@ export default function WomenInFOSS() {
           0.4
         );
       } else {
-        // If already revealed, ensure the underlying items are visible
         gsap.set(".reveal-item", { y: 0, opacity: 1 });
       }
 
-      // 5. Magazine Reveal
-      gsap.from(".mag-reveal", {
-        scrollTrigger: {
-          trigger: magSectionRef.current,
-          start: "top 80%",
-          toggleActions: "play none none reverse"
-        },
-        y: 80,
-        opacity: 0,
-        stagger: 0.2,
-        duration: 1.2,
-        ease: "power4.out"
-      });
+      // 4. Magazine Reveal
+      if (magSectionRef.current) {
+        gsap.from(".mag-reveal", {
+          scrollTrigger: {
+            trigger: magSectionRef.current,
+            start: "top 80%",
+            toggleActions: "play none none reverse"
+          },
+          y: 80,
+          opacity: 0,
+          stagger: 0.2,
+          duration: 1.2,
+          ease: "power4.out"
+        });
+      }
       
-      // 6. Horizontal Sections
+      // 5. Horizontal Sections
       const horizontalSections = gsap.utils.toArray<HTMLElement>('.horizontal-container');
       horizontalSections.forEach((section) => {
         const track = section.querySelector<HTMLElement>('.scroll-track');
@@ -121,20 +131,18 @@ export default function WomenInFOSS() {
           }
         });
       });
-    });
+    }, containerRef); // Scoping to containerRef is best practice for GSAP + React
 
     return () => ctx.revert();
-  }, []);
+  }, [hasRevealed]);
 
   return (
     <main className="bg-[#0f0720] text-white selection:bg-purple-500 font-sans overflow-x-hidden">
       
-      {/* Container height becomes auto if already revealed to prevent dead scroll space */}
       <section 
         ref={containerRef} 
         className={`relative w-full overflow-hidden ${hasRevealed ? 'h-auto py-20' : 'h-screen'}`}
       >
-        {/* DEEP BACKGROUND */}
         <div className={`absolute inset-0 flex items-center justify-center bg-[#0f0720] px-6 ${hasRevealed ? 'relative' : ''}`}>
           <div className="absolute inset-0 flex flex-col justify-around opacity-[0.02] select-none pointer-events-none leading-none">
             {[...Array(6)].map((_, i) => (
@@ -168,7 +176,7 @@ export default function WomenInFOSS() {
                   </p>
                   <div className="h-px w-full bg-gradient-to-r from-purple-500 to-transparent opacity-50" />
                   <p className="text-sm md:text-base text-purple-100/60 leading-relaxed italic font-light">
-                    At SLIIT Women in FOSS, we believe code is just the beginning. We focus on the ecosystem of innovation—mentorship, public speaking, technical leadership, and the collaborative spirit of Open Source. 
+                    At SLIIT Women in FOSS, we believe code is just the beginning. We focus on the ecosystem of innovation and mentorship, public speaking, technical leadership, and the collaborative spirit of Open Source. 
                   </p>
                 </div>
               </div>
@@ -176,7 +184,6 @@ export default function WomenInFOSS() {
           </div>
         </div>
 
-        {/* REVEAL LAYER - Hidden immediately if hasRevealed is true */}
         {!hasRevealed && (
           <header 
             ref={heroRef} 
@@ -214,7 +221,6 @@ export default function WomenInFOSS() {
         )}
       </section>
 
-      {/* IDENTITY SECTION */}
       <section ref={magSectionRef} className="relative bg-[#0f0720] pt-32 pb-48 px-6 -mt-1">
         <div className="absolute top-20 -left-10 text-[25vw] font-black text-white/[0.02] select-none leading-none tracking-tighter pointer-events-none uppercase">Identity</div>
         
@@ -270,7 +276,6 @@ export default function WomenInFOSS() {
         </div>
       </section>
 
-      {/* MASCOT SECTION */}
       <section className="relative py-32 px-6 bg-[#0f0720]">
         <div className="max-w-6xl mx-auto">
           <div className="relative group overflow-hidden bg-gradient-to-br from-purple-900/10 to-transparent border border-white/10 rounded-[2rem] md:rounded-[4rem] p-8 md:p-20">
@@ -299,7 +304,6 @@ export default function WomenInFOSS() {
                   <p>Nifi is thrilled to be a part of women tech enthusiasts as our <span className="text-white font-bold italic">cute, fluffy</span> official mascot.</p>
                 </div>
                <div className="reveal-element flex flex-wrap justify-center lg:justify-start gap-4 pt-4">
-                {/* Wrapped the button in a Link component */}
                 <Link href="/registrations"> 
                   <button 
                     type="button" 
