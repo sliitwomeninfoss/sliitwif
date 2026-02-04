@@ -1,6 +1,6 @@
 # SLIIT WOMEN IN FOSS
 
-<div align="center">
+
 
 **Beyond the Community Is the Code**
 
@@ -130,9 +130,9 @@ NEXT_PUBLIC_MEDIUM_RSS_URL=https://medium.com/feed/sliitwif
 
 ## 🤝 CONTRIBUTING
 ## Contributors 
-<a href="https://github.com/sliitwif/wif-web/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=sliitwif/wif-web" />
-</a>
+We are proud of the community members who have helped build this platform.
+
+ <a href="https://github.com/sliitwomeninfoss/sliitwif/graphs/contributors"> <img src="https://contrib.rocks/image?repo=sliitwomeninfoss/sliitwif" alt="Contributors" /> </a>
 
 We welcome contributions from the community! Here's how you can help:
 
@@ -203,4 +203,3 @@ If you find this project useful, please consider giving it a star!
 
 **Est. 2018** • **Open Source** • **Empowerment**
 
-</div>
