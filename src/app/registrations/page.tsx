@@ -116,7 +116,7 @@ export default function RegistrationsAwaiting() {
               </p>
               {/* Note the use of &apos; to satisfy ESLint react/no-unescaped-entities */}
               <p className="text-purple-100/50 text-base leading-relaxed font-light">
-                Registration protocols are currently restricted. Nifi is monitoring the network&mdash;once the encryption breaks, the gates will open. Stay tuned to our official channels for the decryption key.
+                Registration protocols are currently restricted. Nifi is monitoring the network;once the encryption breaks, the gates will open. Stay tuned to our official channels for the decryption key.
               </p>
             </div>
 
