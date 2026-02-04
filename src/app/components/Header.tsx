@@ -38,6 +38,14 @@ export default function Header() {
     }
   }, [menuOpen]);
 
+  const toggleMenu = useCallback(() => {
+    setMenuOpen((prev) => !prev);
+  }, []);
+
+  const closeMenu = useCallback(() => {
+    setMenuOpen(false);
+  }, []);
+
   const links = [
     { path: "/", label: "Home" },
     { path: "/about-us", label: "About Us" },
@@ -110,7 +118,7 @@ export default function Header() {
             href="/registrations"
             className="relative group inline-block px-8 py-3 bg-white text-black font-black uppercase tracking-widest text-[10px] overflow-hidden transition-all duration-500 rounded-full"
           >
-            <span className="relative z-10">Get Involved</span>
+            <span className="relative z-10 group-hover:text-white transition-colors duration-500">Get Involved</span>
             <div className="absolute inset-0 bg-purple-600 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out" />
           </Link>
         </div>
@@ -118,11 +126,11 @@ export default function Header() {
         {/* MOBILE MENU TOGGLE */}
         <button 
           type="button"
-          aria-label="Toggle Menu"
-          onClick={() => setMenuOpen(!menuOpen)}
+          aria-label={menuOpen ? "Close menu" : "Open menu"}
+          onClick={toggleMenu}
           className="lg:hidden relative z-[110] text-white p-2 transition-transform active:scale-90"
         >
-          {menuOpen ? <X size={32} /> : <Menu size={32} />}
+          {menuOpen ? <X size={28} strokeWidth={2.5} /> : <Menu size={28} strokeWidth={2.5} />}
         </button>
 
         {/* MOBILE FULL-SCREEN MENU */}
@@ -133,15 +141,15 @@ export default function Header() {
               animate={{ opacity: 1, clipPath: "circle(150% at 90% 10%)" }}
               exit={{ opacity: 0, clipPath: "circle(0% at 90% 10%)" }}
               transition={{ duration: 0.7, ease: [0.87, 0, 0.13, 1] }}
-              className="fixed inset-0 bg-[#0a0515] z-[100] flex flex-col justify-center px-8 overflow-hidden"
+              className="fixed inset-0 bg-[#0a0515] z-[100] flex flex-col justify-between px-6 sm:px-8 py-24 overflow-y-auto"
             >
-              {/* Watermark - Smaller for mobile */}
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full text-center opacity-[0.03] pointer-events-none select-none">
-                <span className="text-[25vw] font-black text-white leading-none uppercase italic">WIF</span>
+              {/* Watermark */}
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full text-center opacity-[0.02] pointer-events-none select-none">
+                <span className="text-[30vw] sm:text-[25vw] font-black text-white leading-none uppercase italic">WIF</span>
               </div>
 
-              {/* Spaced out Navigation Links */}
-              <div className="flex flex-col gap-8 md:gap-10 relative z-10 py-12">
+              {/* Navigation Links - Better mobile spacing */}
+              <nav className="flex flex-col gap-5 sm:gap-6 relative z-10 mt-8">
                 {links.map((link, i) => (
                   <motion.div
                     initial={{ opacity: 0, x: -20 }}
@@ -151,31 +159,78 @@ export default function Header() {
                   >
                     <Link
                       href={link.path}
-                      onClick={() => setMenuOpen(false)}
-                      className={`text-4xl md:text-6xl font-black uppercase tracking-tight block transition-all ${
-                        pathname === link.path ? "text-purple-500 italic translate-x-4" : "text-white active:text-purple-400"
+                      onClick={closeMenu}
+                      className={`text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black uppercase tracking-tight block transition-all ${
+                        pathname === link.path 
+                          ? "text-purple-500 italic translate-x-3 sm:translate-x-4" 
+                          : "text-white hover:text-purple-400 hover:translate-x-2 active:text-purple-400"
                       }`}
                     >
                       {link.label}
                     </Link>
                   </motion.div>
                 ))}
-              </div>
+              </nav>
+
+              {/* Mobile CTA Button */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5 }}
+                className="relative z-10 mt-8"
+              >
+                <Link
+                  href="/registrations"
+                  onClick={closeMenu}
+                  className="block w-full text-center px-8 py-4 sm:py-5 bg-purple-600 text-white font-black uppercase tracking-widest text-xs sm:text-sm rounded-full hover:bg-purple-700 transition-all active:scale-95"
+                >
+                  Get Involved
+                </Link>
+              </motion.div>
 
               {/* Mobile Footer */}
-              <div className="absolute bottom-10 left-8 right-8 flex justify-between items-end border-t border-white/5 pt-8">
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.6 }}
+                className="relative z-10 flex flex-col sm:flex-row justify-between items-start sm:items-end gap-6 sm:gap-4 border-t border-white/5 pt-6 mt-8"
+              >
                 <div>
-                  <p className="font-mono text-[9px] text-purple-400 uppercase tracking-widest mb-3">Follow Us</p>
-                  <div className="flex gap-5 text-[10px] font-bold uppercase tracking-widest text-white/40">
-                    <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">IG</a>
-                    <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">LN</a>
-                    <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">GH</a>
+                  <p className="font-mono text-[9px] sm:text-[10px] text-purple-400 uppercase tracking-widest mb-3">Follow Us</p>
+                  <div className="flex gap-4 sm:gap-5 text-[10px] sm:text-xs font-bold uppercase tracking-widest text-white/40">
+                    <a 
+                      href="https://www.instagram.com/sliitwif/" 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      className="hover:text-white transition-colors"
+                      aria-label="Instagram"
+                    >
+                      IG
+                    </a>
+                    <a 
+                      href="https://www.linkedin.com/company/sliit-wif/" 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      className="hover:text-white transition-colors"
+                      aria-label="LinkedIn"
+                    >
+                      LN
+                    </a>
+                    <a 
+                      href="https://github.com/SLIIT-Women-in-FOSS" 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      className="hover:text-white transition-colors"
+                      aria-label="GitHub"
+                    >
+                      GH
+                    </a>
                   </div>
                 </div>
-                <div className="text-right">
-                  <p className="text-[9px] text-white/20 uppercase tracking-[0.2em]">© 2026 SLIIT WIF</p>
+                <div className="text-left sm:text-right">
+                  <p className="text-[9px] sm:text-[10px] text-white/20 uppercase tracking-[0.2em]">© 2026 SLIIT WIF</p>
                 </div>
-              </div>
+              </motion.div>
             </motion.div>
           )}
         </AnimatePresence>

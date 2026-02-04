@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { ArrowUpRight, Calendar, ExternalLink } from "lucide-react";
 import Image from "next/image";
 
@@ -23,7 +23,7 @@ interface BlogState {
 
 const MEDIUM_BLOG_URL = 'https://api.rss2json.com/v1/api.json?rss_url=https://medium.com/feed/sliitwif';
 const PROFILE_URL = 'https://medium.com/sliitwif';
-const GENERIC_BLOG_IMAGE = "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1000&auto=format&fit=crop";
+const FALLBACK_IMAGE = "/assets/logo.png";
 
 export default function Blogs() {
   const [blog, setBlog] = useState<BlogState>({
@@ -33,40 +33,66 @@ export default function Blogs() {
   });
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
-  useEffect(() => {
-    const fetchBlogs = async () => {
-      try {
-        const res = await fetch(MEDIUM_BLOG_URL);
-        if (!res.ok) throw new Error("Failed to fetch journal entries");
-        const data = await res.json();
+  const fetchBlogs = useCallback(async () => {
+    try {
+      const res = await fetch(MEDIUM_BLOG_URL);
+      if (!res.ok) throw new Error("Failed to fetch journal entries");
+      const data = await res.json();
 
-        const posts: MediumPost[] = data.items.map((post: MediumPost) => {
-          let discoveredImg = post.thumbnail;
-          // Medium RSS often puts tracking pixels in thumbnail; we check for valid images
-          if (!discoveredImg || discoveredImg === "" || discoveredImg.includes("stat?event")) {
-            const imgRegExp = /<img[^>]+src="([^">]+)"/;
-            const match = post.description.match(imgRegExp);
-            discoveredImg = match ? match[1] : GENERIC_BLOG_IMAGE;
-          }
-          
-          // Clean up HTML entities in titles (like &amp; or &quot;)
-          const cleanTitle = post.title.replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>');
+      const posts: MediumPost[] = data.items.map((post: MediumPost) => {
+        let discoveredImg = post.thumbnail;
+        
+        // Medium RSS often puts tracking pixels in thumbnail; we check for valid images
+        const invalidImage = 
+          !discoveredImg || 
+          discoveredImg.trim() === "" || 
+          discoveredImg.includes("stat?event") ||
+          discoveredImg.includes("medium.com/_/stat");
 
-          return { ...post, title: cleanTitle, thumbnail: discoveredImg };
-        });
+        if (invalidImage) {
+          const imgRegExp = /<img[^>]+src="([^">]+)"/;
+          const match = post.description?.match(imgRegExp);
+          discoveredImg = match?.[1] || FALLBACK_IMAGE;
+        }
+        
+        // Clean up HTML entities in titles
+        const cleanTitle = post.title
+          .replace(/&amp;/g, '&')
+          .replace(/&lt;/g, '<')
+          .replace(/&gt;/g, '>')
+          .replace(/&quot;/g, '"')
+          .replace(/&#39;/g, "'");
 
-        setBlog({ items: posts, error: null, isLoading: false });
-      } catch (err) {
-        setBlog({ 
-          items: [], 
-          error: err instanceof Error ? err.message : "An error occurred", 
-          isLoading: false 
-        });
-      }
-    };
+        return { 
+          ...post, 
+          title: cleanTitle, 
+          thumbnail: discoveredImg || FALLBACK_IMAGE 
+        };
+      });
 
-    fetchBlogs();
+      setBlog({ items: posts, error: null, isLoading: false });
+    } catch (err) {
+      setBlog({ 
+        items: [], 
+        error: err instanceof Error ? err.message : "An error occurred", 
+        isLoading: false 
+      });
+    }
   }, []);
+
+  useEffect(() => {
+    fetchBlogs();
+  }, [fetchBlogs]);
+
+  const handleImageError = useCallback((e: React.SyntheticEvent<HTMLImageElement>) => {
+    const target = e.currentTarget;
+    target.src = FALLBACK_IMAGE;
+  }, []);
+
+  const handleRetry = useCallback(() => {
+    setBlog({ items: [], error: null, isLoading: true });
+    fetchBlogs();
+  }, [fetchBlogs]);
 
   return (
     <main className="bg-[#0f0720] text-white selection:bg-purple-500 font-sans overflow-x-hidden min-h-screen pt-40 pb-24 relative">
@@ -77,8 +103,8 @@ export default function Blogs() {
           className="absolute top-[-10%] right-[-10%] w-[600px] h-[600px] bg-purple-600/20 blur-[150px] rounded-full transition-all duration-1000"
           style={{ 
             transform: hoveredIndex !== null 
-              ? `scale(1.2) translate(${hoveredIndex * 10}px)` 
-              : 'none' 
+              ? `scale(1.2) translate(${hoveredIndex * 10}px, 0px)` 
+              : 'scale(1) translate(0px, 0px)' 
           }}
         />
       </div>
@@ -99,7 +125,11 @@ export default function Blogs() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {blog.isLoading ? (
             Array.from({ length: 6 }).map((_, i) => (
-              <div key={`skeleton-${i}`} className="bg-white/[0.02] border border-white/10 h-[500px] animate-pulse" />
+              <div 
+                key={`skeleton-${i}`} 
+                className="bg-white/[0.02] border border-white/10 h-[500px] animate-pulse" 
+                aria-label="Loading blog post"
+              />
             ))
           ) : (
             blog.items.map((item, index) => (
@@ -110,20 +140,31 @@ export default function Blogs() {
                 className="group relative bg-white/[0.01] backdrop-blur-sm border border-white/5 overflow-hidden flex flex-col transition-all duration-500 hover:border-purple-500 hover:bg-white/[0.04] hover:-translate-y-2"
               >
                 <div className="relative h-64 overflow-hidden bg-[#1a0b35]">
-                  <Image 
-                    src={item.thumbnail} 
-                    alt={item.title} 
-                    fill
-                    className="object-cover transition-transform duration-1000 group-hover:scale-110"
-                    sizes="(max-width: 768px) 100vw, 33vw"
-                    unoptimized
-                  />
-                  
-                  {/* Branding Overlay if using generic image */}
-                  {item.thumbnail === GENERIC_BLOG_IMAGE && (
-                    <div className="absolute inset-0 bg-purple-900/40 flex items-center justify-center">
-                       <span className="text-5xl font-black opacity-20 italic select-none">WIF</span>
+                  {item.thumbnail === FALLBACK_IMAGE ? (
+                    <div className="relative w-full h-full bg-purple-900/40 flex items-center justify-center">
+                      <Image
+                        src={FALLBACK_IMAGE}
+                        alt="SLIIT Women in FOSS Logo"
+                        fill
+                        className="object-contain p-12 opacity-40"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                        priority={index < 3}
+                      />
+                      <span className="absolute text-5xl font-black opacity-20 italic select-none z-10">
+                        WIF
+                      </span>
                     </div>
+                  ) : (
+                    <Image 
+                      src={item.thumbnail} 
+                      alt={item.title} 
+                      fill
+                      className="object-cover transition-transform duration-1000 group-hover:scale-110"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      unoptimized
+                      priority={index < 3}
+                      onError={handleImageError}
+                    />
                   )}
 
                   <div className="absolute top-4 left-4 z-10">
@@ -136,9 +177,9 @@ export default function Blogs() {
                 <div className="p-8 flex flex-col flex-grow">
                   <div className="flex items-center gap-2 mb-4 text-purple-400/60">
                     <Calendar size={12} />
-                    <span className="text-[10px] font-mono uppercase tracking-widest">
+                    <time className="text-[10px] font-mono uppercase tracking-widest">
                       {item.pubDate.split(" ")[0]}
-                    </span>
+                    </time>
                   </div>
 
                   <h3 className="text-2xl font-black uppercase italic tracking-tighter leading-tight mb-6 group-hover:text-purple-400 transition-colors line-clamp-3">
@@ -158,6 +199,7 @@ export default function Blogs() {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center justify-between w-full p-4 bg-white text-black font-black uppercase tracking-widest text-[10px] transition-all hover:bg-purple-500 hover:text-white"
+                    aria-label={`Read article: ${item.title}`}
                   >
                     Read Article <ArrowUpRight size={14} />
                   </a>
@@ -166,6 +208,27 @@ export default function Blogs() {
             ))
           )}
         </div>
+
+        {/* ERROR STATE */}
+        {blog.error && (
+          <div className="text-center py-20">
+            <p className="text-red-400 font-mono text-sm mb-4">Error: {blog.error}</p>
+            <button 
+              onClick={handleRetry}
+              className="px-6 py-3 bg-purple-600 hover:bg-purple-700 transition-colors font-bold uppercase text-xs tracking-wider"
+              type="button"
+            >
+              Retry
+            </button>
+          </div>
+        )}
+
+        {/* EMPTY STATE */}
+        {!blog.isLoading && !blog.error && blog.items.length === 0 && (
+          <div className="text-center py-20">
+            <p className="text-white/50 font-mono text-sm">No blog posts available at the moment.</p>
+          </div>
+        )}
 
         {/* BOTTOM CTA */}
         <footer className="mt-32 border-t border-white/10 pt-20 text-center">
@@ -180,6 +243,7 @@ export default function Blogs() {
             target="_blank"
             rel="noopener noreferrer"
             className="group relative inline-flex items-center gap-4 px-12 py-6 border-2 border-white hover:border-purple-500 transition-all duration-300"
+            aria-label="Follow SLIIT Women in FOSS on Medium"
           >
             <span className="font-black uppercase tracking-[0.2em] text-sm">Follow on Medium</span>
             <ExternalLink size={20} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
