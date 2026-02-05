@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faFacebook,
   faInstagram,
-  faTwitter,
+  faXTwitter,
   faLinkedin,
   faTiktok,
 } from "@fortawesome/free-brands-svg-icons";
@@ -16,7 +16,7 @@ const SOCIAL_LINKS = [
   { id: "fb", icon: faFacebook, url: "https://facebook.com/sliitwif", label: "Facebook" },
   { id: "ig", icon: faInstagram, url: "https://instagram.com/sliitwif", label: "Instagram" },
   { id: "tk", icon: faTiktok, url: "https://tiktok.com/@sliitwif", label: "TikTok" },
-  { id: "tw", icon: faTwitter, url: "https://twitter.com/sliitwif", label: "Twitter" },
+  { id: "tw", icon: faXTwitter, url: "https://twitter.com/sliitwif", label: "X" },
   { id: "li", icon: faLinkedin, url: "https://linkedin.com/company/sliit-women-in-foss-community/", label: "LinkedIn" },
 ];
 

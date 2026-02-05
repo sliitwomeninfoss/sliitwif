@@ -1,7 +1,34 @@
 "use client";
 
-import React, { useState, useCallback } from "react";
-import { MapPin, Phone, Mail, Send, Zap, CheckCircle2, AlertCircle } from "lucide-react";
+import React, { useState, useCallback, useRef, useEffect } from "react";
+import { 
+  MapPin, 
+  Phone, 
+  Mail, 
+  Send, 
+  Zap, 
+  CheckCircle2, 
+  AlertCircle 
+} from "lucide-react";
+
+// FontAwesome Imports
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faFacebook,
+  faInstagram,
+  faXTwitter,
+  faLinkedin,
+  faTiktok,
+} from "@fortawesome/free-brands-svg-icons";
+import { IconDefinition } from "@fortawesome/fontawesome-svg-core";
+
+interface SocialLink {
+  id: string;
+  icon: IconDefinition;
+  url: string;
+  label: string;
+  hoverClass: string;
+}
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -13,28 +40,33 @@ export default function ContactPage() {
   const [isSuccess, setIsSuccess] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  const nameRef = useRef<HTMLTextAreaElement>(null);
+  const emailRef = useRef<HTMLTextAreaElement>(null);
+
+  const adjustHeight = (el: HTMLTextAreaElement | null) => {
+    if (el) {
+      el.style.height = "auto";
+      el.style.height = `${el.scrollHeight}px`;
+    }
+  };
+
+  useEffect(() => {
+    adjustHeight(nameRef.current);
+    adjustHeight(emailRef.current);
+  }, [formData.name, formData.email]);
+
   const handleChange = useCallback((
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    event: React.ChangeEvent<HTMLTextAreaElement>
   ) => {
     const { name, value } = event.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   }, []);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    
     const accessKey = process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY;
-
     if (!accessKey) {
       setError("Configuration Error: Access Key is missing.");
-      return;
-    }
-
-    if (!formData.name || !formData.email || !formData.message) {
-      setError("Please fill in all required fields.");
       return;
     }
 
@@ -44,21 +76,15 @@ export default function ContactPage() {
     try {
       const response = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify({
           access_key: accessKey,
-          name: formData.name,
-          email: formData.email,
-          message: formData.message,
-          from_name: "Contact Form Website",
+          ...formData,
+          from_name: "SLIIT WIF Contact Form",
         }),
       });
 
       const result = await response.json();
-
       if (result.success) {
         setIsSuccess(true);
         setFormData({ name: "", email: "", message: "" });
@@ -66,23 +92,28 @@ export default function ContactPage() {
       } else {
         setError(result.message || "Transmission failed.");
       }
-    } catch (err) {
-      setError("An unexpected error occurred. Please try again.");
+    } catch {
+      setError("An unexpected error occurred.");
     } finally {
       setIsSubmitting(false);
     }
   };
 
+  const SOCIAL_LINKS: SocialLink[] = [
+    { id: "fb", icon: faFacebook, url: "https://facebook.com/sliitwif", label: "Facebook", hoverClass: "hover:text-[#1877F2]" },
+    { id: "ig", icon: faInstagram, url: "https://instagram.com/sliitwif", label: "Instagram", hoverClass: "hover:text-[#E4405F]" },
+    { id: "tk", icon: faTiktok, url: "https://tiktok.com/@sliitwif", label: "TikTok", hoverClass: "hover:text-[#00f2ea]" },
+    { id: "tw", icon: faXTwitter, url: "https://twitter.com/sliitwif", label: "X", hoverClass: "hover:text-[#1DA1F2]" },
+    { id: "li", icon: faLinkedin, url: "https://linkedin.com/company/sliit-women-in-foss-community/", label: "LinkedIn", hoverClass: "hover:text-[#0A66C2]" },
+  ];
+
   return (
     <main className="bg-[#0b041a] text-white selection:bg-purple-500 font-sans min-h-screen pt-32 pb-24 relative overflow-x-hidden">
-      
-      {/* GLOBAL AMBIENCE */}
       <div className="fixed inset-0 pointer-events-none opacity-20">
         <div className="absolute top-[-5%] right-[-5%] w-[600px] h-[600px] bg-purple-600/30 blur-[150px] rounded-full" />
       </div>
 
       <div className="max-w-[1300px] mx-auto px-8 relative z-10">
-        
         <header className="mb-20">
           <div className="w-16 h-1 bg-purple-500 mb-6" />
           <span className="text-purple-400 font-mono tracking-[0.4em] text-[10px] uppercase block mb-3">
@@ -96,63 +127,74 @@ export default function ContactPage() {
         </header>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
-          
-          {/* INFO CARDS */}
           <div className="lg:col-span-4 space-y-6">
             {[
               { Icon: MapPin, title: "Location", detail: "SLIIT MALABE" },
               { Icon: Phone, title: "Call Us", detail: "+94 76 320 1664" },
               { Icon: Mail, title: "Email Us", detail: "infowifsliit@gmail.com" },
             ].map(({ Icon, title, detail }) => (
-              <div
-                key={title}
-                className="group bg-white/[0.02] border border-white/5 p-8 rounded-2xl transition-all duration-500 hover:border-purple-500/30 hover:bg-white/[0.04]"
-              >
+              <div key={title} className="group bg-white/[0.02] border border-white/5 p-8 rounded-2xl transition-all duration-500 hover:border-purple-500/30 hover:bg-white/[0.04]">
                 <div className="flex items-center gap-4 mb-4">
                   <div className="p-3 bg-purple-500/10 rounded-lg text-purple-500">
                     <Icon size={20} />
                   </div>
-                  <h3 className="text-[10px] font-mono uppercase tracking-[0.2em] text-white/30">
-                    {title}
-                  </h3>
+                  <h3 className="text-[10px] font-mono uppercase tracking-[0.2em] text-white/30">{title}</h3>
                 </div>
                 <p className="text-lg font-black italic uppercase tracking-tight text-white group-hover:text-purple-400 transition-colors">
                   {detail}
                 </p>
               </div>
             ))}
+
+            <div className="bg-white/[0.02] border border-white/5 p-8 rounded-2xl">
+              <h3 className="text-[10px] font-mono uppercase tracking-[0.2em] text-white/30 mb-6">Social Networks</h3>
+              <div className="flex flex-wrap gap-4">
+                {SOCIAL_LINKS.map((link) => (
+                  <a 
+                    key={link.id}
+                    href={link.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`p-4 bg-white/[0.03] border border-white/5 rounded-xl text-white/50 transition-all duration-300 ${link.hoverClass} hover:bg-white/[0.05] hover:border-current`}
+                    aria-label={link.label}
+                  >
+                    <FontAwesomeIcon icon={link.icon} className="text-xl w-5 h-5" />
+                  </a>
+                ))}
+              </div>
+            </div>
           </div>
 
-          {/* FORM */}
           <div className="lg:col-span-8 bg-white/[0.02] border border-white/5 p-10 lg:p-16 rounded-3xl relative">
             <form onSubmit={handleSubmit} className="space-y-12 relative z-10">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-                
                 <div className="space-y-2">
                   <label htmlFor="name" className="text-[9px] font-mono uppercase tracking-[0.3em] text-purple-400 ml-1">Identity</label>
-                  <input
+                  <textarea
+                    ref={nameRef}
                     id="name"
-                    type="text"
                     name="name"
                     required
+                    rows={1}
                     value={formData.name}
                     onChange={handleChange}
                     placeholder="ENTER FULL NAME"
-                    className="w-full px-0 py-4 bg-transparent border-b border-white/10 text-white placeholder-white/5 focus:outline-none focus:border-purple-500 transition-colors font-black uppercase italic text-xl"
+                    className="w-full px-0 py-4 bg-transparent border-b border-white/10 text-white placeholder-white/5 focus:outline-none focus:border-purple-500 transition-colors font-black uppercase italic text-xl resize-none overflow-hidden"
                   />
                 </div>
 
                 <div className="space-y-2">
                   <label htmlFor="email" className="text-[9px] font-mono uppercase tracking-[0.3em] text-purple-400 ml-1">Digital Mail</label>
-                  <input
+                  <textarea
+                    ref={emailRef}
                     id="email"
-                    type="email"
                     name="email"
                     required
+                    rows={1}
                     value={formData.email}
                     onChange={handleChange}
                     placeholder="USER@DOMAIN.COM"
-                    className="w-full px-0 py-4 bg-transparent border-b border-white/10 text-white placeholder-white/5 focus:outline-none focus:border-purple-500 transition-colors font-black uppercase italic text-xl"
+                    className="w-full px-0 py-4 bg-transparent border-b border-white/10 text-white placeholder-white/5 focus:outline-none focus:border-purple-500 transition-colors font-black uppercase italic text-xl resize-none overflow-hidden"
                   />
                 </div>
               </div>
@@ -204,6 +246,9 @@ export default function ContactPage() {
         }
         @media (min-width: 768px) {
           .stroke-text-white { -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.4); }
+        }
+        textarea::placeholder {
+          opacity: 0.2;
         }
       `}</style>
     </main>

@@ -3,7 +3,6 @@
 import React, { useEffect, useRef } from "react";
 import { 
   ShieldCheck, 
-  AlertOctagon, 
   Send,
   Gavel,
   Clock,
@@ -73,26 +72,6 @@ export default function CodeOfConduct() {
         );
       });
 
-      // Unacceptable behavior list items
-      const unacceptableItems = gsap.utils.toArray<HTMLElement>(".unacceptable-item");
-      unacceptableItems.forEach((item, index) => {
-        gsap.fromTo(item,
-          { opacity: 0, x: -30 },
-          {
-            opacity: 1,
-            x: 0,
-            duration: isMobile ? 0.5 : 0.7,
-            ease: "power3.out",
-            scrollTrigger: {
-              trigger: item,
-              start: isMobile ? "top 95%" : "top 88%",
-              toggleActions: "play none none none"
-            },
-            delay: index * 0.1
-          }
-        );
-      });
-
       // Reporting section elements
       const reportingElements = gsap.utils.toArray<HTMLElement>(".reporting-element");
       reportingElements.forEach((el, index) => {
@@ -119,8 +98,8 @@ export default function CodeOfConduct() {
           const startScale = () => gsap.to(card, { scale: 0.98, duration: 0.1 });
           const endScale = () => gsap.to(card, { scale: 1, duration: 0.2, ease: "back.out(2)" });
           
-          card.addEventListener('touchstart', startScale);
-          card.addEventListener('touchend', endScale);
+          card.addEventListener("touchstart", startScale);
+          card.addEventListener("touchend", endScale);
         });
       }
 
@@ -142,7 +121,7 @@ export default function CodeOfConduct() {
         <header className="mb-24 reveal-section">
           <div className="w-24 h-1 bg-purple-500 mb-8" />
           <span className="text-purple-400 font-mono tracking-[0.4em] text-[10px] uppercase block mb-4">
-            {"Safety // Excellence // Respect"}
+            Safety // Excellence // Respect
           </span>
           <h1 className="text-[12vw] lg:text-[10vw] font-[1000] leading-[0.8] tracking-[-0.08em] uppercase italic mb-12">
             CODE OF <br />
@@ -156,7 +135,7 @@ export default function CodeOfConduct() {
             <div className="lg:col-span-3">
                <ShieldCheck className="text-purple-500 mb-6" size={56} />
                <p className="text-[10px] font-mono text-purple-400 uppercase tracking-widest leading-loose">
-                 {"Scope: Forums, Wiki, Repositories, IRC, Private Correspondence, and Public Meetings."}
+                 Scope: Forums, Wiki, Repositories, IRC, Private Correspondence, and Public Meetings.
                </p>
             </div>
             <div className="lg:col-span-9">
@@ -169,8 +148,7 @@ export default function CodeOfConduct() {
                   Diversity is our strength, but it requires ground rules to ensure we remain an excellent space for collaboration.
                 </p>
                 <p className="text-lg md:text-xl italic border-t border-white/10 pt-6">
-                  {/* Fixed: Escaped quotes and apostrophe */}
-                  {"\"Take it in the spirit in which it's intended — a guide to make it easier to be excellent to one another. Follow it in spirit as much as in the letter.\""}
+                  &quot;Take it in the spirit in which it&apos;s intended a guide to make it easier to be excellent to one another. Follow it in spirit as much as in the letter.&quot;
                 </p>
               </div>
             </div>
@@ -195,96 +173,12 @@ export default function CodeOfConduct() {
           </div>
         </section>
 
-        <section className="reveal-section mb-40">
-          <div className="flex items-center gap-4 mb-12">
-            <AlertOctagon size={32} className="text-red-500" />
-            <h2 className="text-4xl font-black uppercase italic tracking-tighter text-red-500">Unacceptable Behavior</h2>
-          </div>
-          <div className="space-y-0 border-t border-white/10">
-            {[
-              "Violent threats directed against another person.",
-              "Discriminatory jokes and harmful language.",
-              "Posting or threatening to post personally identifiable information (Doxing).",
-              "Personal insults and targeted harassment.",
-              "Unwelcome sexual attention in any form."
-            ].map((text, i) => (
-              <div key={i} className="unacceptable-item group border-b border-white/10 py-8 flex items-start md:items-center gap-4 md:gap-8 md:hover:bg-red-500/[0.02] transition-all active:bg-red-500/[0.03]">
-                <span className="text-3xl md:text-4xl font-black text-white/5 md:group-hover:text-red-500/20 transition-colors italic flex-shrink-0">0{i+1}</span>
-                <p className="text-lg md:text-2xl font-light text-purple-100/70 md:group-hover:text-white transition-colors uppercase italic tracking-tight">{text}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        <section className="reveal-section">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-            
-            <div className="reporting-element lg:col-span-8 p-8 md:p-12 border border-purple-500/20 bg-purple-500/[0.02]">
-              <h3 className="text-2xl md:text-3xl font-black uppercase italic tracking-tighter mb-8 flex items-center gap-3">
-                <Search size={24} className="text-purple-500" /> Reporting Guide
-              </h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-                <div className="space-y-4">
-                  <p className="text-[10px] font-mono text-purple-400 uppercase tracking-widest">Mandatory Details:</p>
-                  <ul className="space-y-2 text-purple-100/60 text-sm font-light">
-                    <li>{"• Your contact information"}</li>
-                    <li>{"• Specific time and location of incident"}</li>
-                    <li>{"• Detailed context and ongoing status"}</li>
-                    <li>{"• Any other relevant supporting info"}</li>
-                  </ul>
-                </div>
-                <div className="p-6 bg-white/[0.03] border border-white/5">
-                  <div className="flex items-center gap-2 mb-2">
-                    <Clock size={16} className="text-purple-400" />
-                    <span className="text-[10px] font-mono uppercase">Response Time</span>
-                  </div>
-                  <p className="text-sm font-light text-purple-100/70">
-                    {"You will receive an email immediately. We promise action within "}
-                    <span className="text-white font-bold underline">24 hours</span>.
-                  </p>
-                </div>
-              </div>
-              <div className="flex flex-col md:flex-row gap-8 items-start md:items-center pt-8 border-t border-white/10">
-                <a href="mailto:infowifsliit@gmail.com" className="text-xl md:text-2xl font-bold hover:text-purple-400 transition-colors break-all">infowifsliit@gmail.com</a>
-                <a 
-                  href={"mailto:infowifsliit@gmail.com?subject=Code%20of%20Conduct%20Violation%20Report&body=Please%20provide%20the%20following%20information%3A%0A%0A1.%20Your%20contact%20information%3A%0A%0A2.%20Time%20and%20location%20of%20incident%3A%0A%0A3.%20Detailed%20description%20of%20what%20happened%3A%0A%0A4.%20Any%20additional%20supporting%20information%3A"}
-                  className="flex items-center justify-between gap-8 md:gap-12 p-5 bg-white text-black font-black uppercase tracking-widest text-[10px] group transition-all hover:bg-purple-500 hover:text-white active:scale-95 w-full md:w-auto"
-                >
-                  File Report <Send size={14} className="md:group-hover:translate-x-2 transition-transform" />
-                </a>
-              </div>
-            </div>
-
-            <div className="reporting-element lg:col-span-4 p-8 md:p-12 border border-white/10 bg-white/[0.02]">
-              <h3 className="text-xl md:text-2xl font-black uppercase italic tracking-tighter mb-8 flex items-center gap-3">
-                <Gavel size={24} className="text-purple-500" /> Consequences
-              </h3>
-              <div className="space-y-6">
-                {[
-                  { level: "01", type: "Warning", desc: "Public or private explanation of negative impact." },
-                  { level: "02", type: "Suspension", desc: "Temporary ban from all future community activities." },
-                  { level: "03", type: "Permanent Ban", desc: "Total removal from the SLIIT Women In FOSS community.", final: true },
-                ].map((c, i) => (
-                  <div key={i} className="border-b border-white/5 pb-4">
-                    <div className="flex justify-between items-center mb-1">
-                      <span className="text-[9px] font-mono text-purple-500">LVL {c.level}</span>
-                      <span className={`text-xs font-black uppercase ${c.final ? 'text-red-500' : 'text-white'}`}>{c.type}</span>
-                    </div>
-                    <p className="text-xs text-purple-100/40 font-light">{c.desc}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-          </div>
-        </section>
 
       </div>
 
       <style jsx global>{`
         .reveal-section { will-change: transform, opacity; }
         .behavior-card { will-change: transform, opacity; }
-        .unacceptable-item { will-change: transform, opacity; }
         .reporting-element { will-change: transform, opacity; }
         
         .stroke-text-white {
@@ -296,8 +190,7 @@ export default function CodeOfConduct() {
         }
 
         @media (max-width: 767px) {
-          .behavior-card,
-          .unacceptable-item {
+          .behavior-card {
             -webkit-tap-highlight-color: transparent;
           }
         }
