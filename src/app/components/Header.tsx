@@ -54,6 +54,7 @@ export default function Header() {
     { path: "/blog", label: "Blog" },
     { path: "/code-of-conduct", label: "Conduct" },
     { path: "/contact", label: "Contact" },
+    { path: "/Womens_Day", label: "Women's Day" },
   ];
 
   return (
