@@ -12,7 +12,7 @@ export default function MediumCompetitionPage() {
     "THEME: FOCUS ON WOMEN IN FOSS OR TECH EMPOWERMENT.",
     "PLATFORM: MUST BE PUBLISHED ON MEDIUM.COM.",
     "TAGGING: USE #SLIITWIF AND #WOMENINTECH TAGS.",
-    "TIMELINE: ARTICLES MUST BE PUBLISHED ON OR AFTER 24TH FEBRUARY 2026.",
+    "TIMELINE: ARTICLES MUST BE PUBLISHED ON OR AFTER 01ST MARCH 2026.",
     "DEADLINE: SUBMISSIONS CLOSE ON 15TH MARCH 2026, 11:59 PM.",
   ];
 
@@ -96,10 +96,12 @@ export default function MediumCompetitionPage() {
           <span className="text-purple-400 font-mono tracking-[0.3em] md:tracking-[0.5em] text-[9px] md:text-[10px] uppercase block mb-4 animate-flicker">
             Phase_02 // Content_Manifesto
           </span>
-          <h1 className="text-5xl sm:text-7xl md:text-[9vw] font-[1000] leading-[0.85] tracking-[-0.06em] md:tracking-[-0.08em] uppercase italic text-white">
-            ARCHITECTS <br /> 
-            <span className="outlined-text">OF INFLUENCE</span><span className="text-purple-500 not-italic">.</span>
-          </h1>
+                  {/* Hero Title: Reduced tracking-tighter for that brutalist overlap */}
+            <h1 className="text-6xl sm:text-8xl md:text-[10vw] font-[1000] leading-[0.8] tracking-[-0.07em] md:tracking-[-0.09em] uppercase italic text-white mb-8 md:mb-10">
+              I m p a c t 
+              <span className="outlined-text"> X</span>
+              <span className="text-purple-500 not-italic ml-[-0.05em]">.</span>
+            </h1>
           <p className="mt-6 md:mt-8 max-w-2xl text-lg md:text-xl font-bold uppercase italic text-white/70 leading-snug">
             The industry is quiet; it&apos;s time to create some noise. 
             Document your story and secure your place.
