@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { 
+import {
   ShieldCheck, Sparkles, ChevronRight,
   Fingerprint, AlertTriangle, Activity
 } from "lucide-react";
@@ -18,6 +18,38 @@ export default function MediumCompetitionPage() {
     "DEADLINE: SUBMISSIONS CLOSE ON 20TH MARCH 2026, 11:59 PM.",
   ];
 
+  const TOPIC_CATEGORIES = [
+    {
+      title: "Artificial Intelligence and the Future of Work",
+      description:
+        "How AI tools are transforming industries, jobs, and the way we build software.",
+    },
+    {
+      title:
+        "The Rise of Cloud Computing: Building Scalable Applications in the Modern Era",
+      description:
+        "How cloud platforms enable modern software systems and startups to scale globally.",
+    },
+    {
+      title:
+        "Cybersecurity in the Digital Age: Protecting Systems in an AI-Driven World",
+      description:
+        "Emerging threats, security practices, and the importance of secure development.",
+    },
+    {
+      title: "How Open Source Is Shaping the Future of Technology Innovation",
+      description:
+        "The role of global open-source communities in building modern software.",
+    },
+    {
+      title: "The Next Generation of Technologies: AI, IoT, and Edge Computing",
+      description:
+        "How emerging technologies are transforming industries and digital ecosystems.",
+    },
+  ];
+
+
+
   return (
     <main className="bg-[#0d0b14] text-white selection:bg-purple-500 font-sans min-h-screen pt-20 md:pt-32 pb-12 md:pb-24 relative overflow-x-hidden">
       {/* Dynamic Background Elements */}
@@ -27,16 +59,16 @@ export default function MediumCompetitionPage() {
       </div>
 
       <div className="max-w-[1300px] mx-auto px-6 md:px-8 relative z-10">
-        
+
         {/* --- THE GRAND REVEAL SECTION --- */}
         <section className="mb-16 md:mb-24 relative overflow-hidden">
           <div className="text-center">
             <h3 className="text-purple-500 font-mono text-[9px] md:text-[10px] tracking-[0.4em] md:tracking-[0.6em] uppercase mb-6 flex justify-center items-center gap-2 md:gap-4 animate-flicker">
               <Sparkles size={14} aria-hidden="true" /> Incoming_Transmission <Sparkles size={14} aria-hidden="true" />
             </h3>
-            
+
             <h2 className="text-5xl sm:text-6xl md:text-[7vw] font-[1000] uppercase italic leading-[0.9] tracking-tighter mb-8 md:mb-12">
-              THE FINAL <br /> 
+              THE FINAL <br />
               <span className="text-transparent stroke-text-white animate-glitch-blink">UNVEILING</span>
               <span className="text-purple-500 not-italic">.</span>
             </h2>
@@ -45,8 +77,8 @@ export default function MediumCompetitionPage() {
               <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center text-left">
                 <div className="space-y-4 md:space-y-6">
                   <p className="text-xl md:text-2xl font-black italic uppercase leading-[1.1] tracking-tight">
-                    Winning entries are just the beginning. 
-                    Your words will soon be 
+                    Winning entries are just the beginning.
+                    Your words will soon be
                     <span className="text-purple-500"> Recognized.</span>
                   </p>
                 </div>
@@ -54,13 +86,13 @@ export default function MediumCompetitionPage() {
                 {/* THE BLINKING DATA BOX */}
                 <div className="relative p-6 md:p-8 rounded-xl border border-white/10 bg-white/[0.02] overflow-hidden min-h-[180px] flex flex-col justify-center">
                   <div className="absolute inset-0 z-20 pointer-events-none bg-purple-500/5 animate-glitch-blink border-2 border-purple-500/20" />
-                  
+
                   <div className="relative z-10 space-y-4">
                     <div className="flex justify-between font-mono text-[9px] text-purple-400">
                       <span className="animate-flicker">LOCATION_ID:</span>
                       <span className="bg-purple-500 text-black px-1 animate-pulse">REDACTED</span>
                     </div>
-                    
+
                     <div className="space-y-1">
                       <div className="h-8 w-full bg-white/10 animate-pulse relative overflow-hidden">
                         <div className="absolute inset-0 flex items-center px-4 font-black italic uppercase text-white/20 tracking-widest text-lg md:text-xl">
@@ -91,21 +123,21 @@ export default function MediumCompetitionPage() {
             </div>
           </div>
         </section>
-        
+
         {/* HEADER */}
         <header className="mb-16 md:mb-24 relative">
           <div className="w-16 md:w-24 h-[2px] bg-purple-500 mb-6 md:mb-8" />
           <span className="text-purple-400 font-mono tracking-[0.3em] md:tracking-[0.5em] text-[9px] md:text-[10px] uppercase block mb-4 animate-flicker">
             Phase_02 // Content_Manifesto
           </span>
-                  {/* Hero Title: Reduced tracking-tighter for that brutalist overlap */}
-            <h1 className="text-6xl sm:text-8xl md:text-[10vw] font-[1000] leading-[0.8] tracking-[-0.07em] md:tracking-[-0.09em] uppercase italic text-white mb-8 md:mb-10">
-              I m p a c t 
-              <span className="outlined-text"> X</span>
-              <span className="text-purple-500 not-italic ml-[-0.05em]">.</span>
-            </h1>
+          {/* Hero Title: Reduced tracking-tighter for that brutalist overlap */}
+          <h1 className="text-6xl sm:text-8xl md:text-[10vw] font-[1000] leading-[0.8] tracking-[-0.07em] md:tracking-[-0.09em] uppercase italic text-white mb-8 md:mb-10">
+            I m p a c t
+            <span className="outlined-text"> X</span>
+            <span className="text-purple-500 not-italic ml-[-0.05em]">.</span>
+          </h1>
           <p className="mt-6 md:mt-8 max-w-2xl text-lg md:text-xl font-bold uppercase italic text-white/70 leading-snug">
-            The industry is quiet; it&apos;s time to create some noise. 
+            The industry is quiet; it&apos;s time to create some noise.
             Document your story and secure your place.
           </p>
         </header>
@@ -117,7 +149,7 @@ export default function MediumCompetitionPage() {
               <h2 className="text-[10px] font-mono uppercase tracking-[0.3em] text-purple-400 mb-6 md:mb-8 flex items-center gap-2">
                 <Activity size={14} className="animate-pulse" aria-hidden="true" /> Briefing_Note
               </h2>
-              
+
               <div className="mb-8 md:mb-10 p-4 border-l-2 border-purple-500/30 bg-purple-500/5">
                 <p className="text-xs font-bold text-purple-400 uppercase mb-2">Why Medium?</p>
                 <p className="text-sm text-white/60 leading-relaxed italic">
@@ -158,16 +190,36 @@ export default function MediumCompetitionPage() {
                   </div>
                   <div className="mt-8 md:mt-12">
                     <p className="text-3xl md:text-4xl lg:text-5xl font-black uppercase italic leading-[1.1]">
-                      READY TO UPLINK <br /> 
+                      READY TO UPLINK <br />
                       YOUR <span className="text-purple-500">MANIFESTO?</span>
                     </p>
                   </div>
                 </div>
 
+                <div className="mt-8 md:mt-10 rounded-2xl border border-purple-500/20 bg-white/[0.02] p-5 md:p-6">
+                  <p className="font-mono text-[9px] md:text-[10px] uppercase tracking-[0.35em] text-purple-400 mb-4">
+                    Topic Categories
+                  </p>
+
+                  <ul className="space-y-4">
+                    {TOPIC_CATEGORIES.map((item, idx) => (
+                      <li key={`topic-${idx}`} className="border-l-2 border-purple-500/40 pl-3">
+                        <p className="text-sm md:text-[1rem] font-black italic text-white leading-snug">
+                          {item.title}
+                        </p>
+                        <p className="text-sm md:text-l text-white/65 italic mt-1 leading-relaxed">
+                          {item.description}
+                        </p>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+
                 <div className="mt-12 md:mt-16">
-                  <a 
-                    href="https://forms.gle/QFKJE49p99mVrEnS8" 
-                    target="_blank" 
+                  <a
+                    href="https://forms.gle/QFKJE49p99mVrEnS8"
+                    target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex w-full group/btn relative items-center justify-between bg-white p-6 md:p-8 text-black transition-all hover:bg-purple-600 hover:text-white rounded-xl md:rounded-2xl"
                   >
