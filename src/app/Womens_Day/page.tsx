@@ -1,10 +1,12 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   ShieldCheck, Sparkles, ChevronRight,
   Fingerprint, AlertTriangle, Activity
 } from "lucide-react";
+
+const DEADLINE = new Date("2026-03-20T23:59:00+05:30").getTime();
 
 export default function MediumCompetitionPage() {
   const RULES = [
@@ -47,6 +49,37 @@ export default function MediumCompetitionPage() {
         "How emerging technologies are transforming industries and digital ecosystems.",
     },
   ];
+
+  const [timeLeft, setTimeLeft] = useState({
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0,
+    expired: false,
+  });
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      const now = Date.now();
+      const diff = DEADLINE - now;
+
+      if (diff <= 0) {
+        setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0, expired: true });
+        clearInterval(timer);
+        return;
+      }
+
+      setTimeLeft({
+        days: Math.floor(diff / (1000 * 60 * 60 * 24)),
+        hours: Math.floor((diff / (1000 * 60 * 60)) % 24),
+        minutes: Math.floor((diff / (1000 * 60)) % 60),
+        seconds: Math.floor((diff / 1000) % 60),
+        expired: false,
+      });
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, []);
 
 
 
@@ -215,6 +248,21 @@ export default function MediumCompetitionPage() {
                   </ul>
                 </div>
 
+                <div className="mt-8 md:mt-10 rounded-2xl border border-purple-500/30 bg-white/[0.02] p-5 md:p-6">
+                  <p className="font-mono text-[9px] md:text-[10px] uppercase tracking-[0.35em] text-purple-400 mb-3">
+                    Deadline Countdown
+                  </p>
+
+                  {timeLeft.expired ? (
+                    <p className="text-sm md:text-base font-black italic uppercase text-red-400">
+                      Submission closed
+                    </p>
+                  ) : (
+                    <p className="text-lg md:text-2xl font-black italic uppercase text-white tracking-wide">
+                      {timeLeft.days}d : {timeLeft.hours}h : {timeLeft.minutes}m : {timeLeft.seconds}s
+                    </p>
+                  )}
+                </div>
 
                 <div className="mt-12 md:mt-16">
                   <a
