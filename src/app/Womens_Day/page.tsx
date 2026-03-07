@@ -6,7 +6,7 @@ import {
   Fingerprint, AlertTriangle, Activity
 } from "lucide-react";
 
-const DEADLINE = new Date("2026-03-20T23:59:00+05:30").getTime();
+const DEADLINE = new Date("2026-03-15T23:59:00+05:30").getTime();
 
 export default function MediumCompetitionPage() {
   const RULES = [
@@ -17,7 +17,7 @@ export default function MediumCompetitionPage() {
     "TAGGING: USE #SLIITWIF AND #WOMENINTECH TAGS.",
     "ELIGIBILITY: OPEN TO UNDERGRADUATES OF SLIIT.",
     "TIMELINE: ARTICLES MUST BE PUBLISHED ON OR AFTER 06TH MARCH 2026.",
-    "DEADLINE: SUBMISSIONS CLOSE ON 20TH MARCH 2026, 11:59 PM.",
+    "DEADLINE: SUBMISSIONS CLOSE ON 15TH MARCH 2026, 11:59 PM.",
   ];
 
   const TOPIC_CATEGORIES = [
