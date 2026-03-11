@@ -58,6 +58,32 @@ export default function MediumCompetitionPage() {
     expired: false,
   });
 
+  const SPONSORS = [
+    {
+      name: "Sponsor Name",
+      logo: "/sponsors/sponsor1.png",
+      website: "https://example.com",
+    },
+    {
+      name: "Sponsor Name",
+      logo: "/sponsors/sponsor2.png",
+      website: "https://example.com",
+    },
+  ];
+
+  const SPEAKERS = [
+    {
+      name: "Speaker Name",
+      role: "AI Engineer",
+      image: "/speakers/speaker1.jpg",
+    },
+    {
+      name: "Speaker Name",
+      role: "Cloud Architect",
+      image: "/speakers/speaker2.jpg",
+    },
+  ];
+
   useEffect(() => {
     const timer = setInterval(() => {
       const now = Date.now();
@@ -100,11 +126,91 @@ export default function MediumCompetitionPage() {
               <Sparkles size={14} aria-hidden="true" /> Incoming_Transmission <Sparkles size={14} aria-hidden="true" />
             </h3>
 
-            <h2 className="text-5xl sm:text-6xl md:text-[7vw] font-[1000] uppercase italic leading-[0.9] tracking-tighter mb-8 md:mb-12">
+            {/* <h2 className="text-5xl sm:text-6xl md:text-[7vw] font-[1000] uppercase italic leading-[0.9] tracking-tighter mb-8 md:mb-12">
               THE FINAL <br />
               <span className="text-transparent stroke-text-white animate-glitch-blink">UNVEILING</span>
               <span className="text-purple-500 not-italic">.</span>
-            </h2>
+            </h2> */}
+
+            {/* IMPACT X EVENT DETAILS */}
+            <section className="mb-20">
+              <div className="grid md:grid-cols-2 gap-10 items-center">
+
+                {/* EVENT IMAGE */}
+                <div className="relative rounded-2xl overflow-hidden border border-white/10 group max-w-[520px]">
+                  <img
+                    src="/impactx-event.jpeg"
+                    alt="Impact X Event"
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+
+                  {/* Overlay Animation */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-80"/>
+
+                  {/* Floating label */}
+                  <div className="absolute bottom-4 left-4 text-white">
+                    <p className="font-mono text-[10px] tracking-[0.3em] text-purple-400 animate-flicker">
+                      EVENT_PROTOCOL
+                    </p>
+                    <p className="text-lg font-black italic uppercase">
+                      Impact X
+                    </p>
+                  </div>
+                </div>
+
+                {/* EVENT DESCRIPTION */}
+                <div className="relative bg-white/[0.03] border border-white/10 rounded-2xl p-8 backdrop-blur-md overflow-hidden">
+
+                  {/* animated glow */}
+                  <div className="absolute inset-0 bg-purple-500/5 animate-glitch-blink pointer-events-none"/>
+
+                  <h2 className="text-3xl md:text-4xl font-black italic uppercase mb-6">
+                    Impact X Event
+                  </h2>
+
+                  <p className="text-white/70 leading-relaxed mb-6">
+                    Impact X is a special initiative by SLIIT Women in FOSS that brings
+                    together innovators, developers, and aspiring technologists.
+                    The event highlights the voices of women in open-source,
+                    leadership, and emerging technologies.
+                  </p>
+
+                  {/* Animated info rows */}
+                  <div className="space-y-4">
+
+                    <div className="flex justify-between border-b border-white/10 pb-2">
+                      <span className="font-mono text-[10px] text-purple-400 tracking-widest">
+                        STATUS
+                      </span>
+                      <span className="font-bold text-white animate-pulse">
+                        ACTIVE
+                      </span>
+                    </div>
+
+                    <div className="flex justify-between border-b border-white/10 pb-2">
+                      <span className="font-mono text-[10px] text-purple-400 tracking-widest">
+                        COMMUNITY
+                      </span>
+                      <span className="font-bold text-white">
+                        WOMEN IN FOSS
+                      </span>
+                    </div>
+
+                    <div className="flex justify-between border-b border-white/10 pb-2">
+                      <span className="font-mono text-[10px] text-purple-400 tracking-widest">
+                        EVENT TYPE
+                      </span>
+                      <span className="font-bold text-white">
+                        TECH + OPEN SOURCE
+                      </span>
+                    </div>
+
+                  </div>
+
+                </div>
+
+              </div>
+            </section>
 
             <div className="max-w-4xl mx-auto bg-white/[0.03] border border-white/10 rounded-[1.5rem] md:rounded-[2rem] p-6 md:p-12 backdrop-blur-xl relative overflow-hidden border-t-purple-500/50">
               <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center text-left">
@@ -281,6 +387,89 @@ export default function MediumCompetitionPage() {
             </div>
           </div>
         </div>
+
+        {/* SPONSORS */}
+        <section className="mt-24">
+          <h2 className="text-3xl font-black italic uppercase mb-10">
+            Sponsors
+          </h2>
+
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+
+            {SPONSORS.length === 0
+              ? [...Array(4)].map((_, i) => (
+                  <div
+                    key={i}
+                    className="h-28 rounded-xl border border-dashed border-white/20 flex items-center justify-center text-white/30 text-sm uppercase"
+                  >
+                    Sponsor Soon
+                  </div>
+                ))
+              : SPONSORS.map((sponsor, i) => (
+                  <a
+                    key={i}
+                    href={sponsor.website}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group relative h-28 rounded-xl border border-white/10 bg-white/[0.02] flex items-center justify-center overflow-hidden"
+                  >
+                    <div className="absolute inset-0 bg-purple-500/10 opacity-0 group-hover:opacity-100 transition" />
+
+                    <img
+                      src={sponsor.logo}
+                      alt={sponsor.name}
+                      className="max-h-12 object-contain opacity-80 group-hover:opacity-100 transition"
+                    />
+                  </a>
+                ))}
+          </div>
+        </section>
+
+        {/* SPEAKERS */}
+        <section className="mt-24">
+          <h2 className="text-3xl font-black italic uppercase mb-10">
+            Speakers
+          </h2>
+
+          <div className="grid md:grid-cols-5 gap-6">
+
+            {SPEAKERS.length === 0
+              ? [...Array(5)].map((_, i) => (
+                  <div
+                    key={i}
+                    className="h-64 rounded-xl border border-white/10 bg-white/[0.02] flex items-center justify-center text-white/40 uppercase tracking-widest"
+                  >
+                    Reveal Soon
+                  </div>
+                ))
+              : SPEAKERS.map((speaker, i) => (
+                  <div
+                    key={i}
+                    className="group relative h-64 rounded-xl border border-white/10 overflow-hidden bg-white/[0.02]"
+                  >
+                    <img
+                      src={speaker.image}
+                      alt={speaker.name}
+                      className="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:scale-110 transition duration-700"
+                    />
+
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
+
+                    <div className="absolute bottom-4 left-4">
+                      <p className="text-white font-bold text-lg">
+                        {speaker.name}
+                      </p>
+
+                      <p className="text-purple-400 text-sm">
+                        {speaker.role}
+                      </p>
+                    </div>
+
+                    <div className="absolute inset-0 border-2 border-transparent group-hover:border-purple-500 transition" />
+                  </div>
+                ))}
+          </div>
+        </section>
       </div>
 
       <style jsx>{`
