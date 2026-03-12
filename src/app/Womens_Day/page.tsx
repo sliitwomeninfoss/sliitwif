@@ -82,6 +82,11 @@ export default function MediumCompetitionPage() {
       role: "Cloud Architect",
       image: "/speakers/speaker2.jpg",
     },
+    {
+      name:"Aisha Khan",
+      role:"Cybersecurity Researcher",
+      image:"/speakers/aisha.jpg"
+    },
   ];
 
   useEffect(() => {
@@ -162,6 +167,11 @@ export default function MediumCompetitionPage() {
                 <div className="relative bg-white/[0.03] border border-white/10 rounded-2xl p-8 backdrop-blur-md overflow-hidden">
 
                   {/* animated glow */}
+
+                  <div className="mb-8 md:mb-12 h-1 w-full bg-white/5 relative overflow-hidden">
+                    <div className="absolute inset-0 bg-purple-500 w-1/4 animate-scan" />
+                  </div>
+
                   <div className="absolute inset-0 bg-purple-500/5 animate-glitch-blink pointer-events-none"/>
 
                   <h2 className="text-3xl md:text-4xl font-black italic uppercase mb-6">
@@ -205,6 +215,10 @@ export default function MediumCompetitionPage() {
                       </span>
                     </div>
 
+                  </div>
+
+                  <div className="mt-8 md:mt-12 h-1 w-full bg-white/5 relative overflow-hidden">
+                    <div className="absolute inset-0 bg-purple-500 w-1/4 animate-scan" />
                   </div>
 
                 </div>
@@ -389,39 +403,36 @@ export default function MediumCompetitionPage() {
         </div>
 
         {/* SPONSORS */}
-        <section className="mt-24">
+        <section className="mt-24 overflow-hidden">
           <h2 className="text-3xl font-black italic uppercase mb-10">
             Sponsors
           </h2>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+          <div className="relative w-full overflow-hidden">
 
-            {SPONSORS.length === 0
-              ? [...Array(4)].map((_, i) => (
-                  <div
-                    key={i}
-                    className="h-28 rounded-xl border border-dashed border-white/20 flex items-center justify-center text-white/30 text-sm uppercase"
-                  >
-                    Sponsor Soon
-                  </div>
-                ))
-              : SPONSORS.map((sponsor, i) => (
-                  <a
-                    key={i}
-                    href={sponsor.website}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group relative h-28 rounded-xl border border-white/10 bg-white/[0.02] flex items-center justify-center overflow-hidden"
-                  >
-                    <div className="absolute inset-0 bg-purple-500/10 opacity-0 group-hover:opacity-100 transition" />
+            {/* gradient fade edges */}
+            <div className="absolute left-0 top-0 w-24 h-full bg-gradient-to-r from-[#0d0b14] to-transparent z-10"/>
+            <div className="absolute right-0 top-0 w-24 h-full bg-gradient-to-l from-[#0d0b14] to-transparent z-10"/>
 
-                    <img
-                      src={sponsor.logo}
-                      alt={sponsor.name}
-                      className="max-h-12 object-contain opacity-80 group-hover:opacity-100 transition"
-                    />
-                  </a>
-                ))}
+            <div className="flex w-max animate-marquee hover:[animation-play-state:paused] gap-12">
+
+              {[...SPONSORS, ...SPONSORS].map((sponsor, i) => (
+                <a
+                  key={i}
+                  href={sponsor.website}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group flex items-center justify-center h-24 w-48 border border-white/10 rounded-xl bg-white/[0.02] hover:bg-purple-500/10 transition"
+                >
+                  <img
+                    src={sponsor.logo}
+                    alt={sponsor.name}
+                    className="max-h-10 opacity-70 group-hover:opacity-100 transition"
+                  />
+                </a>
+              ))}
+
+            </div>
           </div>
         </section>
 
@@ -493,6 +504,18 @@ export default function MediumCompetitionPage() {
         @keyframes scan {
           0% { transform: translateX(-100%); }
           100% { transform: translateX(300%); }
+        }
+        @keyframes marquee {
+          0% {
+            transform: translateX(0);
+          }
+          100% {
+            transform: translateX(-50%);
+          }
+        }
+
+        .animate-marquee {
+          animation: marquee 25s linear infinite;
         }
         .animate-flicker { animation: flicker 3s linear infinite; }
         .animate-glitch-blink { animation: glitch-blink 0.8s ease-in-out infinite; }
