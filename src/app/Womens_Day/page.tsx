@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import {
   ShieldCheck, Sparkles, ChevronRight,
-  Fingerprint, AlertTriangle, Activity
+  Fingerprint, AlertTriangle, Activity, Lock
 } from "lucide-react";
 
 const DEADLINE = new Date("2026-03-15T23:59:00+05:30").getTime();
@@ -281,78 +281,110 @@ export default function MediumCompetitionPage() {
         </section>
 
         {/* SPONSORS */}
-        <section className="mt-24 overflow-hidden">
-          <h2 className="text-3xl font-black italic uppercase mb-10">
-            Sponsors
-          </h2>
+        {/* SPONSORS: PREMIUM TECH CAROUSEL */}
+<section className="mt-24 overflow-hidden">
+  <h2 className="text-3xl font-black italic uppercase mb-10 flex items-center gap-4">
+    Partners 
+    <span className="w-full h-[1px] bg-gradient-to-r from-purple-500/50 to-transparent" />
+  </h2>
 
-          <div className="relative w-full overflow-hidden">
+  <div className="relative w-full">
+    {/* Soft fade edges for a premium feel */}
+    <div className="absolute left-0 top-0 w-40 h-full bg-gradient-to-r from-[#0d0b14] to-transparent z-20 pointer-events-none" />
+    <div className="absolute right-0 top-0 w-40 h-full bg-gradient-to-l from-[#0d0b14] to-transparent z-20 pointer-events-none" />
 
-            {/* gradient fade edges */}
-            <div className="absolute left-0 top-0 w-24 h-full bg-gradient-to-r from-[#3a3448] to-transparent z-10"/>
-            <div className="absolute right-0 top-0 w-24 h-full bg-gradient-to-l from-[#3a3448] to-transparent z-10"/>
+    <div className="flex w-max animate-marquee hover:[animation-play-state:paused] gap-10 py-6">
+      {[...SPONSORS, ...SPONSORS].map((sponsor, i) => (
+        <div 
+          key={i} 
+          className="group relative flex items-center justify-center h-28 w-64 border border-white/5 bg-gradient-to-b from-white/[0.03] to-transparent rounded-2xl transition-all duration-500 hover:border-purple-500/50 hover:scale-[1.02]"
+        >
+          {/* INNER GLOW EFFECT */}
+          <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl bg-[radial-gradient(circle_at_center,_var(--tw-gradient-from)_0%,_transparent_70%)] from-purple-500/10" />
 
-            <div className="flex w-max animate-marquee hover:[animation-play-state:paused] gap-12">
+          {/* THE LOGO */}
+          <img
+            src={sponsor.logo}
+            alt={sponsor.name}
+            className="h-12 w-auto object-contain grayscale brightness-200 opacity-40 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500 filter drop-shadow-[0_0_10px_rgba(168,85,247,0)] group-hover:drop-shadow-[0_0_15px_rgba(168,85,247,0.4)]"
+          />
 
-              {[...SPONSORS, ...SPONSORS].map((sponsor, i) => (
-                <div className="group flex items-center justify-center h-24 w-48 border border-white/10 rounded-xl bg-white/[0.02] hover:bg-purple-500/10 transition">
-                  <img
-                    src={sponsor.logo}
-                    alt={sponsor.name}
-                    className="max-h-10 opacity-70 group-hover:opacity-100 transition"
-                  />
-                </div>
-              ))}
+          {/* CORNER ACCENTS: Adds that "gaming store" sophistication */}
+          <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-all">
+            <div className="w-1 h-1 bg-purple-500 rounded-full animate-pulse" />
+          </div>
+          
+          {/* SUBTLE LABEL */}
+          <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 group-hover:-bottom-1 transition-all">
+            <span className="font-mono text-[8px] text-purple-400 uppercase tracking-[0.3em] bg-[#0d0b14] px-2 py-0.5 border border-purple-500/20 rounded-full">
+              Verified_Partner
+            </span>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+        {/* SPEAKERS */}
+    <section className="mt-24 mb-24">
+  {/* TITLE DNA: Kept as requested */}
+  <h2 className="text-3xl font-black italic uppercase mb-10">
+    Speakers
+  </h2>
 
+  <div className="grid grid-cols-2 md:grid-cols-5 gap-6">
+    {[...Array(5)].map((_, i) => (
+      <div
+        key={i}
+        className="group relative h-72 rounded-xl border border-white/10 overflow-hidden bg-white/[0.02] transition-all duration-500 hover:border-purple-500/50 hover:bg-purple-500/[0.03]"
+      >
+        {/* BACKGROUND DNA: Subtle tech-grid */}
+        <div className="absolute inset-0 opacity-10 group-hover:opacity-20 transition-opacity bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:16px_16px]" />
+
+        {/* CENTER CONTENT: The Mystery Identity */}
+        <div className="absolute inset-0 flex flex-col items-center justify-center">
+          <div className="relative">
+            <span className="text-7xl font-[1000] text-white/5 group-hover:text-purple-500/20 transition-colors duration-500 italic">
+              ?
+            </span>
+            {/* Redacted bar effect */}
+            <div className="absolute inset-0 flex items-center justify-center">
+               <div className="w-12 h-1 bg-white/10 group-hover:bg-purple-500/40 transition-all duration-700 group-hover:w-full group-hover:rotate-12" />
             </div>
           </div>
-        </section>
-
-        {/* SPEAKERS */}
-        <section className="mt-24 mb-24 ">
-          <h2 className="text-3xl font-black italic uppercase mb-10">
-            Speakers
-          </h2>
-
-          <div className="grid md:grid-cols-5 gap-6">
-
-            {SPEAKERS.length === 0
-              ? [...Array(5)].map((_, i) => (
-                  <div
-                    key={i}
-                    className="h-64 rounded-xl border border-white/10 bg-white/[0.02] flex items-center justify-center text-white/40 uppercase tracking-widest"
-                  >
-                    Reveal Soon
-                  </div>
-                ))
-              : SPEAKERS.map((speaker, i) => (
-                  <div
-                    key={i}
-                    className="group relative h-64 rounded-xl border border-white/10 overflow-hidden bg-white/[0.02]"
-                  >
-                    <img
-                      src={speaker.image}
-                      alt={speaker.name}
-                      className="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:scale-110 transition duration-700"
-                    />
-
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
-
-                    <div className="absolute bottom-4 left-4">
-                      <p className="text-white font-bold text-lg">
-                        {speaker.name}
-                      </p>
-
-                      <p className="text-purple-400 text-sm">
-                        {speaker.role}
-                      </p>
-                    </div>
-
-                    <div className="absolute inset-0 border-2 border-transparent group-hover:border-purple-500 transition" />
-                  </div>
-                ))}
+          
+          <div className="mt-4 flex flex-col items-center">
+            <Lock size={16} className="text-white/20 group-hover:text-purple-500/50 mb-2" />
+            <span className="font-mono text-[8px] text-white/30 tracking-[0.3em] uppercase">
+              Encrypted
+            </span>
           </div>
-        </section>
+        </div>
+
+        {/* BOTTOM INFO: "Classified" Metadata */}
+        <div className="absolute bottom-0 left-0 right-0 p-5 bg-gradient-to-t from-black via-black/80 to-transparent">
+          <div className="flex flex-col gap-1">
+            <p className="font-mono text-[9px] text-purple-400 tracking-[0.2em] uppercase opacity-60">
+              _0{i + 1}
+            </p>
+            <p className="text-sm font-black italic uppercase text-white/40 tracking-tighter group-hover:text-white/70 transition-colors">
+              Identity_Hidden
+            </p>
+          </div>
+          
+          {/* Animated Progress Bar */}
+          <div className="mt-3 h-[2px] w-full bg-white/5 relative overflow-hidden">
+            <div className="absolute inset-0 bg-purple-600 w-1/3 -translate-x-full group-hover:translate-x-[300%] transition-transform duration-1000" />
+          </div>
+        </div>
+
+
+        {/* SCANNING LINE EFFECT */}
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-purple-500/10 to-transparent h-20 w-full -translate-y-full group-hover:animate-scan pointer-events-none" />
+      </div>
+    ))}
+  </div>
+</section>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-16 items-stretch">
           {/* LEFT COLUMN: INTEL */}
