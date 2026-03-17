@@ -6,7 +6,7 @@ import {
   Fingerprint, Activity, Lock
 } from "lucide-react";
 
-const DEADLINE = new Date("2026-03-15T23:59:00+05:30").getTime();
+const DEADLINE = new Date("2026-03-20T23:59:00+05:30").getTime();
 
 type TimelineItemProps = {
   title: string;
