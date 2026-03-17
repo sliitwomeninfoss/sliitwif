@@ -2,11 +2,33 @@
 
 import React, { useEffect, useState } from "react";
 import {
-  ShieldCheck, Sparkles, ChevronRight,
-  Fingerprint, AlertTriangle, Activity, Lock
+  ShieldCheck, ChevronRight,
+  Fingerprint, Activity, Lock
 } from "lucide-react";
 
 const DEADLINE = new Date("2026-03-15T23:59:00+05:30").getTime();
+
+type TimelineItemProps = {
+  title: string;
+  description: string;
+};
+
+type InfoRowProps = {
+  label: string;
+  value: string;
+  valueClass?: string;
+};
+
+type ImpactPoint = {
+  title: string;
+  description: string;
+};
+
+type Sponsor = {
+  id: string;
+  name: string;
+  logo?: string;
+};
 
 export default function MediumCompetitionPage() {
   const RULES = [
@@ -86,42 +108,65 @@ export default function MediumCompetitionPage() {
     }
   ];
 
-  const SPONSORS = [
+ const SPONSORS: Sponsor[] = [
     {
+      id: "sliit",
       name: "SLIIT",
-      logo: "assets/logo.png",
+      logo: "/assets/logo.png",
     },
     {
+      id: "sp-1",
       name: "Sponsor Name",
-      logo: "/sponsors/sponsor2.png",
     },
     {
-      name: "Sponsor Name",
-      logo: "/sponsors/sponsor2.png",
+      id: "sp-2",
+      name: "Hidden Sponsor",
     },
     {
-      name: "Sponsor Name",
-      logo: "/sponsors/sponsor2.png",
+      id: "sp-3",
+      name: "Hidden Sponsor",
     },
   ];
 
-  const SPEAKERS = [
-    {
-      name: "Speaker Name",
-      role: "AI Engineer",
-      image: "/speakers/speaker1.jpg",
-    },
-    {
-      name: "Speaker Name",
-      role: "Cloud Architect",
-      image: "/speakers/speaker2.jpg",
-    },
-    {
-      name:"Aisha Khan",
-      role:"Cybersecurity Researcher",
-      image:"/speakers/aisha.jpg"
-    },
-  ];
+  // const SPEAKERS = [
+  //   {
+  //     name: "Speaker Name",
+  //     role: "AI Engineer",
+  //     image: "/speakers/speaker1.jpg",
+  //   },
+  //   {
+  //     name: "Speaker Name",
+  //     role: "Cloud Architect",
+  //     image: "/speakers/speaker2.jpg",
+  //   },
+  //   {
+  //     name:"Aisha Khan",
+  //     role:"Cybersecurity Researcher",
+  //     image:"/speakers/aisha.jpg"
+  //   },
+  // ];
+
+  const TimelineItem : React.FC<TimelineItemProps> =  ({ title, description }) => (
+    <div className="group relative">
+      {/* timeline dot */}
+      <div className="absolute -left-[26px] top-2 w-4 h-4 bg-purple-500 rounded-full shadow-lg shadow-purple-500/50 transition group-hover:scale-125" />
+
+      {/* card */}
+      <div className="bg-white/[0.03] border border-white/10 rounded-xl p-6 backdrop-blur-md transition hover:border-purple-500/40 hover:bg-purple-500/5">
+        <h3 className="text-xl font-bold text-white mb-2">{title}</h3>
+        <p className="text-white/70 leading-relaxed">{description}</p>
+      </div>
+    </div>
+  );
+
+  const InfoRow : React.FC<InfoRowProps>  = ({ label, value, valueClass = "text-white" }) => (
+    <div className="flex justify-between border-b border-white/10 pb-2">
+      <span className="font-mono text-[10px] text-purple-400 tracking-widest">
+        {label}
+      </span>
+      <span className={`font-bold ${valueClass}`}>{value}</span>
+    </div>
+  );
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -177,214 +222,209 @@ export default function MediumCompetitionPage() {
         </header>
 
         {/* IMPACT X EVENT DETAILS */}
-        <section className="mb-24">
+        <section className="mb-24 mt-16">
+          {/* TITLE */}
+          <h2 className="text-3xl md:text-4xl font-black italic uppercase mb-16 text-center">
+            What is Impact X
+          </h2>
 
-          {/* WHAT IS IMPACT X */}
-          <section className="mt-20 max-w-4xl mx-auto">
-
-            <h2 className="text-3xl md:text-4xl font-black italic uppercase mb-12 text-center">
-              What is Impact X
-            </h2>
-
+          {/* CONTENT WRAPPER */}
+          <div className="grid md:grid-cols-2 gap-16 items-stretch max-w-6xl mx-auto">
+            
+            {/* LEFT - TIMELINE */}
             <div className="relative border-l border-purple-500/30 pl-10 space-y-6">
-
-              {IMPACT_POINTS.map((point, i) => (
-                <div key={i} className="group relative">
-
-                  {/* timeline dot */}
-                  <div className="absolute -left-[26px] top-2 w-4 h-4 bg-purple-500 rounded-full shadow-lg shadow-purple-500/50 group-hover:scale-125 transition"/>
-
-                  {/* card */}
-                  <div className="bg-white/[0.03] border border-white/10 rounded-xl p-6 backdrop-blur-md transition hover:border-purple-500/40 hover:bg-purple-500/5">
-
-                    <h3 className="text-xl font-bold text-white mb-2">
-                      {point.title}
-                    </h3>
-
-                    <p className="text-white/70 leading-relaxed">
-                      {point.description}
-                    </p>
-
-                  </div>
-
-                </div>
+              {IMPACT_POINTS.map((point) => (
+                <TimelineItem
+                  key={point.title}
+                  title={point.title}
+                  description={point.description}
+                />
               ))}
-
             </div>
 
-          </section>
+            {/* RIGHT - EVENT CARD (FIXED) */}
+            <div className="relative h-full flex flex-col justify-between bg-white/[0.04] border border-white/10 rounded-2xl p-10 backdrop-blur-md overflow-hidden">
+              
+              {/* background effects */}
+              <div className="absolute inset-0 bg-purple-500/5 animate-glitch-blink pointer-events-none" />
 
-
-          {/* EVENT DESCRIPTION */}
-          <section className="mt-24 flex justify-center">
-
-            <div className="relative max-w-2xl w-full bg-white/[0.03] border border-white/10 rounded-2xl p-8 backdrop-blur-md overflow-hidden">
-
-              {/* animated glow */}
+              {/* TOP SCAN BAR */}
               <div className="mb-8 h-1 w-full bg-white/5 relative overflow-hidden">
                 <div className="absolute inset-0 bg-purple-500 w-1/4 animate-scan" />
               </div>
 
-              <div className="absolute inset-0 bg-purple-500/5 animate-glitch-blink pointer-events-none"/>
+              {/* CONTENT */}
+              <div>
+                {/* HEADER */}
+                <h2 className="text-3xl md:text-4xl font-black italic uppercase mb-6 text-center">
+                  Impact X Event
+                </h2>
 
-              <h2 className="text-3xl md:text-4xl font-black italic uppercase mb-6 text-center">
-                Impact X Event
-              </h2>
+                <p className="text-white/70 leading-relaxed mb-8 text-center max-w-md mx-auto">
+                  Impact X is a special initiative by SLIIT Women in FOSS that brings
+                  together innovators, developers, and aspiring technologists.
+                  The event highlights the voices of women in open-source,
+                  leadership, and emerging technologies.
+                </p>
 
-              <p className="text-white/70 leading-relaxed mb-6 text-center">
-                Impact X is a special initiative by SLIIT Women in FOSS that brings
-                together innovators, developers, and aspiring technologists.
-                The event highlights the voices of women in open-source,
-                leadership, and emerging technologies.
-              </p>
-
-              {/* Info rows */}
-              <div className="space-y-4">
-
-                <div className="flex justify-between border-b border-white/10 pb-2">
-                  <span className="font-mono text-[10px] text-purple-400 tracking-widest">
-                    STATUS
-                  </span>
-                  <span className="font-bold text-purple-400 animate-pulse">
-                    ACTIVE
-                  </span>
+                {/* INFO BLOCK */}
+                <div className="space-y-5">
+                  <InfoRow
+                    label="STATUS"
+                    value="ACTIVE"
+                    valueClass="text-purple-400 animate-pulse"
+                  />
+                  <InfoRow label="COMMUNITY" value="WOMEN IN FOSS" />
+                  <InfoRow label="EVENT TYPE" value="TECH + OPEN SOURCE" />
                 </div>
-
-                <div className="flex justify-between border-b border-white/10 pb-2">
-                  <span className="font-mono text-[10px] text-purple-400 tracking-widest">
-                    COMMUNITY
-                  </span>
-                  <span className="font-bold text-white">
-                    WOMEN IN FOSS
-                  </span>
-                </div>
-
-                <div className="flex justify-between border-b border-white/10 pb-2">
-                  <span className="font-mono text-[10px] text-purple-400 tracking-widest">
-                    EVENT TYPE
-                  </span>
-                  <span className="font-bold text-white">
-                    TECH + OPEN SOURCE
-                  </span>
-                </div>
-
               </div>
 
-              <div className="mt-8 h-1 w-full bg-white/5 relative overflow-hidden">
-                <div className="absolute inset-0 bg-purple-500 w-1/4 animate-scan" />
-              </div>
+              {/* BOTTOM SECTION (balances height) */}
+              <div className="mt-10">
+                <div className="text-center text-white/40 text-xs font-mono tracking-widest mb-4">
+                  LIVE EVENT • NETWORK • LEARN • GROW
+                </div>
 
+                <div className="h-1 w-full bg-white/5 relative overflow-hidden">
+                  <div className="absolute inset-0 bg-purple-500 w-1/4 animate-scan" />
+                </div>
+              </div>
             </div>
 
-          </section>
-
+          </div>
         </section>
 
         {/* SPONSORS */}
         {/* SPONSORS: PREMIUM TECH CAROUSEL */}
-<section className="mt-24 overflow-hidden">
-  <h2 className="text-3xl font-black italic uppercase mb-10 flex items-center gap-4">
-    Partners 
-    <span className="w-full h-[1px] bg-gradient-to-r from-purple-500/50 to-transparent" />
-  </h2>
+        <section className="mt-24 overflow-hidden">
+          <h2 className="text-3xl font-black italic uppercase mb-10 flex items-center gap-4">
+            Partners
+            <span className="w-full h-[1px] bg-gradient-to-r from-purple-500/50 to-transparent" />
+          </h2>
 
-  <div className="relative w-full">
-    {/* Soft fade edges for a premium feel */}
-    <div className="absolute left-0 top-0 w-40 h-full bg-gradient-to-r from-[#0d0b14] to-transparent z-20 pointer-events-none" />
-    <div className="absolute right-0 top-0 w-40 h-full bg-gradient-to-l from-[#0d0b14] to-transparent z-20 pointer-events-none" />
+          <div className="relative w-full">
+            {/* Fade edges */}
+            <div className="absolute left-0 top-0 w-40 h-full bg-gradient-to-r from-[#0d0b14] to-transparent z-20 pointer-events-none" />
+            <div className="absolute right-0 top-0 w-40 h-full bg-gradient-to-l from-[#0d0b14] to-transparent z-20 pointer-events-none" />
 
-    <div className="flex w-max animate-marquee hover:[animation-play-state:paused] gap-10 py-6">
-      {[...SPONSORS, ...SPONSORS].map((sponsor, i) => (
-        <div 
-          key={i} 
-          className="group relative flex items-center justify-center h-28 w-64 border border-white/5 bg-gradient-to-b from-white/[0.03] to-transparent rounded-2xl transition-all duration-500 hover:border-purple-500/50 hover:scale-[1.02]"
-        >
-          {/* INNER GLOW EFFECT */}
-          <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl bg-[radial-gradient(circle_at_center,_var(--tw-gradient-from)_0%,_transparent_70%)] from-purple-500/10" />
+            <div className="flex w-max animate-marquee hover:[animation-play-state:paused] gap-10 py-6">
+              {[...SPONSORS, ...SPONSORS].map((sponsor, index) => {
+                const isRevealed = Boolean(sponsor.logo);
 
-          {/* THE LOGO */}
-          <img
-            src={sponsor.logo}
-            alt={sponsor.name}
-            className="h-12 w-auto object-contain grayscale brightness-200 opacity-40 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500 filter drop-shadow-[0_0_10px_rgba(168,85,247,0)] group-hover:drop-shadow-[0_0_15px_rgba(168,85,247,0.4)]"
-          />
+                return (
+                  <div
+                    key={`${sponsor.id}-${index}`}
+                    className="group relative flex items-center justify-center h-28 w-64 border border-white/5 bg-gradient-to-b from-white/[0.03] to-transparent rounded-2xl transition-all duration-500 hover:border-purple-500/50 hover:scale-[1.02]"
+                  >
+                    {/* INNER GLOW */}
+                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl bg-[radial-gradient(circle_at_center,_var(--tw-gradient-from)_0%,_transparent_70%)] from-purple-500/10" />
 
-          {/* CORNER ACCENTS: Adds that "gaming store" sophistication */}
-          <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-all">
-            <div className="w-1 h-1 bg-purple-500 rounded-full animate-pulse" />
-          </div>
-          
-          {/* SUBTLE LABEL */}
-          <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 group-hover:-bottom-1 transition-all">
-            <span className="font-mono text-[8px] text-purple-400 uppercase tracking-[0.3em] bg-[#0d0b14] px-2 py-0.5 border border-purple-500/20 rounded-full">
-              Verified_Partner
-            </span>
-          </div>
-        </div>
-      ))}
-    </div>
-  </div>
-</section>
-        {/* SPEAKERS */}
-    <section className="mt-24 mb-24">
-  {/* TITLE DNA: Kept as requested */}
-  <h2 className="text-3xl font-black italic uppercase mb-10">
-    Speakers
-  </h2>
+                    {/* CONTENT */}
+                    {isRevealed ? (
+                      <img
+                        src={sponsor.logo}
+                        alt={sponsor.name || "Sponsor logo"}
+                        className="h-12 w-auto object-contain grayscale brightness-200 opacity-40 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500 filter drop-shadow-[0_0_10px_rgba(168,85,247,0)] group-hover:drop-shadow-[0_0_15px_rgba(168,85,247,0.4)]"
+                        loading="lazy"
+                      />
+                    ) : (
+                      <div className="flex flex-col items-center justify-center">
+                        {/* QUESTION MARK */}
+                        <div className="relative">
+                          <span className="text-5xl font-[900] text-white/10 group-hover:text-purple-500/20 transition-colors duration-500 italic">
+                            ?
+                          </span>
 
-  <div className="grid grid-cols-2 md:grid-cols-5 gap-6">
-    {[...Array(5)].map((_, i) => (
-      <div
-        key={i}
-        className="group relative h-72 rounded-xl border border-white/10 overflow-hidden bg-white/[0.02] transition-all duration-500 hover:border-purple-500/50 hover:bg-purple-500/[0.03]"
-      >
-        {/* BACKGROUND DNA: Subtle tech-grid */}
-        <div className="absolute inset-0 opacity-10 group-hover:opacity-20 transition-opacity bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:16px_16px]" />
+                          {/* Redacted bar */}
+                          <div className="absolute inset-0 flex items-center justify-center">
+                            <div className="w-10 h-1 bg-white/10 group-hover:bg-purple-500/40 transition-all duration-700 group-hover:w-full group-hover:rotate-12" />
+                          </div>
+                        </div>
 
-        {/* CENTER CONTENT: The Mystery Identity */}
-        <div className="absolute inset-0 flex flex-col items-center justify-center">
-          <div className="relative">
-            <span className="text-7xl font-[1000] text-white/5 group-hover:text-purple-500/20 transition-colors duration-500 italic">
-              ?
-            </span>
-            {/* Redacted bar effect */}
-            <div className="absolute inset-0 flex items-center justify-center">
-               <div className="w-12 h-1 bg-white/10 group-hover:bg-purple-500/40 transition-all duration-700 group-hover:w-full group-hover:rotate-12" />
+                        {/* LABEL */}
+                        <span className="mt-2 font-mono text-[8px] text-white/30 tracking-[0.3em] uppercase">
+                          Hidden
+                        </span>
+                      </div>
+                    )}
+
+                    {/* CORNER DOT */}
+                    <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-all">
+                      <div className="w-1 h-1 bg-purple-500 rounded-full animate-pulse" />
+                    </div>
+
+                    {/* BOTTOM TAG */}
+                    <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 group-hover:-bottom-1 transition-all">
+                      <span className="font-mono text-[8px] text-purple-400 uppercase tracking-[0.3em] bg-[#0d0b14] px-2 py-0.5 border border-purple-500/20 rounded-full">
+                        {isRevealed ? "Verified_Partner" : "Classified"}
+                      </span>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           </div>
-          
-          <div className="mt-4 flex flex-col items-center">
-            <Lock size={16} className="text-white/20 group-hover:text-purple-500/50 mb-2" />
-            <span className="font-mono text-[8px] text-white/30 tracking-[0.3em] uppercase">
-              Encrypted
-            </span>
-          </div>
-        </div>
+        </section>
+        {/* SPEAKERS */}
+        <section className="mt-24 mb-24">
+          {/* TITLE DNA: Kept as requested */}
+          <h2 className="text-3xl font-black italic uppercase mb-10">
+            Speakers
+          </h2>
 
-        {/* BOTTOM INFO: "Classified" Metadata */}
-        <div className="absolute bottom-0 left-0 right-0 p-5 bg-gradient-to-t from-black via-black/80 to-transparent">
-          <div className="flex flex-col gap-1">
-            <p className="font-mono text-[9px] text-purple-400 tracking-[0.2em] uppercase opacity-60">
-              _0{i + 1}
-            </p>
-            <p className="text-sm font-black italic uppercase text-white/40 tracking-tighter group-hover:text-white/70 transition-colors">
-              Identity_Hidden
-            </p>
-          </div>
-          
-          {/* Animated Progress Bar */}
-          <div className="mt-3 h-[2px] w-full bg-white/5 relative overflow-hidden">
-            <div className="absolute inset-0 bg-purple-600 w-1/3 -translate-x-full group-hover:translate-x-[300%] transition-transform duration-1000" />
-          </div>
-        </div>
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-6">
+            {[...Array(5)].map((_, i) => (
+              <div
+                key={i}
+                className="group relative h-72 rounded-xl border border-white/10 overflow-hidden bg-white/[0.02] transition-all duration-500 hover:border-purple-500/50 hover:bg-purple-500/[0.03]"
+              >
+                {/* BACKGROUND DNA: Subtle tech-grid */}
+                <div className="absolute inset-0 opacity-10 group-hover:opacity-20 transition-opacity bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:16px_16px]" />
+
+                {/* CENTER CONTENT: The Mystery Identity */}
+                <div className="absolute inset-0 flex flex-col items-center justify-center">
+                  <div className="relative">
+                    <span className="text-7xl font-[1000] text-white/5 group-hover:text-purple-500/20 transition-colors duration-500 italic">
+                      ?
+                    </span>
+                    {/* Redacted bar effect */}
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="w-12 h-1 bg-white/10 group-hover:bg-purple-500/40 transition-all duration-700 group-hover:w-full group-hover:rotate-12" />
+                    </div>
+                  </div>
+                  
+                  <div className="mt-4 flex flex-col items-center">
+                    <Lock size={16} className="text-white/20 group-hover:text-purple-500/50 mb-2" />
+                    <span className="font-mono text-[8px] text-white/30 tracking-[0.3em] uppercase">
+                      Encrypted
+                    </span>
+                  </div>
+                </div>
+
+                {/* BOTTOM INFO: "Classified" Metadata */}
+                <div className="absolute bottom-0 left-0 right-0 p-5 bg-gradient-to-t from-black via-black/80 to-transparent">
+                  <div className="flex flex-col gap-1">
+                    <p className="font-mono text-[9px] text-purple-400 tracking-[0.2em] uppercase opacity-60">
+                      _0{i + 1}
+                    </p>
+                    <p className="text-sm font-black italic uppercase text-white/40 tracking-tighter group-hover:text-white/70 transition-colors">
+                      Identity_Hidden
+                    </p>
+                  </div>
+                  
+                  {/* Animated Progress Bar */}
+                  <div className="mt-3 h-[2px] w-full bg-white/5 relative overflow-hidden">
+                    <div className="absolute inset-0 bg-purple-600 w-1/3 -translate-x-full group-hover:translate-x-[300%] transition-transform duration-1000" />
+                  </div>
+                </div>
 
 
-        {/* SCANNING LINE EFFECT */}
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-purple-500/10 to-transparent h-20 w-full -translate-y-full group-hover:animate-scan pointer-events-none" />
-      </div>
-    ))}
-  </div>
-</section>
+                {/* SCANNING LINE EFFECT */}
+                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-purple-500/10 to-transparent h-20 w-full -translate-y-full group-hover:animate-scan pointer-events-none" />
+              </div>
+            ))}
+          </div>
+        </section>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-16 items-stretch">
           {/* LEFT COLUMN: INTEL */}
