@@ -6,7 +6,7 @@ import {
   Fingerprint, Activity, Lock
 } from "lucide-react";
 
-const DEADLINE = new Date("2026-03-20T23:59:00+05:30").getTime();
+const DEADLINE = new Date("2026-03-21T23:59:00+05:30").getTime();
 
 type TimelineItemProps = {
   title: string;
@@ -351,13 +351,6 @@ export default function MediumCompetitionPage() {
                     {/* CORNER DOT */}
                     <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-all">
                       <div className="w-1 h-1 bg-purple-500 rounded-full animate-pulse" />
-                    </div>
-
-                    {/* BOTTOM TAG */}
-                    <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 group-hover:-bottom-1 transition-all">
-                      <span className="font-mono text-[8px] text-purple-400 uppercase tracking-[0.3em] bg-[#0d0b14] px-2 py-0.5 border border-purple-500/20 rounded-full">
-                        {isRevealed ? "Verified_Partner" : "Classified"}
-                      </span>
                     </div>
                   </div>
                 );
