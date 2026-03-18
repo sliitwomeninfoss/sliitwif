@@ -2,11 +2,33 @@
 
 import React, { useEffect, useState } from "react";
 import {
-  ShieldCheck, Sparkles, ChevronRight,
-  Fingerprint, AlertTriangle, Activity
+  ShieldCheck, ChevronRight,
+  Fingerprint, Activity, Lock
 } from "lucide-react";
 
-const DEADLINE = new Date("2026-03-15T23:59:00+05:30").getTime();
+const DEADLINE = new Date("2026-03-20T23:59:00+05:30").getTime();
+
+type TimelineItemProps = {
+  title: string;
+  description: string;
+};
+
+type InfoRowProps = {
+  label: string;
+  value: string;
+  valueClass?: string;
+};
+
+type ImpactPoint = {
+  title: string;
+  description: string;
+};
+
+type Sponsor = {
+  id: string;
+  name: string;
+  logo?: string;
+};
 
 export default function MediumCompetitionPage() {
   const RULES = [
@@ -58,6 +80,94 @@ export default function MediumCompetitionPage() {
     expired: false,
   });
 
+  const IMPACT_POINTS = [
+    {
+      title: "Hear from Experienced Women in tech",
+      description:
+        "Listen to inspiring stories and real career journeys shared by successful women in the tech industry."
+    },
+    {
+      title: "Understand Industry Expectations",
+      description:
+        "Learn what companies actually expect from future engineers, developers, and innovators."
+    },
+    {
+      title: "Bring Your Tech Questions",
+      description:
+        "An open environment where you can ask questions about careers, technology, and opportunities."
+    },
+    {
+      title: "Connect with tech Professionals",
+      description:
+        "Build connections with mentors, engineers, and industry leaders in the tech ecosystem."
+    },
+    {
+      title: "Find Your Direction in Tech",
+      description:
+        "Discover the tech paths that match your passion — from AI and cloud to open source and cybersecurity."
+    }
+  ];
+
+ const SPONSORS: Sponsor[] = [
+    {
+      id: "sliit",
+      name: "SLIIT",
+      logo: "/assets/logo.png",
+    },
+    {
+      id: "sp-1",
+      name: "Sponsor Name",
+    },
+    {
+      id: "sp-2",
+      name: "Hidden Sponsor",
+    },
+    {
+      id: "sp-3",
+      name: "Hidden Sponsor",
+    },
+  ];
+
+  // const SPEAKERS = [
+  //   {
+  //     name: "Speaker Name",
+  //     role: "AI Engineer",
+  //     image: "/speakers/speaker1.jpg",
+  //   },
+  //   {
+  //     name: "Speaker Name",
+  //     role: "Cloud Architect",
+  //     image: "/speakers/speaker2.jpg",
+  //   },
+  //   {
+  //     name:"Aisha Khan",
+  //     role:"Cybersecurity Researcher",
+  //     image:"/speakers/aisha.jpg"
+  //   },
+  // ];
+
+  const TimelineItem : React.FC<TimelineItemProps> =  ({ title, description }) => (
+    <div className="group relative">
+      {/* timeline dot */}
+      <div className="absolute -left-[26px] top-2 w-4 h-4 bg-purple-500 rounded-full shadow-lg shadow-purple-500/50 transition group-hover:scale-125" />
+
+      {/* card */}
+      <div className="bg-white/[0.03] border border-white/10 rounded-xl p-6 backdrop-blur-md transition hover:border-purple-500/40 hover:bg-purple-500/5">
+        <h3 className="text-xl font-bold text-white mb-2">{title}</h3>
+        <p className="text-white/70 leading-relaxed">{description}</p>
+      </div>
+    </div>
+  );
+
+  const InfoRow : React.FC<InfoRowProps>  = ({ label, value, valueClass = "text-white" }) => (
+    <div className="flex justify-between border-b border-white/10 pb-2">
+      <span className="font-mono text-[10px] text-purple-400 tracking-widest">
+        {label}
+      </span>
+      <span className={`font-bold ${valueClass}`}>{value}</span>
+    </div>
+  );
+
   useEffect(() => {
     const timer = setInterval(() => {
       const now = Date.now();
@@ -93,72 +203,8 @@ export default function MediumCompetitionPage() {
 
       <div className="max-w-[1300px] mx-auto px-6 md:px-8 relative z-10">
 
-        {/* --- THE GRAND REVEAL SECTION --- */}
-        <section className="mb-16 md:mb-24 relative overflow-hidden">
-          <div className="text-center">
-            <h3 className="text-purple-500 font-mono text-[9px] md:text-[10px] tracking-[0.4em] md:tracking-[0.6em] uppercase mb-6 flex justify-center items-center gap-2 md:gap-4 animate-flicker">
-              <Sparkles size={14} aria-hidden="true" /> Incoming_Transmission <Sparkles size={14} aria-hidden="true" />
-            </h3>
-
-            <h2 className="text-5xl sm:text-6xl md:text-[7vw] font-[1000] uppercase italic leading-[0.9] tracking-tighter mb-8 md:mb-12">
-              THE FINAL <br />
-              <span className="text-transparent stroke-text-white animate-glitch-blink">UNVEILING</span>
-              <span className="text-purple-500 not-italic">.</span>
-            </h2>
-
-            <div className="max-w-4xl mx-auto bg-white/[0.03] border border-white/10 rounded-[1.5rem] md:rounded-[2rem] p-6 md:p-12 backdrop-blur-xl relative overflow-hidden border-t-purple-500/50">
-              <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center text-left">
-                <div className="space-y-4 md:space-y-6">
-                  <p className="text-xl md:text-2xl font-black italic uppercase leading-[1.1] tracking-tight">
-                    Winning entries are just the beginning.
-                    Your words will soon be
-                    <span className="text-purple-500"> Recognized.</span>
-                  </p>
-                </div>
-
-                {/* THE BLINKING DATA BOX */}
-                <div className="relative p-6 md:p-8 rounded-xl border border-white/10 bg-white/[0.02] overflow-hidden min-h-[180px] flex flex-col justify-center">
-                  <div className="absolute inset-0 z-20 pointer-events-none bg-purple-500/5 animate-glitch-blink border-2 border-purple-500/20" />
-
-                  <div className="relative z-10 space-y-4">
-                    <div className="flex justify-between font-mono text-[9px] text-purple-400">
-                      <span className="animate-flicker">LOCATION_ID:</span>
-                      <span className="bg-purple-500 text-black px-1 animate-pulse">REDACTED</span>
-                    </div>
-
-                    <div className="space-y-1">
-                      <div className="h-8 w-full bg-white/10 animate-pulse relative overflow-hidden">
-                        <div className="absolute inset-0 flex items-center px-4 font-black italic uppercase text-white/20 tracking-widest text-lg md:text-xl">
-                          DECRYPTING...
-                        </div>
-                      </div>
-                      <p className="text-[9px] font-mono text-white/30 uppercase tracking-[0.3em] animate-flicker">
-                        Syncing with Women&apos;s Day 2026
-                      </p>
-                    </div>
-
-                    <div className="pt-4 border-t border-white/5">
-                      <div className="flex items-center gap-2 text-purple-500 mb-1">
-                        <AlertTriangle size={12} className="animate-bounce" aria-hidden="true" />
-                        <span className="text-[9px] font-bold uppercase tracking-widest">Protocol Locked</span>
-                      </div>
-                      <p className="text-[10px] font-medium text-white/50 italic uppercase leading-tight">
-                        The physical manifest will be revealed Soon.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="mt-8 md:mt-12 h-1 w-full bg-white/5 relative overflow-hidden">
-                <div className="absolute inset-0 bg-purple-500 w-1/4 animate-scan" />
-              </div>
-            </div>
-          </div>
-        </section>
-
         {/* HEADER */}
-        <header className="mb-16 md:mb-24 relative">
+        <header className="relative">
           <div className="w-16 md:w-24 h-[2px] bg-purple-500 mb-6 md:mb-8" />
           <span className="text-purple-400 font-mono tracking-[0.3em] md:tracking-[0.5em] text-[9px] md:text-[10px] uppercase block mb-4 animate-flicker">
             Phase_02 // Content_Manifesto
@@ -174,6 +220,211 @@ export default function MediumCompetitionPage() {
             Document your story and secure your place.
           </p>
         </header>
+
+        {/* IMPACT X EVENT DETAILS */}
+        <section className="mb-24 mt-16">
+          {/* TITLE */}
+          <h2 className="text-3xl md:text-4xl font-black italic uppercase mb-16 text-center">
+            What is Impact X
+          </h2>
+
+          {/* CONTENT WRAPPER */}
+          <div className="grid md:grid-cols-2 gap-16 items-stretch max-w-6xl mx-auto">
+            
+            {/* LEFT - TIMELINE */}
+            <div className="relative border-l border-purple-500/30 pl-10 space-y-6">
+              {IMPACT_POINTS.map((point) => (
+                <TimelineItem
+                  key={point.title}
+                  title={point.title}
+                  description={point.description}
+                />
+              ))}
+            </div>
+
+            {/* RIGHT - EVENT CARD (FIXED) */}
+            <div className="relative h-full flex flex-col justify-between bg-white/[0.04] border border-white/10 rounded-2xl p-10 backdrop-blur-md overflow-hidden">
+              
+              {/* background effects */}
+              <div className="absolute inset-0 bg-purple-500/5 animate-glitch-blink pointer-events-none" />
+
+              {/* TOP SCAN BAR */}
+              <div className="mb-8 h-1 w-full bg-white/5 relative overflow-hidden">
+                <div className="absolute inset-0 bg-purple-500 w-1/4 animate-scan" />
+              </div>
+
+              {/* CONTENT */}
+              <div>
+                {/* HEADER */}
+                <h2 className="text-3xl md:text-4xl font-black italic uppercase mb-6 text-center">
+                  Impact X Event
+                </h2>
+
+                <p className="text-white/70 leading-relaxed mb-8 text-center max-w-md mx-auto">
+                  Impact X is a special initiative by SLIIT Women in FOSS that brings
+                  together innovators, developers, and aspiring technologists.
+                  The event highlights the voices of women in open-source,
+                  leadership, and emerging technologies.
+                </p>
+
+                {/* INFO BLOCK */}
+                <div className="space-y-5">
+                  <InfoRow
+                    label="STATUS"
+                    value="ACTIVE"
+                    valueClass="text-purple-400 animate-pulse"
+                  />
+                  <InfoRow label="COMMUNITY" value="WOMEN IN FOSS" />
+                  <InfoRow label="EVENT TYPE" value="TECH + OPEN SOURCE" />
+                </div>
+              </div>
+
+              {/* BOTTOM SECTION (balances height) */}
+              <div className="mt-10">
+                <div className="text-center text-white/40 text-xs font-mono tracking-widest mb-4">
+                  LIVE EVENT • NETWORK • LEARN • GROW
+                </div>
+
+                <div className="h-1 w-full bg-white/5 relative overflow-hidden">
+                  <div className="absolute inset-0 bg-purple-500 w-1/4 animate-scan" />
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        {/* SPONSORS */}
+        {/* SPONSORS: PREMIUM TECH CAROUSEL */}
+        <section className="mt-24 overflow-hidden">
+          <h2 className="text-3xl font-black italic uppercase mb-10 flex items-center gap-4">
+            Partners
+            <span className="w-full h-[1px] bg-gradient-to-r from-purple-500/50 to-transparent" />
+          </h2>
+
+          <div className="relative w-full">
+            {/* Fade edges */}
+            <div className="absolute left-0 top-0 w-40 h-full bg-gradient-to-r from-[#0d0b14] to-transparent z-20 pointer-events-none" />
+            <div className="absolute right-0 top-0 w-40 h-full bg-gradient-to-l from-[#0d0b14] to-transparent z-20 pointer-events-none" />
+
+            <div className="flex w-max animate-marquee hover:[animation-play-state:paused] gap-10 py-6">
+              {[...SPONSORS, ...SPONSORS].map((sponsor, index) => {
+                const isRevealed = Boolean(sponsor.logo);
+
+                return (
+                  <div
+                    key={`${sponsor.id}-${index}`}
+                    className="group relative flex items-center justify-center h-28 w-64 border border-white/5 bg-gradient-to-b from-white/[0.03] to-transparent rounded-2xl transition-all duration-500 hover:border-purple-500/50 hover:scale-[1.02]"
+                  >
+                    {/* INNER GLOW */}
+                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl bg-[radial-gradient(circle_at_center,_var(--tw-gradient-from)_0%,_transparent_70%)] from-purple-500/10" />
+
+                    {/* CONTENT */}
+                    {isRevealed ? (
+                      <img
+                        src={sponsor.logo}
+                        alt={sponsor.name || "Sponsor logo"}
+                        className="h-12 w-auto object-contain grayscale brightness-200 opacity-40 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500 filter drop-shadow-[0_0_10px_rgba(168,85,247,0)] group-hover:drop-shadow-[0_0_15px_rgba(168,85,247,0.4)]"
+                        loading="lazy"
+                      />
+                    ) : (
+                      <div className="flex flex-col items-center justify-center">
+                        {/* QUESTION MARK */}
+                        <div className="relative">
+                          <span className="text-5xl font-[900] text-white/10 group-hover:text-purple-500/20 transition-colors duration-500 italic">
+                            ?
+                          </span>
+
+                          {/* Redacted bar */}
+                          <div className="absolute inset-0 flex items-center justify-center">
+                            <div className="w-10 h-1 bg-white/10 group-hover:bg-purple-500/40 transition-all duration-700 group-hover:w-full group-hover:rotate-12" />
+                          </div>
+                        </div>
+
+                        {/* LABEL */}
+                        <span className="mt-2 font-mono text-[8px] text-white/30 tracking-[0.3em] uppercase">
+                          Hidden
+                        </span>
+                      </div>
+                    )}
+
+                    {/* CORNER DOT */}
+                    <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-all">
+                      <div className="w-1 h-1 bg-purple-500 rounded-full animate-pulse" />
+                    </div>
+
+                    {/* BOTTOM TAG */}
+                    <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 group-hover:-bottom-1 transition-all">
+                      <span className="font-mono text-[8px] text-purple-400 uppercase tracking-[0.3em] bg-[#0d0b14] px-2 py-0.5 border border-purple-500/20 rounded-full">
+                        {isRevealed ? "Verified_Partner" : "Classified"}
+                      </span>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+        {/* SPEAKERS */}
+        <section className="mt-24 mb-24">
+          {/* TITLE DNA: Kept as requested */}
+          <h2 className="text-3xl font-black italic uppercase mb-10">
+            Speakers
+          </h2>
+
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-6">
+            {[...Array(5)].map((_, i) => (
+              <div
+                key={i}
+                className="group relative h-72 rounded-xl border border-white/10 overflow-hidden bg-white/[0.02] transition-all duration-500 hover:border-purple-500/50 hover:bg-purple-500/[0.03]"
+              >
+                {/* BACKGROUND DNA: Subtle tech-grid */}
+                <div className="absolute inset-0 opacity-10 group-hover:opacity-20 transition-opacity bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:16px_16px]" />
+
+                {/* CENTER CONTENT: The Mystery Identity */}
+                <div className="absolute inset-0 flex flex-col items-center justify-center">
+                  <div className="relative">
+                    <span className="text-7xl font-[1000] text-white/5 group-hover:text-purple-500/20 transition-colors duration-500 italic">
+                      ?
+                    </span>
+                    {/* Redacted bar effect */}
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="w-12 h-1 bg-white/10 group-hover:bg-purple-500/40 transition-all duration-700 group-hover:w-full group-hover:rotate-12" />
+                    </div>
+                  </div>
+                  
+                  <div className="mt-4 flex flex-col items-center">
+                    <Lock size={16} className="text-white/20 group-hover:text-purple-500/50 mb-2" />
+                    <span className="font-mono text-[8px] text-white/30 tracking-[0.3em] uppercase">
+                      Encrypted
+                    </span>
+                  </div>
+                </div>
+
+                {/* BOTTOM INFO: "Classified" Metadata */}
+                <div className="absolute bottom-0 left-0 right-0 p-5 bg-gradient-to-t from-black via-black/80 to-transparent">
+                  <div className="flex flex-col gap-1">
+                    <p className="font-mono text-[9px] text-purple-400 tracking-[0.2em] uppercase opacity-60">
+                      _0{i + 1}
+                    </p>
+                    <p className="text-sm font-black italic uppercase text-white/40 tracking-tighter group-hover:text-white/70 transition-colors">
+                      Identity_Hidden
+                    </p>
+                  </div>
+                  
+                  {/* Animated Progress Bar */}
+                  <div className="mt-3 h-[2px] w-full bg-white/5 relative overflow-hidden">
+                    <div className="absolute inset-0 bg-purple-600 w-1/3 -translate-x-full group-hover:translate-x-[300%] transition-transform duration-1000" />
+                  </div>
+                </div>
+
+
+                {/* SCANNING LINE EFFECT */}
+                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-purple-500/10 to-transparent h-20 w-full -translate-y-full group-hover:animate-scan pointer-events-none" />
+              </div>
+            ))}
+          </div>
+        </section>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-16 items-stretch">
           {/* LEFT COLUMN: INTEL */}
@@ -281,6 +532,8 @@ export default function MediumCompetitionPage() {
             </div>
           </div>
         </div>
+
+        
       </div>
 
       <style jsx>{`
@@ -304,6 +557,18 @@ export default function MediumCompetitionPage() {
         @keyframes scan {
           0% { transform: translateX(-100%); }
           100% { transform: translateX(300%); }
+        }
+        @keyframes marquee {
+          0% {
+            transform: translateX(0);
+          }
+          100% {
+            transform: translateX(-50%);
+          }
+        }
+
+        .animate-marquee {
+          animation: marquee 25s linear infinite;
         }
         .animate-flicker { animation: flicker 3s linear infinite; }
         .animate-glitch-blink { animation: glitch-blink 0.8s ease-in-out infinite; }
