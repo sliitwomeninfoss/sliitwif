@@ -115,36 +115,76 @@ export default function MediumCompetitionPage() {
       logo: "/assets/logo.png",
     },
     {
-      id: "sp-1",
-      name: "Sponsor Name",
+      id: "sp-1-platinum",
+      name: "Perituza Software Solutions",
+      logo: undefined,
     },
     {
-      id: "sp-2",
-      name: "Hidden Sponsor",
-    },
-    {
-      id: "sp-3",
-      name: "Hidden Sponsor",
+      id: "sp-2-golden",
+      name: "SoftSora(Pvt) Ltd",
+      logo: undefined,
     },
   ];
 
-  // const SPEAKERS = [
-  //   {
-  //     name: "Speaker Name",
-  //     role: "AI Engineer",
-  //     image: "/speakers/speaker1.jpg",
-  //   },
-  //   {
-  //     name: "Speaker Name",
-  //     role: "Cloud Architect",
-  //     image: "/speakers/speaker2.jpg",
-  //   },
-  //   {
-  //     name:"Aisha Khan",
-  //     role:"Cybersecurity Researcher",
-  //     image:"/speakers/aisha.jpg"
-  //   },
-  // ];
+  type Speaker = {
+    id: number;
+    name: string;
+    role: string;
+    image: string;
+    status: "hidden" | "revealed";
+  };
+
+  const speakers: Speaker[] = [
+    {
+      id: 1,
+      name: "Yuka La Tulippe",
+      role: "Co-CEO & General Manager of APAC operations at Perituza Software Solutions",
+      image: "/images/speakers/Yuka.jpeg",
+      status: "revealed",
+    },
+    {
+      id: 2,
+      name: "Dr.Kalpani Manathunga",
+      role: "Head of Department of Software Engineering at SLIIT",
+      image: "/images/speakers/Kalpani.png",
+      status: "revealed",
+    },
+    {
+      id: 3,
+      name: "Thilanka Abeywardena",
+      role: "Asia Cloud & AI integrated Marketing Lead - Migration & Modernization at Microsoft",
+      image: "/images/speakers/Thilanka.jpeg",
+      status: "revealed",
+    },
+    {
+      id: 4,
+      name: "Wyomi Ranasinghe",
+      role: "Head of Research & Innovation at Platned",
+      image: "/images/speakers/Wyomi.png",
+      status: "revealed",
+    },
+    {
+      id: 5,
+      name: "Anjalie Gamage",
+      role: "Senior Lecturer at Faculty of Computing at SLIIT",
+      image: "/images/speakers/Anjalie.png",
+      status: "revealed",
+    },
+    {
+      id: 6,
+      name: "Udara Thewarahannadige",
+      role: "Co-Founder, Cheif Operating Officer at STEM Link",
+      image: "/images/speakers/Udara.png",
+      status: "revealed",
+    },
+    {
+      id: 7,
+      name: "Shyam Prasath Somaskanda Sarma",
+      role: "Supervisor, Application Development at Perituza",
+      image: "/images/speakers/Shyam.png",
+      status: "revealed",
+    },
+  ];
 
   const TimelineItem : React.FC<TimelineItemProps> =  ({ title, description }) => (
     <div className="group relative">
@@ -337,7 +377,7 @@ export default function MediumCompetitionPage() {
 
                           {/* Redacted bar */}
                           <div className="absolute inset-0 flex items-center justify-center">
-                            <div className="w-10 h-1 bg-white/10 group-hover:bg-purple-500/40 transition-all duration-700 group-hover:w-full group-hover:rotate-12" />
+                            <div className="w-10 h-1 bg-white/10 group-hover:bg-purple-500/40 transition-all duration-900 group-hover:w-full group-hover:rotate-12" />
                           </div>
                         </div>
 
@@ -367,60 +407,89 @@ export default function MediumCompetitionPage() {
         </section>
         {/* SPEAKERS */}
         <section className="mt-24 mb-24">
-          {/* TITLE DNA: Kept as requested */}
+          {/* TITLE */}
           <h2 className="text-3xl font-black italic uppercase mb-10">
             Speakers
           </h2>
 
           <div className="grid grid-cols-2 md:grid-cols-5 gap-6">
-            {[...Array(5)].map((_, i) => (
+            {speakers.map((speaker, index) => (
               <div
-                key={i}
+                key={speaker.id}
                 className="group relative h-72 rounded-xl border border-white/10 overflow-hidden bg-white/[0.02] transition-all duration-500 hover:border-purple-500/50 hover:bg-purple-500/[0.03]"
               >
-                {/* BACKGROUND DNA: Subtle tech-grid */}
+                {/* Background Grid */}
                 <div className="absolute inset-0 opacity-10 group-hover:opacity-20 transition-opacity bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:16px_16px]" />
 
-                {/* CENTER CONTENT: The Mystery Identity */}
-                <div className="absolute inset-0 flex flex-col items-center justify-center">
-                  <div className="relative">
-                    <span className="text-7xl font-[1000] text-white/5 group-hover:text-purple-500/20 transition-colors duration-500 italic">
-                      ?
-                    </span>
-                    {/* Redacted bar effect */}
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="w-12 h-1 bg-white/10 group-hover:bg-purple-500/40 transition-all duration-700 group-hover:w-full group-hover:rotate-12" />
-                    </div>
-                  </div>
-                  
-                  <div className="mt-4 flex flex-col items-center">
-                    <Lock size={16} className="text-white/20 group-hover:text-purple-500/50 mb-2" />
-                    <span className="font-mono text-[8px] text-white/30 tracking-[0.3em] uppercase">
-                      Encrypted
-                    </span>
-                  </div>
+                {/* CENTER CONTENT */}
+                <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-3">
+                  {speaker.status === "hidden" ? (
+                    <>
+                      {/* Hidden UI */}
+                      <div className="relative">
+                        <span className="text-7xl font-[1000] text-white/5 group-hover:text-purple-500/20 italic transition-colors duration-500">
+                          ?
+                        </span>
+
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <div className="w-12 h-1 bg-white/10 group-hover:bg-purple-500/40 transition-all duration-700 group-hover:w-full group-hover:rotate-12" />
+                        </div>
+                      </div>
+
+                      <div className="mt-4 flex flex-col items-center">
+                        <Lock
+                          size={16}
+                          className="text-white/20 group-hover:text-purple-500/50 mb-2"
+                        />
+                        <span className="font-mono text-[8px] text-white/30 tracking-[0.3em] uppercase">
+                          Encrypted
+                        </span>
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      {/* Revealed Speaker */}
+                      <img
+                        src={speaker.image}
+                        alt={speaker.name}
+                        className="w-24 h-24 rounded-full object-cover border border-white/10 mb-3"
+                      />
+
+                      {/* <p className="text-sm font-bold text-white">
+                        {speaker.name}
+                      </p> */}
+
+                      <p className="text-xs text-white/50">
+                        {speaker.role}
+                      </p>
+                    </>
+                  )}
                 </div>
 
-                {/* BOTTOM INFO: "Classified" Metadata */}
+                {/* BOTTOM INFO */}
                 <div className="absolute bottom-0 left-0 right-0 p-5 bg-gradient-to-t from-black via-black/80 to-transparent">
                   <div className="flex flex-col gap-1">
                     <p className="font-mono text-[9px] text-purple-400 tracking-[0.2em] uppercase opacity-60">
-                      _0{i + 1}
+                      _0{index + 1}
                     </p>
-                    <p className="text-sm font-black italic uppercase text-white/40 tracking-tighter group-hover:text-white/70 transition-colors">
-                      Identity_Hidden
+
+                    <p className="text-sm font-black italic uppercase tracking-tighter text-white/40 group-hover:text-white/70 transition-colors">
+                      {speaker.status === "hidden"
+                        ? "Identity_Hidden"
+                        : speaker.name}
                     </p>
                   </div>
-                  
-                  {/* Animated Progress Bar */}
+
+                  {/* Progress Bar */}
                   <div className="mt-3 h-[2px] w-full bg-white/5 relative overflow-hidden">
                     <div className="absolute inset-0 bg-purple-600 w-1/3 -translate-x-full group-hover:translate-x-[300%] transition-transform duration-1000" />
                   </div>
                 </div>
 
-
-                {/* SCANNING LINE EFFECT */}
-                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-purple-500/10 to-transparent h-20 w-full -translate-y-full group-hover:animate-scan pointer-events-none" />
+                {/* Scanning Line */}
+                <div className="absolute inset-0 pointer-events-none">
+                  <div className="h-20 w-full bg-gradient-to-b from-transparent via-purple-500/10 to-transparent -translate-y-full group-hover:animate-scan" />
+                </div>
               </div>
             ))}
           </div>
