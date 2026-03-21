@@ -28,6 +28,7 @@ type Sponsor = {
   id: string;
   name: string;
   logo?: string;
+  tier?: "platinum" | "golden" | "default";
 };
 
 export default function MediumCompetitionPage() {
@@ -113,20 +114,29 @@ export default function MediumCompetitionPage() {
       id: "sliit",
       name: "SLIIT",
       logo: "/assets/logo.png",
+      tier: "default",
     },
     {
       id: "sp-1-platinum",
-      name: "Perituza Software Solutions",
-      logo: undefined,
+      name: "Perituza Software Solutions - Platinum Partner",
+      logo: "/images/sponsors/perituza.png",
+      tier: "platinum",
     },
     {
       id: "sp-2-golden",
-      name: "SoftSora(Pvt) Ltd",
-      logo: undefined,
+      name: "SoftSora(Pvt) Ltd - Golden Partner",
+      logo: "/images/sponsors/softsora.png",
+      tier: "golden",
+    },
+    {
+      id: "sp-3",
+      name: "Media Unit-FOC SLIIT",
+      logo: "/images/sponsors/media.png",
+      tier: "default",
     },
   ];
 
-  type Speaker = {
+  type Speaker = { 
     id: number;
     name: string;
     role: string;
@@ -175,13 +185,6 @@ export default function MediumCompetitionPage() {
       name: "Udara Thewarahannadige",
       role: "Co-Founder, Cheif Operating Officer at STEM Link",
       image: "/images/speakers/Udara.png",
-      status: "revealed",
-    },
-    {
-      id: 7,
-      name: "Shyam Prasath Somaskanda Sarma",
-      role: "Supervisor, Application Development at Perituza",
-      image: "/images/speakers/Shyam.png",
       status: "revealed",
     },
   ];
@@ -351,20 +354,38 @@ export default function MediumCompetitionPage() {
               {[...SPONSORS, ...SPONSORS].map((sponsor, index) => {
                 const isRevealed = Boolean(sponsor.logo);
 
+                const glowStyles = {
+                  golden: "from-yellow-400/20",
+                  platinum: "from-gray-300/20",
+                  default: "from-purple-500/10",
+                };
+
+                const borderStyles = {
+                  golden: "hover:border-yellow-400/50",
+                  platinum: "hover:border-gray-300/50",
+                  default: "hover:border-purple-500/50",
+                };
+
+                const shadowStyles = {
+                  golden: "group-hover:drop-shadow-[0_0_15px_rgba(250,204,21,0.6)]",
+                  platinum: "group-hover:drop-shadow-[0_0_15px_rgba(200,200,200,0.6)]",
+                  default: "group-hover:drop-shadow-[0_0_15px_rgba(168,85,247,0.4)]",
+                };
+
                 return (
                   <div
                     key={`${sponsor.id}-${index}`}
-                    className="group relative flex items-center justify-center h-28 w-64 border border-white/5 bg-gradient-to-b from-white/[0.03] to-transparent rounded-2xl transition-all duration-500 hover:border-purple-500/50 hover:scale-[1.02]"
+                    className={`group relative flex items-center justify-center h-28 w-64 border border-white/5 bg-gradient-to-b from-white/[0.03] to-transparent rounded-2xl transition-all duration-500 hover:scale-[1.02] ${borderStyles[sponsor.tier || "default"]}`}
                   >
                     {/* INNER GLOW */}
-                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl bg-[radial-gradient(circle_at_center,_var(--tw-gradient-from)_0%,_transparent_70%)] from-purple-500/10" />
+                    <div className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl bg-[radial-gradient(circle_at_center,_var(--tw-gradient-from)_0%,_transparent_70%)] ${glowStyles[sponsor.tier || "default"]}`} />
 
                     {/* CONTENT */}
                     {isRevealed ? (
                       <img
                         src={sponsor.logo}
                         alt={sponsor.name || "Sponsor logo"}
-                        className="h-12 w-auto object-contain grayscale brightness-200 opacity-40 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500 filter drop-shadow-[0_0_10px_rgba(168,85,247,0)] group-hover:drop-shadow-[0_0_15px_rgba(168,85,247,0.4)]"
+                        className={`h-12 w-auto object-contain grayscale brightness-200 opacity-40 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500 filter drop-shadow-[0_0_10px_rgba(168,85,247,0)] group-hover:drop-shadow-[0_0_15px_rgba(168,85,247,0.4)] ${shadowStyles[sponsor.tier || "default"]}`}
                         loading="lazy"
                       />
                     ) : (
@@ -396,7 +417,13 @@ export default function MediumCompetitionPage() {
                     {/* BOTTOM TAG */}
                     <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 group-hover:-bottom-1 transition-all">
                       <span className="font-mono text-[8px] text-purple-400 uppercase tracking-[0.3em] bg-[#0d0b14] px-2 py-0.5 border border-purple-500/20 rounded-full">
-                        {isRevealed ? "Verified_Partner" : "Classified"}
+                        {isRevealed
+                          ? sponsor.tier === "golden"
+                            ? "Gold_Partner"
+                            : sponsor.tier === "platinum"
+                            ? "Platinum_Partner"
+                            : "Verified_Partner"
+                          : "Classified"}
                       </span>
                     </div>
                   </div>
@@ -405,6 +432,7 @@ export default function MediumCompetitionPage() {
             </div>
           </div>
         </section>
+
         {/* SPEAKERS */}
         <section className="mt-24 mb-24">
           {/* TITLE */}
