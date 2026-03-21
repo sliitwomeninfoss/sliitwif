@@ -2,8 +2,11 @@
 
 import React, { useEffect, useState } from "react";
 import {
-  ShieldCheck, ChevronRight,
-  Fingerprint, Activity, Lock
+  ShieldCheck,
+  ChevronRight,
+  Fingerprint,
+  Activity,
+  Lock,
 } from "lucide-react";
 
 const DEADLINE = new Date("2026-03-21T23:59:00+05:30").getTime();
@@ -28,7 +31,42 @@ type Sponsor = {
   id: string;
   name: string;
   logo?: string;
+  tier?: "platinum" | "golden" | "default";
 };
+
+type Speaker = {
+  id: number;
+  name: string;
+  role: string;
+  image: string;
+  status: "hidden" | "revealed";
+};
+
+const TimelineItem: React.FC<TimelineItemProps> = ({ title, description }) => (
+  <div className="group relative">
+    {/* timeline dot */}
+    <div className="absolute -left-[26px] top-2 w-4 h-4 bg-purple-500 rounded-full shadow-lg shadow-purple-500/50 transition group-hover:scale-125" />
+
+    {/* card */}
+    <div className="bg-white/[0.03] border border-white/10 rounded-xl p-6 backdrop-blur-md transition hover:border-purple-500/40 hover:bg-purple-500/5">
+      <h3 className="text-xl font-bold text-white mb-2">{title}</h3>
+      <p className="text-white/70 leading-relaxed">{description}</p>
+    </div>
+  </div>
+);
+
+const InfoRow: React.FC<InfoRowProps> = ({
+  label,
+  value,
+  valueClass = "text-white",
+}) => (
+  <div className="flex justify-between border-b border-white/10 pb-2">
+    <span className="font-mono text-[10px] text-purple-400 tracking-widest">
+      {label}
+    </span>
+    <span className={`font-bold ${valueClass}`}>{value}</span>
+  </div>
+);
 
 export default function MediumCompetitionPage() {
   const RULES = [
@@ -80,93 +118,105 @@ export default function MediumCompetitionPage() {
     expired: false,
   });
 
-  const IMPACT_POINTS = [
+  const IMPACT_POINTS: ImpactPoint[] = [
     {
       title: "Hear from Experienced Women in tech",
       description:
-        "Listen to inspiring stories and real career journeys shared by successful women in the tech industry."
+        "Listen to inspiring stories and real career journeys shared by successful women in the tech industry.",
     },
     {
       title: "Understand Industry Expectations",
       description:
-        "Learn what companies actually expect from future engineers, developers, and innovators."
+        "Learn what companies actually expect from future engineers, developers, and innovators.",
     },
     {
       title: "Bring Your Tech Questions",
       description:
-        "An open environment where you can ask questions about careers, technology, and opportunities."
+        "An open environment where you can ask questions about careers, technology, and opportunities.",
     },
     {
       title: "Connect with tech Professionals",
       description:
-        "Build connections with mentors, engineers, and industry leaders in the tech ecosystem."
+        "Build connections with mentors, engineers, and industry leaders in the tech ecosystem.",
     },
     {
       title: "Find Your Direction in Tech",
       description:
-        "Discover the tech paths that match your passion — from AI and cloud to open source and cybersecurity."
-    }
+        "Discover the tech paths that match your passion — from AI and cloud to open source and cybersecurity.",
+    },
   ];
 
- const SPONSORS: Sponsor[] = [
+  const SPONSORS: Sponsor[] = [
     {
       id: "sliit",
       name: "SLIIT",
       logo: "/assets/logo.png",
+      tier: "default",
     },
     {
-      id: "sp-1",
-      name: "Sponsor Name",
+      id: "sp-1-platinum",
+      name: "Perituza Software Solutions - Platinum Partner",
+      logo: "/images/sponsors/perituza.png",
+      tier: "platinum",
     },
     {
-      id: "sp-2",
-      name: "Hidden Sponsor",
+      id: "sp-2-golden",
+      name: "SoftSora(Pvt) Ltd - Golden Partner",
+      logo: "/images/sponsors/softsora.png",
+      tier: "golden",
     },
     {
       id: "sp-3",
-      name: "Hidden Sponsor",
+      name: "Media Unit-FOC SLIIT",
+      logo: "/images/sponsors/media.png",
+      tier: "default",
     },
   ];
 
-  // const SPEAKERS = [
-  //   {
-  //     name: "Speaker Name",
-  //     role: "AI Engineer",
-  //     image: "/speakers/speaker1.jpg",
-  //   },
-  //   {
-  //     name: "Speaker Name",
-  //     role: "Cloud Architect",
-  //     image: "/speakers/speaker2.jpg",
-  //   },
-  //   {
-  //     name:"Aisha Khan",
-  //     role:"Cybersecurity Researcher",
-  //     image:"/speakers/aisha.jpg"
-  //   },
-  // ];
-
-  const TimelineItem : React.FC<TimelineItemProps> =  ({ title, description }) => (
-    <div className="group relative">
-      {/* timeline dot */}
-      <div className="absolute -left-[26px] top-2 w-4 h-4 bg-purple-500 rounded-full shadow-lg shadow-purple-500/50 transition group-hover:scale-125" />
-
-      {/* card */}
-      <div className="bg-white/[0.03] border border-white/10 rounded-xl p-6 backdrop-blur-md transition hover:border-purple-500/40 hover:bg-purple-500/5">
-        <h3 className="text-xl font-bold text-white mb-2">{title}</h3>
-        <p className="text-white/70 leading-relaxed">{description}</p>
-      </div>
-    </div>
-  );
-
-  const InfoRow : React.FC<InfoRowProps>  = ({ label, value, valueClass = "text-white" }) => (
-    <div className="flex justify-between border-b border-white/10 pb-2">
-      <span className="font-mono text-[10px] text-purple-400 tracking-widest">
-        {label}
-      </span>
-      <span className={`font-bold ${valueClass}`}>{value}</span>
-    </div>
-  );
+  const speakers: Speaker[] = [
+    {
+      id: 1,
+      name: "Yuka La Tulippe",
+      role: "Co-CEO & General Manager of APAC operations at Perituza Software Solutions",
+      image: "/images/speakers/Yuka.jpeg",
+      status: "revealed",
+    },
+    {
+      id: 2,
+      name: "Dr.Kalpani Manathunga",
+      role: "Head of Department of Software Engineering at SLIIT",
+      image: "/images/speakers/Kalpani.png",
+      status: "revealed",
+    },
+    {
+      id: 3,
+      name: "Thilanka Abeywardena",
+      role: "Asia Cloud & AI integrated Marketing Lead - Migration & Modernization at Microsoft",
+      image: "/images/speakers/Thilanka.jpeg",
+      status: "revealed",
+    },
+    {
+      id: 4,
+      name: "Wyomi Ranasinghe",
+      role: "Head of Research & Innovation at Platned",
+      image: "/images/speakers/Wyomi.png",
+      status: "revealed",
+    },
+    {
+      id: 5,
+      name: "Anjalie Gamage",
+      role: "Senior Lecturer at Faculty of Computing at SLIIT",
+      image: "/images/speakers/Anjalie.png",
+      status: "revealed",
+    },
+    {
+      id: 6,
+      name: "Udara Thewarahannadige",
+      role: "Co-Founder, Cheif Operating Officer at STEM Link",
+      image: "/images/speakers/Udara.png",
+      status: "revealed",
+    },
+  ];
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -174,7 +224,13 @@ export default function MediumCompetitionPage() {
       const diff = DEADLINE - now;
 
       if (diff <= 0) {
-        setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0, expired: true });
+        setTimeLeft({
+          days: 0,
+          hours: 0,
+          minutes: 0,
+          seconds: 0,
+          expired: true,
+        });
         clearInterval(timer);
         return;
       }
@@ -191,8 +247,6 @@ export default function MediumCompetitionPage() {
     return () => clearInterval(timer);
   }, []);
 
-
-
   return (
     <main className="bg-[#0d0b14] text-white selection:bg-purple-500 font-sans min-h-screen pt-20 md:pt-32 pb-12 md:pb-24 relative overflow-x-hidden">
       {/* Dynamic Background Elements */}
@@ -202,35 +256,30 @@ export default function MediumCompetitionPage() {
       </div>
 
       <div className="max-w-[1300px] mx-auto px-6 md:px-8 relative z-10">
-
         {/* HEADER */}
         <header className="relative">
           <div className="w-16 md:w-24 h-[2px] bg-purple-500 mb-6 md:mb-8" />
           <span className="text-purple-400 font-mono tracking-[0.3em] md:tracking-[0.5em] text-[9px] md:text-[10px] uppercase block mb-4 animate-flicker">
             Phase_02 // Content_Manifesto
           </span>
-          {/* Hero Title: Reduced tracking-tighter for that brutalist overlap */}
           <h1 className="text-6xl sm:text-8xl md:text-[10vw] font-[1000] leading-[0.8] tracking-[-0.07em] md:tracking-[-0.09em] uppercase italic text-white mb-8 md:mb-10">
             I m p a c t
             <span className="outlined-text"> X</span>
             <span className="text-purple-500 not-italic ml-[-0.05em]">.</span>
           </h1>
           <p className="mt-6 md:mt-8 max-w-2xl text-lg md:text-xl font-bold uppercase italic text-white/70 leading-snug">
-            The industry is quiet; it&apos;s time to create some noise.
-            Document your story and secure your place.
+            The industry is quiet; it&apos;s time to create some noise. Document
+            your story and secure your place.
           </p>
         </header>
 
         {/* IMPACT X EVENT DETAILS */}
         <section className="mb-24 mt-16">
-          {/* TITLE */}
           <h2 className="text-3xl md:text-4xl font-black italic uppercase mb-16 text-center">
             What is Impact X
           </h2>
 
-          {/* CONTENT WRAPPER */}
           <div className="grid md:grid-cols-2 gap-16 items-stretch max-w-6xl mx-auto">
-            
             {/* LEFT - TIMELINE */}
             <div className="relative border-l border-purple-500/30 pl-10 space-y-6">
               {IMPACT_POINTS.map((point) => (
@@ -242,32 +291,26 @@ export default function MediumCompetitionPage() {
               ))}
             </div>
 
-            {/* RIGHT - EVENT CARD (FIXED) */}
+            {/* RIGHT - EVENT CARD */}
             <div className="relative h-full flex flex-col justify-between bg-white/[0.04] border border-white/10 rounded-2xl p-10 backdrop-blur-md overflow-hidden">
-              
-              {/* background effects */}
               <div className="absolute inset-0 bg-purple-500/5 animate-glitch-blink pointer-events-none" />
 
-              {/* TOP SCAN BAR */}
               <div className="mb-8 h-1 w-full bg-white/5 relative overflow-hidden">
                 <div className="absolute inset-0 bg-purple-500 w-1/4 animate-scan" />
               </div>
 
-              {/* CONTENT */}
               <div>
-                {/* HEADER */}
                 <h2 className="text-3xl md:text-4xl font-black italic uppercase mb-6 text-center">
                   Impact X Event
                 </h2>
 
                 <p className="text-white/70 leading-relaxed mb-8 text-center max-w-md mx-auto">
-                  Impact X is a special initiative by SLIIT Women in FOSS that brings
-                  together innovators, developers, and aspiring technologists.
-                  The event highlights the voices of women in open-source,
-                  leadership, and emerging technologies.
+                  Impact X is a special initiative by SLIIT Women in FOSS that
+                  brings together innovators, developers, and aspiring
+                  technologists. The event highlights the voices of women in
+                  open-source, leadership, and emerging technologies.
                 </p>
 
-                {/* INFO BLOCK */}
                 <div className="space-y-5">
                   <InfoRow
                     label="STATUS"
@@ -279,7 +322,6 @@ export default function MediumCompetitionPage() {
                 </div>
               </div>
 
-              {/* BOTTOM SECTION (balances height) */}
               <div className="mt-10">
                 <div className="text-center text-white/40 text-xs font-mono tracking-widest mb-4">
                   LIVE EVENT • NETWORK • LEARN • GROW
@@ -290,12 +332,10 @@ export default function MediumCompetitionPage() {
                 </div>
               </div>
             </div>
-
           </div>
         </section>
 
         {/* SPONSORS */}
-        {/* SPONSORS: PREMIUM TECH CAROUSEL */}
         <section className="mt-24 overflow-hidden">
           <h2 className="text-3xl font-black italic uppercase mb-10 flex items-center gap-4">
             Partners
@@ -303,7 +343,6 @@ export default function MediumCompetitionPage() {
           </h2>
 
           <div className="relative w-full">
-            {/* Fade edges */}
             <div className="absolute left-0 top-0 w-40 h-full bg-gradient-to-r from-[#0d0b14] to-transparent z-20 pointer-events-none" />
             <div className="absolute right-0 top-0 w-40 h-full bg-gradient-to-l from-[#0d0b14] to-transparent z-20 pointer-events-none" />
 
@@ -311,44 +350,61 @@ export default function MediumCompetitionPage() {
               {[...SPONSORS, ...SPONSORS].map((sponsor, index) => {
                 const isRevealed = Boolean(sponsor.logo);
 
+                const glowStyles: Record<string, string> = {
+                  golden: "from-yellow-400/20",
+                  platinum: "from-gray-300/20",
+                  default: "from-purple-500/10",
+                };
+
+                const borderStyles: Record<string, string> = {
+                  golden: "hover:border-yellow-400/50",
+                  platinum: "hover:border-gray-300/50",
+                  default: "hover:border-purple-500/50",
+                };
+
+                const shadowStyles: Record<string, string> = {
+                  golden:
+                    "group-hover:drop-shadow-[0_0_15px_rgba(250,204,21,0.6)]",
+                  platinum:
+                    "group-hover:drop-shadow-[0_0_15px_rgba(200,200,200,0.6)]",
+                  default:
+                    "group-hover:drop-shadow-[0_0_15px_rgba(168,85,247,0.4)]",
+                };
+
+                const tier = sponsor.tier ?? "default";
+
                 return (
                   <div
                     key={`${sponsor.id}-${index}`}
-                    className="group relative flex items-center justify-center h-28 w-64 border border-white/5 bg-gradient-to-b from-white/[0.03] to-transparent rounded-2xl transition-all duration-500 hover:border-purple-500/50 hover:scale-[1.02]"
+                    className={`group relative flex items-center justify-center h-28 w-64 border border-white/5 bg-gradient-to-b from-white/[0.03] to-transparent rounded-2xl transition-all duration-500 hover:scale-[1.02] ${borderStyles[tier]}`}
                   >
-                    {/* INNER GLOW */}
-                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl bg-[radial-gradient(circle_at_center,_var(--tw-gradient-from)_0%,_transparent_70%)] from-purple-500/10" />
+                    <div
+                      className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl bg-[radial-gradient(circle_at_center,_var(--tw-gradient-from)_0%,_transparent_70%)] ${glowStyles[tier]}`}
+                    />
 
-                    {/* CONTENT */}
                     {isRevealed ? (
                       <img
                         src={sponsor.logo}
-                        alt={sponsor.name || "Sponsor logo"}
-                        className="h-12 w-auto object-contain grayscale brightness-200 opacity-40 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500 filter drop-shadow-[0_0_10px_rgba(168,85,247,0)] group-hover:drop-shadow-[0_0_15px_rgba(168,85,247,0.4)]"
+                        alt={sponsor.name ?? "Sponsor logo"}
+                        className={`h-12 w-auto object-contain grayscale brightness-200 opacity-40 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500 filter drop-shadow-[0_0_10px_rgba(168,85,247,0)] ${shadowStyles[tier]}`}
                         loading="lazy"
                       />
                     ) : (
                       <div className="flex flex-col items-center justify-center">
-                        {/* QUESTION MARK */}
                         <div className="relative">
                           <span className="text-5xl font-[900] text-white/10 group-hover:text-purple-500/20 transition-colors duration-500 italic">
                             ?
                           </span>
-
-                          {/* Redacted bar */}
                           <div className="absolute inset-0 flex items-center justify-center">
-                            <div className="w-10 h-1 bg-white/10 group-hover:bg-purple-500/40 transition-all duration-700 group-hover:w-full group-hover:rotate-12" />
+                            <div className="w-10 h-1 bg-white/10 group-hover:bg-purple-500/40 transition-all duration-900 group-hover:w-full group-hover:rotate-12" />
                           </div>
                         </div>
-
-                        {/* LABEL */}
                         <span className="mt-2 font-mono text-[8px] text-white/30 tracking-[0.3em] uppercase">
                           Hidden
                         </span>
                       </div>
                     )}
 
-                    {/* CORNER DOT */}
                     <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-all">
                       <div className="w-1 h-1 bg-purple-500 rounded-full animate-pulse" />
                     </div>
@@ -358,62 +414,78 @@ export default function MediumCompetitionPage() {
             </div>
           </div>
         </section>
+
         {/* SPEAKERS */}
         <section className="mt-24 mb-24">
-          {/* TITLE DNA: Kept as requested */}
           <h2 className="text-3xl font-black italic uppercase mb-10">
             Speakers
           </h2>
 
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-6">
-            {[...Array(5)].map((_, i) => (
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+            {speakers.map((speaker, index) => (
               <div
-                key={i}
+                key={speaker.id}
                 className="group relative h-72 rounded-xl border border-white/10 overflow-hidden bg-white/[0.02] transition-all duration-500 hover:border-purple-500/50 hover:bg-purple-500/[0.03]"
               >
-                {/* BACKGROUND DNA: Subtle tech-grid */}
                 <div className="absolute inset-0 opacity-10 group-hover:opacity-20 transition-opacity bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:16px_16px]" />
 
-                {/* CENTER CONTENT: The Mystery Identity */}
-                <div className="absolute inset-0 flex flex-col items-center justify-center">
-                  <div className="relative">
-                    <span className="text-7xl font-[1000] text-white/5 group-hover:text-purple-500/20 transition-colors duration-500 italic">
-                      ?
-                    </span>
-                    {/* Redacted bar effect */}
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="w-12 h-1 bg-white/10 group-hover:bg-purple-500/40 transition-all duration-700 group-hover:w-full group-hover:rotate-12" />
-                    </div>
-                  </div>
-                  
-                  <div className="mt-4 flex flex-col items-center">
-                    <Lock size={16} className="text-white/20 group-hover:text-purple-500/50 mb-2" />
-                    <span className="font-mono text-[8px] text-white/30 tracking-[0.3em] uppercase">
-                      Encrypted
-                    </span>
-                  </div>
+                <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-3">
+                  {speaker.status === "hidden" ? (
+                    <>
+                      <div className="relative">
+                        <span className="text-7xl font-[1000] text-white/5 group-hover:text-purple-500/20 italic transition-colors duration-500">
+                          ?
+                        </span>
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <div className="w-12 h-1 bg-white/10 group-hover:bg-purple-500/40 transition-all duration-700 group-hover:w-full group-hover:rotate-12" />
+                        </div>
+                      </div>
+                      <div className="mt-4 flex flex-col items-center">
+                        <Lock
+                          size={16}
+                          className="text-white/20 group-hover:text-purple-500/50 mb-2"
+                        />
+                        <span className="font-mono text-[8px] text-white/30 tracking-[0.3em] uppercase">
+                          Encrypted
+                        </span>
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <img
+                        src={speaker.image || undefined}
+                        alt={speaker.name}
+                        className="w-24 h-24 rounded-full object-cover border border-white/10 mb-3"
+                      />
+                      <p className="text-xs text-white/50">{speaker.role}</p>
+                      <div className="mt-6" />
+                      <br/>
+                      <br/>
+                      <br/>
+                    </>
+                  )}
                 </div>
 
-                {/* BOTTOM INFO: "Classified" Metadata */}
                 <div className="absolute bottom-0 left-0 right-0 p-5 bg-gradient-to-t from-black via-black/80 to-transparent">
                   <div className="flex flex-col gap-1">
                     <p className="font-mono text-[9px] text-purple-400 tracking-[0.2em] uppercase opacity-60">
-                      _0{i + 1}
+                      _0{index + 1}
                     </p>
-                    <p className="text-sm font-black italic uppercase text-white/40 tracking-tighter group-hover:text-white/70 transition-colors">
-                      Identity_Hidden
+                    <p className="text-sm font-black italic uppercase tracking-tighter text-white/40 group-hover:text-white/70 transition-colors">
+                      {speaker.status === "hidden"
+                        ? "Identity_Hidden"
+                        : speaker.name}
                     </p>
                   </div>
-                  
-                  {/* Animated Progress Bar */}
+
                   <div className="mt-3 h-[2px] w-full bg-white/5 relative overflow-hidden">
                     <div className="absolute inset-0 bg-purple-600 w-1/3 -translate-x-full group-hover:translate-x-[300%] transition-transform duration-1000" />
                   </div>
                 </div>
 
-
-                {/* SCANNING LINE EFFECT */}
-                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-purple-500/10 to-transparent h-20 w-full -translate-y-full group-hover:animate-scan pointer-events-none" />
+                <div className="absolute inset-0 pointer-events-none">
+                  <div className="h-20 w-full bg-gradient-to-b from-transparent via-purple-500/10 to-transparent -translate-y-full group-hover:animate-scan" />
+                </div>
               </div>
             ))}
           </div>
@@ -424,13 +496,17 @@ export default function MediumCompetitionPage() {
           <div className="lg:col-span-4 order-2 lg:order-1">
             <div className="bg-white/[0.03] border border-white/10 p-6 md:p-8 rounded-2xl backdrop-blur-sm h-full flex flex-col">
               <h2 className="text-[10px] font-mono uppercase tracking-[0.3em] text-purple-400 mb-6 md:mb-8 flex items-center gap-2">
-                <Activity size={14} className="animate-pulse" aria-hidden="true" /> Briefing_Note
+                <Activity size={14} className="animate-pulse" aria-hidden="true" />{" "}
+                Briefing_Note
               </h2>
 
               <div className="mb-8 md:mb-10 p-4 border-l-2 border-purple-500/30 bg-purple-500/5">
-                <p className="text-xs font-bold text-purple-400 uppercase mb-2">Why Medium?</p>
+                <p className="text-xs font-bold text-purple-400 uppercase mb-2">
+                  Why Medium?
+                </p>
                 <p className="text-sm text-white/60 leading-relaxed italic">
-                  Medium is a global stage. This competition isn&apos;t just a contest; it&apos;s a &quot;Proof of Work&quot; for your career.
+                  Medium is a global stage. This competition isn&apos;t just a
+                  contest; it&apos;s a &quot;Proof of Work&quot; for your career.
                 </p>
               </div>
 
@@ -440,7 +516,9 @@ export default function MediumCompetitionPage() {
               <div className="space-y-6">
                 {RULES.map((rule, idx) => (
                   <div key={`rule-${idx}`} className="group">
-                    <p className="text-[9px] font-mono text-white/30 mb-1 font-bold">PROTOCOL_0{idx + 1}</p>
+                    <p className="text-[9px] font-mono text-white/30 mb-1 font-bold">
+                      PROTOCOL_0{idx + 1}
+                    </p>
                     <p className="text-xs md:text-sm font-black uppercase italic tracking-wide group-hover:text-purple-400 transition-colors leading-tight">
                       {rule}
                     </p>
@@ -458,11 +536,19 @@ export default function MediumCompetitionPage() {
                 <div>
                   <div className="flex items-center gap-4 mb-8">
                     <div className="p-3 bg-purple-500/10 rounded-xl text-purple-500">
-                      <Fingerprint size={28} className="animate-flicker" aria-hidden="true" />
+                      <Fingerprint
+                        size={28}
+                        className="animate-flicker"
+                        aria-hidden="true"
+                      />
                     </div>
                     <div>
-                      <h2 className="text-2xl md:text-3xl font-[1000] uppercase italic tracking-tighter">Transmission Portal</h2>
-                      <p className="font-mono text-[8px] md:text-[9px] text-purple-400 uppercase tracking-[0.4em]">Uplink_Status: Stable</p>
+                      <h2 className="text-2xl md:text-3xl font-[1000] uppercase italic tracking-tighter">
+                        Transmission Portal
+                      </h2>
+                      <p className="font-mono text-[8px] md:text-[9px] text-purple-400 uppercase tracking-[0.4em]">
+                        Uplink_Status: Stable
+                      </p>
                     </div>
                   </div>
                   <div className="mt-8 md:mt-12">
@@ -480,7 +566,10 @@ export default function MediumCompetitionPage() {
 
                   <ul className="space-y-4">
                     {TOPIC_CATEGORIES.map((item, idx) => (
-                      <li key={`topic-${idx}`} className="border-l-2 border-purple-500/40 pl-3">
+                      <li
+                        key={`topic-${idx}`}
+                        className="border-l-2 border-purple-500/40 pl-3"
+                      >
                         <p className="text-sm md:text-[1rem] font-black italic text-white leading-snug">
                           {item.title}
                         </p>
@@ -503,7 +592,8 @@ export default function MediumCompetitionPage() {
                     </p>
                   ) : (
                     <p className="text-lg md:text-2xl font-black italic uppercase text-white tracking-wide">
-                      {timeLeft.days}d : {timeLeft.hours}h : {timeLeft.minutes}m : {timeLeft.seconds}s
+                      {timeLeft.days}d : {timeLeft.hours}h : {timeLeft.minutes}m
+                      : {timeLeft.seconds}s
                     </p>
                   )}
                 </div>
@@ -525,8 +615,6 @@ export default function MediumCompetitionPage() {
             </div>
           </div>
         </div>
-
-        
       </div>
 
       <style jsx>{`
@@ -538,18 +626,40 @@ export default function MediumCompetitionPage() {
           -webkit-text-stroke: 1px white;
         }
         @keyframes flicker {
-          0%, 100% { opacity: 1; }
-          50% { opacity: 0.2; }
-          60% { opacity: 0.1; }
+          0%,
+          100% {
+            opacity: 1;
+          }
+          50% {
+            opacity: 0.2;
+          }
+          60% {
+            opacity: 0.1;
+          }
         }
         @keyframes glitch-blink {
-          0%, 20%, 90%, 100% { opacity: 1; filter: brightness(1); }
-          5% { opacity: 0.5; filter: brightness(2); }
-          95% { opacity: 0.2; }
+          0%,
+          20%,
+          90%,
+          100% {
+            opacity: 1;
+            filter: brightness(1);
+          }
+          5% {
+            opacity: 0.5;
+            filter: brightness(2);
+          }
+          95% {
+            opacity: 0.2;
+          }
         }
         @keyframes scan {
-          0% { transform: translateX(-100%); }
-          100% { transform: translateX(300%); }
+          0% {
+            transform: translateX(-100%);
+          }
+          100% {
+            transform: translateX(300%);
+          }
         }
         @keyframes marquee {
           0% {
@@ -559,13 +669,18 @@ export default function MediumCompetitionPage() {
             transform: translateX(-50%);
           }
         }
-
         .animate-marquee {
           animation: marquee 25s linear infinite;
         }
-        .animate-flicker { animation: flicker 3s linear infinite; }
-        .animate-glitch-blink { animation: glitch-blink 0.8s ease-in-out infinite; }
-        .animate-scan { animation: scan 2s linear infinite; }
+        .animate-flicker {
+          animation: flicker 3s linear infinite;
+        }
+        .animate-glitch-blink {
+          animation: glitch-blink 0.8s ease-in-out infinite;
+        }
+        .animate-scan {
+          animation: scan 2s linear infinite;
+        }
       `}</style>
     </main>
   );
