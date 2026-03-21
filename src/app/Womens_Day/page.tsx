@@ -408,6 +408,18 @@ export default function MediumCompetitionPage() {
                     <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-all">
                       <div className="w-1 h-1 bg-purple-500 rounded-full animate-pulse" />
                     </div>
+
+                    <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 group-hover:-bottom-1 transition-all">
+                      <span className="font-mono text-[8px] text-purple-400 uppercase tracking-[0.3em] bg-[#0d0b14] px-2 py-0.5 border border-purple-500/20 rounded-full">
+                        {isRevealed
+                          ? tier === "golden"
+                            ? "Gold_Partner"
+                            : tier === "platinum"
+                            ? "Platinum_Partner"
+                            : "Organizer"
+                          : "Classified"}
+                      </span>
+                    </div>
                   </div>
                 );
               })}
@@ -465,7 +477,6 @@ export default function MediumCompetitionPage() {
                     </>
                   )}
                 </div>
-              
 
                 <div className="absolute bottom-0 left-0 right-0 p-5 bg-gradient-to-t from-black via-black/80 to-transparent">
                   <div className="flex flex-col gap-1">
