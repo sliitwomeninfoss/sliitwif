@@ -344,18 +344,12 @@ export default function MediumCompetitionPage() {
 
           <div className="relative w-full">
             <div className="absolute left-0 top-0 w-40 h-full bg-gradient-to-r from-[#0d0b14] to-transparent z-20 pointer-events-none" />
-            <div className="absolute right-0 top-0 w-40 h-full bg-gradient-to-l from-[#0d0b14] to-transparent z-20 pointer-events-none" />
+            <div className="absolute right-0 top-0 w-28 h-full bg-gradient-to-l from-[#0d0b14] to-transparent z-20 pointer-events-none" />
 
             <div className="flex w-max animate-marquee hover:[animation-play-state:paused] gap-10 py-6">
               {[...SPONSORS, ...SPONSORS].map((sponsor, index) => {
                 const isRevealed = Boolean(sponsor.logo);
                 const useWhiteLogoCard = isRevealed;
-
-                const glowStyles: Record<string, string> = {
-                  golden: "from-yellow-400/20",
-                  platinum: "from-gray-300/20",
-                  default: "from-purple-500/10",
-                };
 
                 const borderStyles: Record<string, string> = {
                   golden: "hover:border-yellow-400/50",
@@ -364,12 +358,9 @@ export default function MediumCompetitionPage() {
                 };
 
                 const shadowStyles: Record<string, string> = {
-                  golden:
-                    "group-hover:drop-shadow-[0_0_15px_rgba(250,204,21,0.6)]",
-                  platinum:
-                    "group-hover:drop-shadow-[0_0_15px_rgba(200,200,200,0.6)]",
-                  default:
-                    "group-hover:drop-shadow-[0_0_15px_rgba(168,85,247,0.4)]",
+                  golden: "",
+                  platinum: "",
+                  default: "group-hover:drop-shadow-[0_0_15px_rgba(168,85,247,0.4)]",
                 };
 
                 const tier = sponsor.tier ?? "default";
@@ -384,11 +375,11 @@ export default function MediumCompetitionPage() {
                     }`}
                   >
                     <div
-                      className={`absolute inset-0 rounded-2xl bg-[radial-gradient(circle_at_center,_var(--tw-gradient-from)_0%,_transparent_70%)] transition-opacity duration-500 ${
+                      className={`absolute inset-0 rounded-2xl transition-opacity duration-500 ${
                         useWhiteLogoCard
-                          ? "opacity-30 group-hover:opacity-60"
-                          : `opacity-0 group-hover:opacity-100 ${glowStyles[tier]}`
-                      } ${glowStyles[tier]}`}
+                          ? "opacity-0"
+                          : "bg-[radial-gradient(circle_at_center,_rgba(168,85,247,0.1)_0%,_transparent_70%)] opacity-0 group-hover:opacity-100"
+                      }`}
                     />
 
                     {isRevealed ? (
@@ -422,17 +413,20 @@ export default function MediumCompetitionPage() {
                       <div className="w-1 h-1 bg-purple-500 rounded-full animate-pulse" />
                     </div>
 
-                    <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 group-hover:-bottom-1 transition-all">
-                      <span className="font-mono text-[8px] text-purple-400 uppercase tracking-[0.3em] bg-[#0d0b14] px-2 py-0.5 border border-purple-500/20 rounded-full">
-                        {isRevealed
-                          ? tier === "golden"
-                            ? "Gold_Partner"
+                    {isRevealed &&
+                    (tier === "golden" ||
+                      tier === "platinum" ||
+                      sponsor.id === "sp-3") ? (
+                      <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 opacity-100 transition-all">
+                        <span className="inline-flex min-w-[96px] items-center justify-center whitespace-nowrap font-mono text-[9px] font-bold text-purple-100 uppercase tracking-[0.28em] bg-[#0d0b14] px-3 py-1 border border-purple-500/25 rounded-full shadow-[0_6px_16px_rgba(0,0,0,0.35)]">
+                          {tier === "golden"
+                            ? "Gold"
                             : tier === "platinum"
-                            ? "Platinum_Partner"
-                            : "Organizer"
-                          : "Classified"}
-                      </span>
-                    </div>
+                            ? "Platinum"
+                            : "Media"}
+                        </span>
+                      </div>
+                    ) : null}
                   </div>
                 );
               })}
