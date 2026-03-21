@@ -440,12 +440,12 @@ export default function MediumCompetitionPage() {
             Speakers
           </h2>
 
-          <div className="flex flex-wrap justify-center gap-6">
-            {speakers.map((speaker, index) => (
-              <div
-                key={speaker.id}
-                className="group relative h-72 w-[calc(50%-0.75rem)] sm:w-[calc(33.333%-1rem)] md:w-[calc(20%-1.2rem)] rounded-xl border border-white/10 overflow-hidden bg-white/[0.02] transition-all duration-500 hover:border-purple-500/50 hover:bg-purple-500/[0.03]"
-              >
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+  {speakers.map((speaker, index) => (
+    <div
+      key={speaker.id}
+      className="group relative h-72 rounded-xl border border-white/10 overflow-hidden bg-white/[0.02] transition-all duration-500 hover:border-purple-500/50 hover:bg-purple-500/[0.03]"
+    >
                 {/* Background Grid */}
                 <div className="absolute inset-0 opacity-10 group-hover:opacity-20 transition-opacity bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:16px_16px]" />
 
@@ -486,6 +486,9 @@ export default function MediumCompetitionPage() {
                       <p className="text-xs text-white/50">
                         {speaker.role}
                       </p>
+                      <br></br>
+                      <br></br>
+                      <br></br>
                     </>
                   )}
                 </div>
