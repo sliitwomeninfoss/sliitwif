@@ -1,0 +1,339 @@
+{
+  "2021": [
+    {
+      "role": "CLUB LEAD",
+      "name": "Sewvandi Wickramasinghe",
+      "imageSrc": "/assets/2021/Sewvandi.JPG",
+      "facebook": "https://www.facebook.com/sewvandi.wickramasinghe.3",
+      "linkedin": "https://www.linkedin.com/in/sewvandi-promodya-wickramasinghe/"
+    },
+    {
+      "role": "DEVELOPING TEAM LEAD",
+      "name": "Hansi Pabasara",
+      "imageSrc": "/assets/2021/Hansi.jpg",
+      "facebook": "#",
+      "linkedin": "#"
+    },
+    {
+      "role": "WEB AND GRAPHIC TEAM LEAD",
+      "name": "Uvini Wijesinghe",
+      "imageSrc": "/assets/2021/Uvini.jpg",
+      "facebook": "#",
+      "linkedin": "https://www.linkedin.com/in/uvini-wijesinghe/"
+    },
+    {
+      "role": "CONTENT WRITING TEAM LEAD",
+      "name": "Thathsarani Wickramaarachchi",
+      "imageSrc": "/assets/2021/Thathsarani.jpg",
+      "facebook": "https://www.facebook.com/thathsarani.wickramaarachchi",
+      "linkedin": "https://www.linkedin.com/in/thathsarani-wickramaarachchi/"
+    },
+    {
+      "role": "MEMBERSHIP AND RECRUITING LEAD",
+      "name": "Nishiki Yapa",
+      "imageSrc": "/assets/2021/Nishiki.jpeg",
+      "facebook": "https://www.facebook.com/nishiki.yapa.7",
+      "linkedin": "https://www.linkedin.com/in/nishiki-yapa-361778168/"
+    },
+    {
+      "role": "TECHNICAL LEAD",
+      "name": "Renu Harshatha",
+      "imageSrc": "/assets/2021/Renu.jpg",
+      "facebook": "https://www.facebook.com/renu.harshatha",
+      "linkedin": "https://www.linkedin.com/in/renu.harshatha/"
+    },
+    {
+      "role": "MARKETING AND PUBLICITY LEAD",
+      "name": "Oshadi Ranathunga",
+      "imageSrc": "/assets/2021/Oshadi.jpeg",
+      "facebook": "https://www.facebook.com/dilini.ranathunga.520",
+      "linkedin": "#"
+    }
+  ],
+  "2022": [
+    {
+      "role": "CLUB LEAD",
+      "name": "Bhagya Indimagedara",
+      "imageSrc": "/assets/2022/Bhagya.jpeg",
+      "facebook": "https://web.facebook.com/kithminiii/",
+      "linkedin": "https://www.linkedin.com/in/bhagya-indimagedara/"
+    },
+    {
+      "role": "DEVELOPMENT LEAD",
+      "name": "Dulya Perera",
+      "imageSrc": "/assets/2022/Dulya.jpg",
+      "facebook": "https://www.facebook.com/dul.perera.56/",
+      "linkedin": "https://www.linkedin.com/in/dulya-perera-188ab31b9"
+    },
+    {
+      "role": "DESIGN LEAD",
+      "name": "Sandali Kalavitigoda",
+      "imageSrc": "/assets/2022/Sanali.jpg",
+      "facebook": "#",
+      "linkedin": "https://www.linkedin.com/in/sandali-kalavitigoda/"
+    },
+    {
+      "role": "CONTENT WRITING LEAD",
+      "name": "Sheikha Hanna",
+      "imageSrc": "/assets/2022/Sheikha hannah.jpeg",
+      "facebook": "#",
+      "linkedin": "https://www.linkedin.com/in/sheikha-hanna-7127761b5/"
+    },
+    {
+      "role": "PROJECT COORDINATOR",
+      "name": "Dulakshi Hansani",
+      "imageSrc": "/assets/2022/Dulakshi.jpeg",
+      "facebook": "#",
+      "linkedin": "https://www.linkedin.com/in/dulakshi-senevirathne-439bb1215"
+    },
+    {
+      "role": "EVENT COORDINATOR",
+      "name": "Methmi Nugawela",
+      "imageSrc": "/assets/2022/Methmi.png",
+      "facebook": "#",
+      "linkedin": "https://www.linkedin.com/in/methmi-nugawela/"
+    },
+    {
+      "role": "MEMBERSHIP LEAD",
+      "name": "Senara Perera",
+      "imageSrc": "/assets/2022/Senara.jpg",
+      "facebook": "#",
+      "linkedin": "https://www.linkedin.com/in/senaraperera/"
+    },
+    {
+      "role": "MARKETING LEAD",
+      "name": "Modeesha Kalani",
+      "imageSrc": "/assets/2022/Modeesha.jpeg",
+      "facebook": "https://www.facebook.com/modeesha.kalani.3",
+      "linkedin": "https://www.linkedin.com/in/modeesha-kalani-b22043199"
+    }
+  ],
+  "2023": [
+    {
+      "role": "COMMUNITY LEAD",
+      "name": "Sheikha Hanna",
+      "imageSrc": "/assets/2023/SheikhaHanna.jpeg",
+      "facebook": "https://web.facebook.com/art.mode.7739/?_rdc=1&_rdr",
+      "linkedin": "https://www.linkedin.com/in/sheikha-hanna-7127761b5/"
+    },
+    {
+      "role": "DEVELOPMENT LEAD",
+      "name": "Sandalika Ariyarathna",
+      "imageSrc": "/assets/2023/Sandalika.jpg",
+      "facebook": "https://www.facebook.com/profile.php?id=100009407160156",
+      "linkedin": "https://www.linkedin.com/in/dilini-sandalika96"
+    },
+    {
+      "role": "DESIGN LEAD",
+      "name": "Shavidini Ekanayake",
+      "imageSrc": "/assets/2023/Shavidini.png",
+      "facebook": "https://web.facebook.com/shavi.dilunika/",
+      "linkedin": "https://www.linkedin.com/in/shavidini-ekanayake-9368a51ba/"
+    },
+    {
+      "role": "CONTENT WRITING LEAD",
+      "name": "AKILA PERERA",
+      "imageSrc": "/assets/2023/AkilaPerera.jpeg",
+      "facebook": "#",
+      "linkedin": "#"
+    },
+    {
+      "role": "EVENT COORDINATOR",
+      "name": "Kavindu Chethani",
+      "imageSrc": "/assets/2023/Chethani.jpg",
+      "facebook": "#",
+      "linkedin": "#"
+    },
+    {
+      "role": "MARKETING LEAD",
+      "name": "Irushi Gunawardana",
+      "imageSrc": "/assets/2023/Irushi .jpg",
+      "facebook": "#",
+      "linkedin": "#"
+    }
+  ],
+  "2024": [
+    {
+      "role": "COMMUNITY LEAD",
+      "name": "AKILA PERERA",
+      "imageSrc": "/assets/2024/AkilaPerera.jpeg",
+      "facebook": "#",
+      "linkedin": "#"
+    },
+    {
+      "role": "DEVELOPMENT LEAD",
+      "name": "Sandalika Ariyarathna",
+      "imageSrc": "/assets/2024/Sandalika.jpg",
+      "facebook": "https://www.facebook.com/profile.php?id=100009407160156",
+      "linkedin": "https://www.linkedin.com/in/dilini-sandalika96"
+    },
+    {
+      "role": "DESIGN LEAD",
+      "name": "Shavidini Ekanayake",
+      "imageSrc": "/assets/2024/Shavidini.png",
+      "facebook": "https://web.facebook.com/shavi.dilunika/",
+      "linkedin": "https://www.linkedin.com/in/shavidini-ekanayake-9368a51ba/"
+    },
+    {
+      "role": "CONTENT WRITING LEAD",
+      "name": "Sarah Iyoob",
+      "imageSrc": "/assets/2024/Sarah.jpeg",
+      "facebook": "#",
+      "linkedin": "https://www.linkedin.com/in/sarah-ayoob-306231232/"
+    },
+    {
+      "role": "EVENT COORDINATOR",
+      "name": "Dhanushi Piyaratne",
+      "imageSrc": "#",
+      "facebook": "#",
+      "linkedin": "#"
+    },
+    {
+      "role": "MARKETING LEAD",
+      "name": "Irushi Gunawardana",
+      "imageSrc": "/assets/2024/Irushi.jpg",
+      "facebook": "#",
+      "linkedin": "https://www.linkedin.com/in/irushi-gunawardana-941893250"
+    }
+  ],
+  "2025": [
+    {
+      "role": "PRESIDENT",
+      "name": "Irushi Gunawardana",
+      "imageSrc": "/assets/2025/irushi.jpeg",
+      "facebook": "#",
+      "linkedin": "https://www.linkedin.com/in/irushigunawardana/"
+    },
+    {
+      "role": "VICE PRESIDENT",
+      "name": "Leashaniya Krishnapillai",
+      "imageSrc": "/assets/2025/Leashaniya Krishnapillai.jpg",
+      "facebook": "#",
+      "linkedin": "https://www.linkedin.com/in/leashaniya-krishnapillai-36b20a247/"
+    },
+    {
+      "role": "SECRETARY",
+      "name": "Dinithi Wickramaarachchi",
+      "imageSrc": "/assets/2025/Dinithi_Wickramaarachchi_cvphoto.png",
+      "facebook": "#",
+      "linkedin": "https://www.linkedin.com/in/dinithi-wickramaarachchi/"
+    },
+    {
+      "role": "ASSISTANT SECRETARY",
+      "name": "Maleesha Wijerathne",
+      "imageSrc": "/assets/2025/Maleesha_Photo.jpg",
+      "facebook": "#",
+      "linkedin": "https://www.linkedin.com/in/maleesha-wijerathne-46b397249"
+    },
+    {
+      "role": "DEV LEAD",
+      "name": "Nujaba Irfan",
+      "imageSrc": "/assets/2025/Nujaba_Irfan.jpeg",
+      "facebook": "#",
+      "linkedin": "https://www.linkedin.com/in/nujaba-irfan/"
+    },
+    {
+      "role": "DESIGN LEAD",
+      "name": "Gimhani Navodya",
+      "imageSrc": "/assets/2025/Gimhani navodya.jpg",
+      "facebook": "#",
+      "linkedin": "https://www.linkedin.com/in/gimhaninavodya/"
+    },
+    {
+      "role": "PROJECT COORDINATOR",
+      "name": "Manushi Katipearachchi",
+      "imageSrc": "/assets/2025/ManushiKatipearachchi.jpg",
+      "facebook": "https://www.facebook.com/profile.php?id=100092984103364",
+      "linkedin": "https://www.linkedin.com/in/manushi-katipearachchi-b8481627a/"
+    },
+    {
+      "role": "EVENT COORDINATOR",
+      "name": "Dilni Nishshanka ",
+      "imageSrc": "/assets/2025/Dilni Nishshanka.jpg",
+      "facebook": "#",
+      "linkedin": "https://www.linkedin.com/in/dilni-nishshanka-b889b82b1/"
+    }
+  ],
+  "2026": [
+    {
+      "role": "PRESIDENT",
+      "name": "Nujaba Irfan",
+      "imageSrc": "/assets/2026/Nujaba_Irfan.jpg",
+      "facebook": "#",
+      "instagram": "#",
+      "linkedin": "https://www.linkedin.com/in/nujaba-irfan/"
+    },
+    {
+      "role": "VICE PRESIDENT",
+      "name": "Dilni Nishshanka",
+      "imageSrc": "/assets/2026/Dilni_Nishshanka.jpg",
+      "facebook": "#",
+      "instagram": "https://www.instagram.com/dildil_111/",
+      "linkedin": "https://www.linkedin.com/in/dilni-nishshanka/"
+    },
+    {
+      "role": "SECRETARY",
+      "name": "Sayuni Bulathgama",
+      "imageSrc": "/assets/2026/Sayuni_Bulathgama.jpg",
+      "facebook": "#",
+      "instagram": "https://www.instagram.com/sayuni_sulakna/",
+      "linkedin": "https://www.linkedin.com/in/sayuni-bulathgama-5a4130313/"
+    },
+    {
+      "role": "TREASURER",
+      "name": "Uththara Rasindi",
+      "imageSrc": "/assets/2026/Uththara_Rasindi.jpg",
+      "facebook": "#",
+      "instagram": "https://www.instagram.com/r4sindi/",
+      "linkedin": "https://www.linkedin.com/in/uththara-rasindi-masachchi-233804341/"
+    },
+    {
+      "role": "DEV LEAD",
+      "name": "Sandali Sandagomi",
+      "imageSrc": "/assets/2026/Sandali_Sandagomi.jpg",
+      "facebook": "#",
+      "instagram": "https://www.instagram.com/s.sandaliii/",
+      "linkedin": "https://www.linkedin.com/in/sandali-sandagomi/"
+    },
+    {
+      "role": "DESIGN LEAD",
+      "name": "Madhini Ariyasena",
+      "imageSrc": "/assets/2026/Madhini_Ariyasena.jpg",
+      "facebook": "#",
+      "instagram": "https://www.instagram.com/astronomadhi/",
+      "linkedin": "https://www.linkedin.com/in/madhini00/"
+    },
+    {
+      "role": "PROJECT COORDINATOR",
+      "name": "Kaveesha Gunarathne",
+      "imageSrc": "/assets/2026/Kaveesha_Gunarathne.jpg",
+      "facebook": "#",
+      "instagram": "#",
+      "linkedin": "https://www.linkedin.com/in/kaveesha-gunarathne-oo4/"
+    },
+    {
+      "role": "EVENT COORDINATOR",
+      "name": "Oshani Senandhira",
+      "imageSrc": "/assets/2026/Oshani_Senandhira.jpg",
+      "facebook": "#",
+      "instagram": "https://www.instagram.com/oshisenadhira/",
+      "linkedin": "https://www.linkedin.com/in/oshani-senadhira-b324a72a0/"
+    },
+    {
+      "role": "VICE SECRETARY",
+      "name": "Chanithi Perera",
+      "imageSrc": "/assets/2026/Chanithi_Perera.jpg",
+      "facebook": "#",
+      "instagram": "https://www.instagram.com/chanithi_d/",
+      "linkedin": "https://www.linkedin.com/in/chanithi-perera-5253b7392/"
+    },
+    {
+      "role": "VICE TREASURER",
+      "name": "Vishmi Bhagya",
+      "imageSrc": "/assets/2026/Vishmi_Bhagya.jpg",
+      "facebook": "#",
+      "instagram": "https://www.instagram.com/vishmiii.i/",
+      "linkedin": "https://www.linkedin.com/in/vishmi-bhagya-757a32373"
+    }
+  ]
+}
