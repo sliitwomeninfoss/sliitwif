@@ -1,3 +1,6 @@
+// Legacy board data file. The active board page imports data from board.json.
+// Keep this only for reference unless the page is changed to use it again.
+
 export interface BoardMember {
   ROLE: string;
   NAME: string;

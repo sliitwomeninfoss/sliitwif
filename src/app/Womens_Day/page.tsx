@@ -77,7 +77,7 @@ export default function MediumCompetitionPage() {
     "TAGGING: USE #SLIITWIF AND #WOMENINTECH TAGS.",
     "ELIGIBILITY: OPEN TO UNDERGRADUATES OF SLIIT.",
     "TIMELINE: ARTICLES MUST BE PUBLISHED ON OR AFTER 06TH MARCH 2026.",
-    "DEADLINE: SUBMISSIONS CLOSE ON 15TH MARCH 2026, 11:59 PM.",
+    "DEADLINE: SUBMISSIONS CLOSE ON 21ST MARCH 2026, 11:59 PM.",
   ];
 
   const TOPIC_CATEGORIES = [
@@ -344,17 +344,12 @@ export default function MediumCompetitionPage() {
 
           <div className="relative w-full">
             <div className="absolute left-0 top-0 w-40 h-full bg-gradient-to-r from-[#0d0b14] to-transparent z-20 pointer-events-none" />
-            <div className="absolute right-0 top-0 w-40 h-full bg-gradient-to-l from-[#0d0b14] to-transparent z-20 pointer-events-none" />
+            <div className="absolute right-0 top-0 w-28 h-full bg-gradient-to-l from-[#0d0b14] to-transparent z-20 pointer-events-none" />
 
             <div className="flex w-max animate-marquee hover:[animation-play-state:paused] gap-10 py-6">
               {[...SPONSORS, ...SPONSORS].map((sponsor, index) => {
                 const isRevealed = Boolean(sponsor.logo);
-
-                const glowStyles: Record<string, string> = {
-                  golden: "from-yellow-400/20",
-                  platinum: "from-gray-300/20",
-                  default: "from-purple-500/10",
-                };
+                const useWhiteLogoCard = isRevealed;
 
                 const borderStyles: Record<string, string> = {
                   golden: "hover:border-yellow-400/50",
@@ -363,12 +358,9 @@ export default function MediumCompetitionPage() {
                 };
 
                 const shadowStyles: Record<string, string> = {
-                  golden:
-                    "group-hover:drop-shadow-[0_0_15px_rgba(250,204,21,0.6)]",
-                  platinum:
-                    "group-hover:drop-shadow-[0_0_15px_rgba(200,200,200,0.6)]",
-                  default:
-                    "group-hover:drop-shadow-[0_0_15px_rgba(168,85,247,0.4)]",
+                  golden: "",
+                  platinum: "",
+                  default: "group-hover:drop-shadow-[0_0_15px_rgba(168,85,247,0.4)]",
                 };
 
                 const tier = sponsor.tier ?? "default";
@@ -376,17 +368,29 @@ export default function MediumCompetitionPage() {
                 return (
                   <div
                     key={`${sponsor.id}-${index}`}
-                    className={`group relative flex items-center justify-center h-28 w-64 border border-white/5 bg-gradient-to-b from-white/[0.03] to-transparent rounded-2xl transition-all duration-500 hover:scale-[1.02] ${borderStyles[tier]}`}
+                    className={`group relative flex items-center justify-center h-28 w-64 rounded-2xl transition-all duration-500 hover:scale-[1.02] ${
+                      useWhiteLogoCard
+                        ? "border border-white/40 bg-white shadow-[0_0_30px_rgba(255,255,255,0.08)]"
+                        : `border border-white/5 bg-gradient-to-b from-white/[0.03] to-transparent ${borderStyles[tier]}`
+                    }`}
                   >
                     <div
-                      className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl bg-[radial-gradient(circle_at_center,_var(--tw-gradient-from)_0%,_transparent_70%)] ${glowStyles[tier]}`}
+                      className={`absolute inset-0 rounded-2xl transition-opacity duration-500 ${
+                        useWhiteLogoCard
+                          ? "opacity-0"
+                          : "bg-[radial-gradient(circle_at_center,_rgba(168,85,247,0.1)_0%,_transparent_70%)] opacity-0 group-hover:opacity-100"
+                      }`}
                     />
 
                     {isRevealed ? (
                       <img
                         src={sponsor.logo}
                         alt={sponsor.name ?? "Sponsor logo"}
-                        className={`h-12 w-auto object-contain grayscale brightness-200 opacity-40 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500 filter drop-shadow-[0_0_10px_rgba(168,85,247,0)] ${shadowStyles[tier]}`}
+                        className={`h-12 w-auto object-contain transition-all duration-500 filter ${
+                          useWhiteLogoCard
+                            ? "opacity-100 grayscale-0 brightness-100"
+                            : "opacity-100 grayscale-0 brightness-110 group-hover:brightness-125"
+                        } drop-shadow-[0_0_10px_rgba(168,85,247,0)] ${shadowStyles[tier]}`}
                         loading="lazy"
                       />
                     ) : (
@@ -408,6 +412,21 @@ export default function MediumCompetitionPage() {
                     <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-all">
                       <div className="w-1 h-1 bg-purple-500 rounded-full animate-pulse" />
                     </div>
+
+                    {isRevealed &&
+                    (tier === "golden" ||
+                      tier === "platinum" ||
+                      sponsor.id === "sp-3") ? (
+                      <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 opacity-100 transition-all">
+                        <span className="inline-flex min-w-[96px] items-center justify-center whitespace-nowrap font-mono text-[9px] font-bold text-purple-100 uppercase tracking-[0.28em] bg-[#0d0b14] px-3 py-1 border border-purple-500/25 rounded-full shadow-[0_6px_16px_rgba(0,0,0,0.35)]">
+                          {tier === "golden"
+                            ? "Gold"
+                            : tier === "platinum"
+                            ? "Platinum"
+                            : "Media"}
+                        </span>
+                      </div>
+                    ) : null}
                   </div>
                 );
               })}
@@ -465,7 +484,6 @@ export default function MediumCompetitionPage() {
                     </>
                   )}
                 </div>
-              
 
                 <div className="absolute bottom-0 left-0 right-0 p-5 bg-gradient-to-t from-black via-black/80 to-transparent">
                   <div className="flex flex-col gap-1">
