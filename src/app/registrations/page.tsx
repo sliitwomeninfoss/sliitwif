@@ -59,7 +59,7 @@ export default function RegistrationsAwaiting() {
       {/* BACKGROUND DECOR - Grid and Large Text */}
       <div className="absolute inset-0 opacity-[0.03] pointer-events-none select-none">
         <div className="absolute top-40 left-10 text-[20vw] font-black leading-none text-purple-500">
-          WAIT
+          OPEN
         </div>
       </div>
 
@@ -89,7 +89,7 @@ export default function RegistrationsAwaiting() {
               <div className="absolute -bottom-4 -left-4 font-mono text-[10px] text-purple-400/40 space-y-1">
                 <p>LAT: 6.9147&deg; N</p>
                 <p>LNG: 79.9733&deg; E</p>
-                <p>MODE: STANDBY</p>
+                <p>MODE: ACTIVE</p>
               </div>
             </div>
           </div>
@@ -98,43 +98,48 @@ export default function RegistrationsAwaiting() {
           <div className="lg:col-span-7 space-y-12 text-center lg:text-left order-1 lg:order-2">
             <div className="space-y-6">
               <div className="reveal-element inline-flex items-center gap-3 px-4 py-1.5 rounded-full border border-purple-500/30 bg-purple-500/5 backdrop-blur-md">
-                <span className="w-1.5 h-1.5 rounded-full bg-purple-500 animate-ping" />
-                <span className="text-[10px] font-mono uppercase tracking-[0.4em] text-purple-300">Syncing Frequency...</span>
+                <span className="w-1.5 h-1.5 rounded-full bg-purple-500" />
+                <span className="text-[10px] font-mono uppercase tracking-[0.4em] text-purple-300">Registrations Open</span>
               </div>
               
               <h1 className="reveal-element text-[13vw] lg:text-[9vw] font-[1000] uppercase leading-[0.8] tracking-[-0.07em]">
-                AWAIT <br/> 
-                <span className="text-transparent stroke-text-white">FOR THE</span> <br/>
-                <span className="text-purple-500 italic">UPLINK.</span>
+                THE <br/>
+                <span className="text-transparent stroke-text-white">LINK IS</span> <br/>
+                <span className="text-purple-500 italic">LIVE.</span>
               </h1>
             </div>
 
             <div className="reveal-element max-w-xl space-y-6 mx-auto lg:mx-0">
               <div className="h-px w-24 bg-purple-500 mb-8 mx-auto lg:mx-0" />
               <p className="text-xl md:text-2xl font-bold uppercase tracking-tight text-white italic">
-                The terminal is being prepared for the next intake.
+                The gates are open. Nifi is ready to receive you.
               </p>
-              {/* Note the use of &apos; to satisfy ESLint react/no-unescaped-entities */}
               <p className="text-purple-100/50 text-base leading-relaxed font-light">
-                Registration protocols are currently restricted. Nifi is monitoring the network;once the encryption breaks, the gates will open. Stay tuned to our official channels for the decryption key.
+                Registration protocols are now active. Submit your details through the secure uplink below and become part of the SLIIT Women in FOSS network. We&apos;ll be in touch once your signal is received.
               </p>
             </div>
 
             {/* BUTTONS */}
             <div className="reveal-element flex flex-wrap justify-center lg:justify-start gap-4 pt-4">
-              <Link href="/">
-                <button 
-                  type="button" 
+              <a
+                href="https://docs.google.com/forms/d/e/1FAIpQLSf8FzkPDOKkh6pSdmB03U05So2HvuNVDph64iXbSIKDBO7GHw/viewform"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <button
+                  type="button"
                   className="group relative px-10 py-5 bg-white text-black font-black uppercase tracking-widest text-[10px] overflow-hidden transition-all duration-300"
                 >
-                  <span className="relative z-10 group-hover:text-white transition-colors duration-300">Return Home</span>
+                  <span className="relative z-10 group-hover:text-white transition-colors duration-300">Register Now</span>
                   <div className="absolute inset-0 bg-purple-600 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.87,0,0.13,1)]" />
                 </button>
+              </a>
+
+              <Link href="/">
+                <div className="px-8 py-5 border border-white/10 text-purple-400 font-mono text-[10px] uppercase tracking-widest flex items-center hover:border-purple-500/50 transition-colors duration-300 cursor-pointer">
+                  Return Home
+                </div>
               </Link>
-              
-              <div className="px-8 py-5 border border-white/10 text-purple-400 font-mono text-[10px] uppercase tracking-widest flex items-center">
-                System Status: <span className="text-white ml-2">Awaiting Signals</span>
-              </div>
             </div>
           </div>
         </div>
