@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "./components/Header";
 import Footer from "./components/footer";
+import RecruitmentPopup from "./components/RecruitmentPopup";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -17,19 +18,24 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "SLIITWIF",
   description: "Website",
+  icons: {
+    icon: "/images/mascot-nifi.png",
+    apple: "/images/mascot-nifi.png",
+  },
 };
 
 export default function RootLayout({
   children,
-}: {
+}: Readonly<{
   children: React.ReactNode;
-}) {
+}>) {
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <Header />
+        <RecruitmentPopup />
         <main>{children}</main>
         <Footer />
       </body>
