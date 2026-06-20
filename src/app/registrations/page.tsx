@@ -143,6 +143,7 @@ export default function RegistrationsAwaiting() {
             </div>
           </div>
         </div>
+
       </div>
 
       <style jsx>{`
