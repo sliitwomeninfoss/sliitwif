@@ -18,13 +18,17 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "SLIITWIF",
   description: "Website",
+  icons: {
+    icon: "/images/mascot-nifi.png",
+    apple: "/images/mascot-nifi.png",
+  },
 };
 
 export default function RootLayout({
   children,
-}: {
+}: Readonly<{
   children: React.ReactNode;
-}) {
+}>) {
   return (
     <html lang="en">
       <body
