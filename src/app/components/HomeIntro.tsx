@@ -22,15 +22,19 @@ export default function WomenInFOSS() {
   const magSectionRef = useRef<HTMLElement>(null);
   const mascotImgRef = useRef<HTMLImageElement>(null);
 
-  // Initialize state directly to prevent Flash of Unwanted Content (FOUC)
-  const [hasRevealed, setHasRevealed] = useState<boolean>(() => {
-    if (typeof window !== 'undefined') {
-      return sessionStorage.getItem('wif_hero_revealed') === 'true';
-    }
-    return false;
-  });
+  // Always start false (matches server render), then read sessionStorage after mount
+  const [hasRevealed, setHasRevealed] = useState<boolean>(false);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    const revealed = sessionStorage.getItem('wif_hero_revealed') === 'true';
+    setHasRevealed(revealed);
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!mounted) return;
+
     const ctx = gsap.context(() => {
       // 1. Background Grid Animation
       if (gridRef.current) {
@@ -134,7 +138,7 @@ export default function WomenInFOSS() {
     }, containerRef); // Scoping to containerRef is best practice for GSAP + React
 
     return () => ctx.revert();
-  }, [hasRevealed]);
+  }, [hasRevealed, mounted]);
 
   return (
     <main className="bg-[#0f0720] text-white selection:bg-purple-500 font-sans overflow-x-hidden">
