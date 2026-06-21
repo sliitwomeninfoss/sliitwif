@@ -67,12 +67,7 @@ export default function RecruitmentPopup() {
 
                 {/* Status badge over image */}
                 <div className="absolute bottom-4 left-6">
-                  <div className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full border border-purple-500/30 bg-purple-500/10 backdrop-blur-md">
-                    <span className="w-1.5 h-1.5 rounded-full bg-purple-500" />
-                    <span className="text-[10px] font-mono uppercase tracking-[0.4em] text-purple-300">
-                      Now Recruiting — 2026 Intake
-                    </span>
-                  </div>
+                  
                 </div>
               </div>
 
