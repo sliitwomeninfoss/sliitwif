@@ -113,17 +113,6 @@ export default function Header() {
           })}
         </nav>
 
-        {/* CTA BUTTON */}
-        <div className="hidden lg:block">
-          <Link 
-            href="/registrations"
-            className="relative group inline-block px-8 py-3 bg-white text-black font-black uppercase tracking-widest text-[10px] overflow-hidden transition-all duration-500 rounded-full"
-          >
-            <span className="relative z-10 group-hover:text-white transition-colors duration-500">Get Involved</span>
-            <div className="absolute inset-0 bg-purple-600 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out" />
-          </Link>
-        </div>
-
         {/* MOBILE MENU TOGGLE */}
         <button 
           type="button"
@@ -172,22 +161,6 @@ export default function Header() {
                   </motion.div>
                 ))}
               </nav>
-
-              {/* Mobile CTA Button */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.5 }}
-                className="relative z-10 mt-8"
-              >
-                <Link
-                  href="/registrations"
-                  onClick={closeMenu}
-                  className="block w-full text-center px-8 py-4 sm:py-5 bg-purple-600 text-white font-black uppercase tracking-widest text-xs sm:text-sm rounded-full hover:bg-purple-700 transition-all active:scale-95"
-                >
-                  Get Involved
-                </Link>
-              </motion.div>
 
               {/* Mobile Footer */}
               <motion.div
