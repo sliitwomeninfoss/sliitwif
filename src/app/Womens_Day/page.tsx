@@ -11,17 +11,6 @@ import {
 
 const DEADLINE = new Date("2026-03-21T23:59:00+05:30").getTime();
 
-type TimelineItemProps = {
-  title: string;
-  description: string;
-};
-
-type InfoRowProps = {
-  label: string;
-  value: string;
-  valueClass?: string;
-};
-
 type ImpactPoint = {
   title: string;
   description: string;
@@ -41,32 +30,6 @@ type Speaker = {
   image: string;
   status: "hidden" | "revealed";
 };
-
-const TimelineItem: React.FC<TimelineItemProps> = ({ title, description }) => (
-  <div className="group relative">
-    {/* timeline dot */}
-    <div className="absolute -left-[26px] top-2 w-4 h-4 bg-purple-500 rounded-full shadow-lg shadow-purple-500/50 transition group-hover:scale-125" />
-
-    {/* card */}
-    <div className="bg-white/[0.03] border border-white/10 rounded-xl p-6 backdrop-blur-md transition hover:border-purple-500/40 hover:bg-purple-500/5">
-      <h3 className="text-xl font-bold text-white mb-2">{title}</h3>
-      <p className="text-white/70 leading-relaxed">{description}</p>
-    </div>
-  </div>
-);
-
-const InfoRow: React.FC<InfoRowProps> = ({
-  label,
-  value,
-  valueClass = "text-white",
-}) => (
-  <div className="flex justify-between border-b border-white/10 pb-2">
-    <span className="font-mono text-[10px] text-purple-400 tracking-widest">
-      {label}
-    </span>
-    <span className={`font-bold ${valueClass}`}>{value}</span>
-  </div>
-);
 
 export default function MediumCompetitionPage() {
   const RULES = [
@@ -259,8 +222,8 @@ export default function MediumCompetitionPage() {
         {/* HEADER */}
         <header className="relative">
           <div className="w-16 md:w-24 h-[2px] bg-purple-500 mb-6 md:mb-8" />
-          <span className="text-purple-400 font-mono tracking-[0.3em] md:tracking-[0.5em] text-[9px] md:text-[10px] uppercase block mb-4 animate-flicker">
-            Phase_02 // Content_Manifesto
+          <span className="text-purple-400 font-mono tracking-[0.3em] md:tracking-[0.5em] text-[9px] md:text-[10px] uppercase block mb-4">
+            Impact X // 2026 Edition
           </span>
           <h1 className="text-6xl sm:text-8xl md:text-[10vw] font-[1000] leading-[0.8] tracking-[-0.07em] md:tracking-[-0.09em] uppercase italic text-white mb-8 md:mb-10">
             I m p a c t
@@ -268,77 +231,61 @@ export default function MediumCompetitionPage() {
             <span className="text-purple-500 not-italic ml-[-0.05em]">.</span>
           </h1>
           <p className="mt-6 md:mt-8 max-w-2xl text-lg md:text-xl font-bold uppercase italic text-white/70 leading-snug">
-            The industry is quiet; it&apos;s time to create some noise. Document
-            your story and secure your place.
+            2026 Edition
           </p>
         </header>
 
-        {/* IMPACT X EVENT DETAILS */}
-        <section className="mb-24 mt-16">
-          <h2 className="text-3xl md:text-4xl font-black italic uppercase mb-16 text-center">
-            What is Impact X
-          </h2>
-
-          <div className="grid md:grid-cols-2 gap-16 items-stretch max-w-6xl mx-auto">
-            {/* LEFT - TIMELINE */}
-            <div className="relative border-l border-purple-500/30 pl-10 space-y-6">
-              {IMPACT_POINTS.map((point) => (
-                <TimelineItem
-                  key={point.title}
-                  title={point.title}
-                  description={point.description}
-                />
-              ))}
+        {/* WHAT IS IMPACT X */}
+        <section aria-labelledby="impact-x-heading" className="mb-24 mt-16">
+          <div className="max-w-6xl mx-auto">
+            <div className="mb-12 md:mb-16">
+              <h2
+                id="impact-x-heading"
+                className="text-3xl md:text-4xl font-black italic uppercase mb-6"
+              >
+                What is Impact X
+              </h2>
+              <p className="max-w-3xl text-white/70 leading-relaxed text-base md:text-lg">
+                Impact X is a special initiative by SLIIT Women in FOSS that
+                brings together innovators, developers, and aspiring
+                technologists. The event highlights the voices of women in
+                open-source, leadership, and emerging technologies.
+              </p>
             </div>
 
-            {/* RIGHT - EVENT CARD */}
-            <div className="relative h-full flex flex-col justify-between bg-white/[0.04] border border-white/10 rounded-2xl p-10 backdrop-blur-md overflow-hidden">
-              <div className="absolute inset-0 bg-purple-500/5 animate-glitch-blink pointer-events-none" />
-
-              <div className="mb-8 h-1 w-full bg-white/5 relative overflow-hidden">
-                <div className="absolute inset-0 bg-purple-500 w-1/4 animate-scan" />
-              </div>
-
-              <div>
-                <h2 className="text-3xl md:text-4xl font-black italic uppercase mb-6 text-center">
-                  Impact X Event
-                </h2>
-
-                <p className="text-white/70 leading-relaxed mb-8 text-center max-w-md mx-auto">
-                  Impact X is a special initiative by SLIIT Women in FOSS that
-                  brings together innovators, developers, and aspiring
-                  technologists. The event highlights the voices of women in
-                  open-source, leadership, and emerging technologies.
-                </p>
-
-                <div className="space-y-5">
-                  <InfoRow
-                    label="STATUS"
-                    value="ACTIVE"
-                    valueClass="text-purple-400 animate-pulse"
+            <ol className="grid grid-cols-1 md:grid-cols-2 gap-x-12 lg:gap-x-20">
+              {IMPACT_POINTS.map((point, index) => (
+                <li key={point.title} className="group py-7 md:py-9">
+                  <div className="flex items-start gap-5 md:gap-7">
+                    <span
+                      aria-hidden="true"
+                      className="impact-number shrink-0 text-5xl sm:text-6xl lg:text-7xl font-black italic leading-none transition-colors duration-300 group-hover:text-purple-500"
+                    >
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                    <div className="pt-1">
+                      <h3 className="text-lg md:text-xl font-black italic uppercase text-white leading-tight transition-transform duration-300 group-hover:translate-x-1">
+                        {point.title}
+                      </h3>
+                      <p className="mt-3 text-sm md:text-base text-white/60 leading-relaxed">
+                        {point.description}
+                      </p>
+                    </div>
+                  </div>
+                  <div
+                    aria-hidden="true"
+                    className="mt-7 md:mt-9 h-px w-full bg-gradient-to-r from-purple-500/40 to-transparent"
                   />
-                  <InfoRow label="COMMUNITY" value="WOMEN IN FOSS" />
-                  <InfoRow label="EVENT TYPE" value="TECH + OPEN SOURCE" />
-                </div>
-              </div>
-
-              <div className="mt-10">
-                <div className="text-center text-white/40 text-xs font-mono tracking-widest mb-4">
-                  LIVE EVENT • NETWORK • LEARN • GROW
-                </div>
-
-                <div className="h-1 w-full bg-white/5 relative overflow-hidden">
-                  <div className="absolute inset-0 bg-purple-500 w-1/4 animate-scan" />
-                </div>
-              </div>
-            </div>
+                </li>
+              ))}
+            </ol>
           </div>
         </section>
 
         {/* SPONSORS */}
         <section className="mt-24 overflow-hidden">
           <h2 className="text-3xl font-black italic uppercase mb-10 flex items-center gap-4">
-            Partners
+            2026 Partners
             <span className="w-full h-[1px] bg-gradient-to-r from-purple-500/50 to-transparent" />
           </h2>
 
@@ -437,7 +384,7 @@ export default function MediumCompetitionPage() {
         {/* SPEAKERS */}
         <section className="mt-24 mb-24">
           <h2 className="text-3xl font-black italic uppercase mb-10">
-            Speakers
+            2026 Speakers
           </h2>
 
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
@@ -557,7 +504,7 @@ export default function MediumCompetitionPage() {
                     <div className="p-3 bg-purple-500/10 rounded-xl text-purple-500">
                       <Fingerprint
                         size={28}
-                        className="animate-flicker"
+                        className=""
                         aria-hidden="true"
                       />
                     </div>
@@ -641,36 +588,12 @@ export default function MediumCompetitionPage() {
           color: transparent;
           -webkit-text-stroke: 1px rgba(255, 255, 255, 0.6);
         }
-        .stroke-text-white {
-          -webkit-text-stroke: 1px white;
+        .impact-number {
+          color: transparent;
+          -webkit-text-stroke: 1px rgba(168, 85, 247, 0.75);
         }
-        @keyframes flicker {
-          0%,
-          100% {
-            opacity: 1;
-          }
-          50% {
-            opacity: 0.2;
-          }
-          60% {
-            opacity: 0.1;
-          }
-        }
-        @keyframes glitch-blink {
-          0%,
-          20%,
-          90%,
-          100% {
-            opacity: 1;
-            filter: brightness(1);
-          }
-          5% {
-            opacity: 0.5;
-            filter: brightness(2);
-          }
-          95% {
-            opacity: 0.2;
-          }
+        .group:hover .impact-number {
+          -webkit-text-stroke: 1px rgb(168, 85, 247);
         }
         @keyframes scan {
           0% {
@@ -690,12 +613,6 @@ export default function MediumCompetitionPage() {
         }
         .animate-marquee {
           animation: marquee 25s linear infinite;
-        }
-        .animate-flicker {
-          animation: flicker 3s linear infinite;
-        }
-        .animate-glitch-blink {
-          animation: glitch-blink 0.8s ease-in-out infinite;
         }
         .animate-scan {
           animation: scan 2s linear infinite;
