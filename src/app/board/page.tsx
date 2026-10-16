@@ -4,13 +4,12 @@ import React, { useState, useMemo } from 'react';
 import { Linkedin, Facebook, Instagram, Zap, ArrowUpRight } from "lucide-react";
 import Image from "next/image";
 import boardData from "./board.json";
+import subcommitteeData from "./subcommittee.json";
 
 // --- Types ---
 export interface BoardMember {
   role?: string;
   ROLE?: string;
-  team?: string;
-  TEAM?: string;
   name?: string;
   NAME?: string;
   imageSrc?: string;
@@ -27,12 +26,8 @@ export interface SubcommitteeMember extends BoardMember {
   team: string;
 }
 
-export interface BoardJSON {
-  [key: string]: BoardMember[] | Record<string, SubcommitteeMember[]> | undefined;
-  subcommittee?: Record<string, SubcommitteeMember[]>;
-}
-
-const rawBoardData = boardData as unknown as BoardJSON;
+const rawBoardData = boardData as Record<string, BoardMember[]>;
+const rawSubcommitteeData = subcommitteeData as Record<string, SubcommitteeMember[]>;
 
 function SubcommitteeCard({ member }: { member: SubcommitteeMember }) {
   const displayName = member.name || member.NAME || "Subcommittee Member";
@@ -141,18 +136,7 @@ export default function BoardPage() {
   const [activeYear, setActiveYear] = useState(years[0] || "2026");
 
   const subcommitteeMembers = useMemo(() => {
-    const data = rawBoardData;
-    if (data.subcommittee && data.subcommittee[activeYear]) {
-      return data.subcommittee[activeYear];
-    }
-    const yearData = data[activeYear];
-    if (yearData && !Array.isArray(yearData) && typeof yearData === "object" && "subcommittee" in yearData) {
-      const sub = (yearData as Record<string, unknown>).subcommittee;
-      if (Array.isArray(sub)) {
-        return sub as SubcommitteeMember[];
-      }
-    }
-    return [] as SubcommitteeMember[];
+    return rawSubcommitteeData[activeYear] || [];
   }, [activeYear]);
 
   const groupedSubcommittee = useMemo(() => {
@@ -192,9 +176,7 @@ export default function BoardPage() {
   }, [subcommitteeMembers]);
 
   const currentBoardList = useMemo(() => {
-    const yearData = rawBoardData[activeYear];
-    if (Array.isArray(yearData)) return yearData as BoardMember[];
-    return [] as BoardMember[];
+    return rawBoardData[activeYear] || [];
   }, [activeYear]);
 
   return (
