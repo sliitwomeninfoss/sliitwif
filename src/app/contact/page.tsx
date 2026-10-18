@@ -131,8 +131,8 @@ export default function ContactPage() {
             {[
               { Icon: MapPin, title: "Location", detail: "SLIIT MALABE" },
               { Icon: Phone, title: "Call Us", detail: "+94 76 320 1664" },
-              { Icon: Mail, title: "Email Us", detail: "infowifsliit@gmail.com" },
-            ].map(({ Icon, title, detail }) => (
+              { Icon: Mail, title: "Email Us", detail: "infowifsliit@gmail.com", href: "mailto:infowifsliit@gmail.com" },
+            ].map(({ Icon, title, detail, href }) => (
               <div key={title} className="group bg-white/[0.02] border border-white/5 p-8 rounded-2xl transition-all duration-500 hover:border-purple-500/30 hover:bg-white/[0.04]">
                 <div className="flex items-center gap-4 mb-4">
                   <div className="p-3 bg-purple-500/10 rounded-lg text-purple-500">
@@ -140,9 +140,18 @@ export default function ContactPage() {
                   </div>
                   <h3 className="text-[10px] font-mono uppercase tracking-[0.2em] text-white/30">{title}</h3>
                 </div>
-                <p className="text-lg font-black italic uppercase tracking-tight text-white group-hover:text-purple-400 transition-colors">
-                  {detail}
-                </p>
+                {href ? (
+                  <a
+                    href={href}
+                    className="block text-lg font-black italic tracking-tight text-white group-hover:text-purple-400 transition-colors break-all"
+                  >
+                    {detail}
+                  </a>
+                ) : (
+                  <p className="text-lg font-black italic uppercase tracking-tight text-white group-hover:text-purple-400 transition-colors">
+                    {detail}
+                  </p>
+                )}
               </div>
             ))}
 
