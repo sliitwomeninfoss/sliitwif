@@ -156,7 +156,7 @@ export default function PastEvents() {
             alt={event.title}
             className="w-full h-full object-cover group-hover:scale-105 transition-all duration-700"
           />
-        /* Display a Flagship badge only on the Impact X 2026 card. */
+        
         {event.title === "Impact X 2026" && (
           <span className="absolute top-4 left-4 z-10 rounded-full bg-purple-500 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-white">
           Flagship
