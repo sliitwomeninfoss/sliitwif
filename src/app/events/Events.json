@@ -6,6 +6,14 @@
     "__Comment_2": "Add all events in sorted order.(Add new events at the beginning of an array.)",
     "Events": [
         {
+            "title": "Impact X 2026",
+            "image": "/assets/events/Impact X.jpg",
+            "description": "SLIIT WIF's flagship event celebrating innovation, open source, and women in tech.",
+            "date": "23rd March 2026",
+            "link": "/Womens_Day"
+        },
+
+        {
             "title": "Psychology of getting hacked",
             "image": "/assets/events/Psychology of Hacking.jpeg",
             "description": "Cyber Security Undergraduate Sayuni Bulathgama discusses the human element and psychological factors involved in cybersecurity breaches.",

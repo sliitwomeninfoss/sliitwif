@@ -18,7 +18,7 @@ interface EventItem {
   title: string;
   date: string;
   image: string;
-  speaker: string;
+  speaker?: string;  // Optional speaker information because not every event has a speaker
   description: string;
 }
 

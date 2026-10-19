@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { Calendar, ArrowUpRight } from "lucide-react";
 import { motion, HTMLMotionProps } from "framer-motion";
+import Link from "next/link";
 
 // Data Imports
 import EventsData from "./Events.json";
@@ -23,6 +24,7 @@ interface EventItem {
   date: string;
   image: string;
   description: string;
+  link?: string;  // Optional link to the event gallery or related event page
 }
 
 interface WebinarItem {
@@ -144,37 +146,68 @@ export default function PastEvents() {
           </motion.header>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {events.map((event, idx) => (
-              <motion.article 
-                key={`event-${idx}`}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: idx * 0.1 }}
-                className="group flex flex-col cursor-pointer border-t border-white/10 pt-8 hover:border-purple-500/50 transition-colors"
-              >
-                <div className="relative aspect-[10/12] overflow-hidden mb-6 bg-white/5 rounded-sm">
-                  <img 
-                    src={event.image} 
-                    alt={event.title} 
-                    className="w-full h-full object-cover group-hover:scale-105 transition-all duration-700" 
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0b0518] via-transparent to-transparent opacity-40" />
-                </div>
-                
-                <div className="flex flex-col space-y-4">
-                  <div className="flex items-center gap-2 text-[10px] font-mono text-purple-400">
-                    <Calendar size={12} /> {event.date}
-                  </div>
-                  <h3 className="text-xl font-black uppercase italic leading-none group-hover:text-purple-400 transition-colors">
-                    {event.title}
-                  </h3>
-                  <p className="text-white/50 text-xs leading-relaxed line-clamp-2 italic border-l-2 border-white/10 pl-4 group-hover:border-purple-500/30 transition-all">
-                    {event.description}
-                  </p>
-                </div>
-              </motion.article>
-            ))}
+            
+        {events.map((event, idx) => {
+         const cardContent = (
+         <>
+         <div className="relative aspect-[10/12] overflow-hidden mb-6 bg-white/5 rounded-sm">
+          <img
+            src={event.image}
+            alt={event.title}
+            className="w-full h-full object-cover group-hover:scale-105 transition-all duration-700"
+          />
+        /* Display a Flagship badge only on the Impact X 2026 card. */
+        {event.title === "Impact X 2026" && (
+          <span className="absolute top-4 left-4 z-10 rounded-full bg-purple-500 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-white">
+          Flagship
+          </span>
+       )}
+
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0b0518] via-transparent to-transparent opacity-40" />
+      </div>
+
+      <div className="flex flex-col space-y-4">
+        <div className="flex items-center gap-2 text-[10px] font-mono text-purple-400">
+          <Calendar size={12} /> {event.date}
+        </div>
+
+        <h3 className="text-xl font-black uppercase italic leading-none group-hover:text-purple-400 transition-colors">
+          {event.title}
+        </h3>
+
+        <p className="text-white/50 text-xs leading-relaxed line-clamp-2 italic border-l-2 border-white/10 pl-4 group-hover:border-purple-500/30 transition-all">
+          {event.description}
+        </p>
+
+        {event.link && (
+          <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-purple-400 pt-2">
+            View Gallery <ArrowUpRight size={16} />
+          </div>
+        )}
+      </div>
+    </>
+  );
+
+  return (
+    <motion.article
+      key={`event-${idx}`}
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ delay: idx * 0.1 }}
+      className="group flex flex-col border-t border-white/10 pt-8 hover:border-purple-500/50 transition-colors"
+    >
+      {event.link ? (
+        <Link href={event.link} className="block">
+          {cardContent}
+        </Link>
+      ) : (
+        cardContent
+      )}
+    </motion.article>
+  );
+})}
+
           </div>
         </section>
 
