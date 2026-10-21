@@ -156,12 +156,6 @@ export default function PastEvents() {
             alt={event.title}
             className="w-full h-full object-cover group-hover:scale-105 transition-all duration-700"
           />
-        
-        {event.title === "Impact X 2026" && (
-          <span className="absolute top-4 left-4 z-10 rounded-full bg-purple-500 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-white">
-          Flagship
-          </span>
-       )}
 
         <div className="absolute inset-0 bg-gradient-to-t from-[#0b0518] via-transparent to-transparent opacity-40" />
       </div>
@@ -181,7 +175,7 @@ export default function PastEvents() {
 
         {event.link && (
           <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-purple-400 pt-2">
-            View Gallery <ArrowUpRight size={16} />
+            View Page <ArrowUpRight size={16} />
           </div>
         )}
       </div>
