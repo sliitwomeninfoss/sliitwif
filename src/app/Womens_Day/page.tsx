@@ -1,623 +1,321 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
+import Link from "next/link";
+import Image from "next/image";
 import {
-  ShieldCheck,
+  ArrowLeft,
+  Trophy,
+  Camera,
+  Calendar,
+  X,
+  ChevronLeft,
   ChevronRight,
-  Fingerprint,
-  Activity,
-  Lock,
 } from "lucide-react";
 
-const DEADLINE = new Date("2026-03-21T23:59:00+05:30").getTime();
-
-type ImpactPoint = {
-  title: string;
-  description: string;
-};
-
-type Sponsor = {
-  id: string;
-  name: string;
-  logo?: string;
-  tier?: "platinum" | "golden" | "default";
-};
-
-type Speaker = {
+interface GalleryPhoto {
   id: number;
-  name: string;
-  role: string;
-  image: string;
-  status: "hidden" | "revealed";
-};
+  src: string;
+  alt: string;
+  wide?: boolean;
+  full?: boolean;
+  heightClass?: string;
+}
 
-export default function MediumCompetitionPage() {
-  const RULES = [
-    "AUTHENTICITY: MUST BE ORIGINAL WORK. NO PLAGIARISM.",
-    "AI POLICY: DO NOT USE AI TO WRITE YOUR SUBMISSION.",
-    "THEME: FOCUS ON WOMEN IN FOSS OR TECH EMPOWERMENT.",
-    "PLATFORM: MUST BE PUBLISHED ON MEDIUM.COM.",
-    "TAGGING: USE #SLIITWIF AND #WOMENINTECH TAGS.",
-    "ELIGIBILITY: OPEN TO UNDERGRADUATES OF SLIIT.",
-    "TIMELINE: ARTICLES MUST BE PUBLISHED ON OR AFTER 06TH MARCH 2026.",
-    "DEADLINE: SUBMISSIONS CLOSE ON 21ST MARCH 2026, 11:59 PM.",
-  ];
+const PHOTOS: GalleryPhoto[] = [
+  {
+    id: 1,
+    src: "/images/impactx/photo1.jpg",
+    alt: "ImpactX 2026 opening group photo on stage",
+    wide: true,
+    heightClass: "h-60 sm:h-72 md:h-80",
+  },
+  {
+    id: 2,
+    src: "/images/impactx/photo2.jpg",
+    alt: "ImpactX 3D logo and backdrop",
+    wide: false,
+    heightClass: "h-60 sm:h-72 md:h-80",
+  },
+  {
+    id: 3,
+    src: "/images/impactx/photo3.jpg",
+    alt: "ImpactX panel discussion with tech leaders",
+    wide: true,
+    heightClass: "h-48 sm:h-56 md:h-60",
+  },
+  {
+    id: 4,
+    src: "/images/impactx/photo4.jpg",
+    alt: "Keynote speaker addressing the audience",
+    wide: false,
+    heightClass: "h-48 sm:h-56 md:h-60",
+  },
+  {
+    id: 5,
+    src: "/images/impactx/photo5.jpg",
+    alt: "Audience and participants group photo in the auditorium",
+    wide: true,
+    full: true,
+    heightClass: "h-52 sm:h-64 md:h-72",
+  },
+  {
+    id: 6,
+    src: "/images/impactx/photo6.jpg",
+    alt: "Award presentation to participant",
+    wide: false,
+    heightClass: "h-56 sm:h-64 md:h-72",
+  },
+  {
+    id: 7,
+    src: "/images/impactx/photo7.jpg",
+    alt: "Thank You token display for Thilanka Abeywardena",
+    wide: false,
+    heightClass: "h-56 sm:h-64 md:h-72",
+  },
+  {
+    id: 8,
+    src: "/images/impactx/photo8.jpg",
+    alt: "Certificate handover to student winner",
+    wide: false,
+    heightClass: "h-56 sm:h-64 md:h-72",
+  },
+  {
+    id: 9,
+    src: "/images/impactx/photo9.jpg",
+    alt: "ImpactX organizing team and speakers on stage",
+    wide: true,
+    heightClass: "h-60 sm:h-72 md:h-80",
+  },
+  {
+    id: 10,
+    src: "/images/impactx/photo10.jpg",
+    alt: "Raffle draw session host and winner",
+    wide: false,
+    heightClass: "h-60 sm:h-72 md:h-80",
+  },
+];
 
-  const TOPIC_CATEGORIES = [
-    {
-      title: "Artificial Intelligence and the Future of Work",
-      description:
-        "How AI tools are transforming industries, jobs, and the way we build software.",
-    },
-    {
-      title:
-        "The Rise of Cloud Computing: Building Scalable Applications in the Modern Era",
-      description:
-        "How cloud platforms enable modern software systems and startups to scale globally.",
-    },
-    {
-      title:
-        "Cybersecurity in the Digital Age: Protecting Systems in an AI-Driven World",
-      description:
-        "Emerging threats, security practices, and the importance of secure development.",
-    },
-    {
-      title: "How Open Source Is Shaping the Future of Technology Innovation",
-      description:
-        "The role of global open-source communities in building modern software.",
-    },
-    {
-      title: "The Next Generation of Technologies: AI, IoT, and Edge Computing",
-      description:
-        "How emerging technologies are transforming industries and digital ecosystems.",
-    },
-  ];
-
-  const [timeLeft, setTimeLeft] = useState({
-    days: 0,
-    hours: 0,
-    minutes: 0,
-    seconds: 0,
-    expired: false,
-  });
-
-  const IMPACT_POINTS: ImpactPoint[] = [
-    {
-      title: "Hear from Experienced Women in tech",
-      description:
-        "Listen to inspiring stories and real career journeys shared by successful women in the tech industry.",
-    },
-    {
-      title: "Understand Industry Expectations",
-      description:
-        "Learn what companies actually expect from future engineers, developers, and innovators.",
-    },
-    {
-      title: "Bring Your Tech Questions",
-      description:
-        "An open environment where you can ask questions about careers, technology, and opportunities.",
-    },
-    {
-      title: "Connect with tech Professionals",
-      description:
-        "Build connections with mentors, engineers, and industry leaders in the tech ecosystem.",
-    },
-    {
-      title: "Find Your Direction in Tech",
-      description:
-        "Discover the tech paths that match your passion — from AI and cloud to open source and cybersecurity.",
-    },
-  ];
-
-  const SPONSORS: Sponsor[] = [
-    {
-      id: "sliit",
-      name: "SLIIT",
-      logo: "/assets/logo.png",
-      tier: "default",
-    },
-    {
-      id: "sp-1-platinum",
-      name: "Perituza Software Solutions - Platinum Partner",
-      logo: "/images/sponsors/perituza.png",
-      tier: "platinum",
-    },
-    {
-      id: "sp-2-golden",
-      name: "SoftSora(Pvt) Ltd - Golden Partner",
-      logo: "/images/sponsors/softsora.png",
-      tier: "golden",
-    },
-    {
-      id: "sp-3",
-      name: "Media Unit-FOC SLIIT",
-      logo: "/images/sponsors/media.png",
-      tier: "default",
-    },
-  ];
-
-  const speakers: Speaker[] = [
-    {
-      id: 1,
-      name: "Yuka La Tulippe",
-      role: "Co-CEO & General Manager of APAC operations at Perituza Software Solutions",
-      image: "/images/speakers/Yuka.jpeg",
-      status: "revealed",
-    },
-    {
-      id: 2,
-      name: "Dr.Kalpani Manathunga",
-      role: "Head of Department of Software Engineering at SLIIT",
-      image: "/images/speakers/Kalpani.png",
-      status: "revealed",
-    },
-    {
-      id: 3,
-      name: "Thilanka Abeywardena",
-      role: "Asia Cloud & AI integrated Marketing Lead - Migration & Modernization at Microsoft",
-      image: "/images/speakers/Thilanka.jpeg",
-      status: "revealed",
-    },
-    {
-      id: 4,
-      name: "Wyomi Ranasinghe",
-      role: "Head of Research & Innovation at Platned",
-      image: "/images/speakers/Wyomi.png",
-      status: "revealed",
-    },
-    {
-      id: 5,
-      name: "Anjalie Gamage",
-      role: "Senior Lecturer at Faculty of Computing at SLIIT",
-      image: "/images/speakers/Anjalie.png",
-      status: "revealed",
-    },
-    {
-      id: 6,
-      name: "Udara Thewarahannadige",
-      role: "Co-Founder, Cheif Operating Officer at STEM Link",
-      image: "/images/speakers/Udara.png",
-      status: "revealed",
-    },
-  ];
+export default function ImpactXGalleryPage() {
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      const now = Date.now();
-      const diff = DEADLINE - now;
-
-      if (diff <= 0) {
-        setTimeLeft({
-          days: 0,
-          hours: 0,
-          minutes: 0,
-          seconds: 0,
-          expired: true,
-        });
-        clearInterval(timer);
-        return;
-      }
-
-      setTimeLeft({
-        days: Math.floor(diff / (1000 * 60 * 60 * 24)),
-        hours: Math.floor((diff / (1000 * 60 * 60)) % 24),
-        minutes: Math.floor((diff / (1000 * 60)) % 60),
-        seconds: Math.floor((diff / 1000) % 60),
-        expired: false,
-      });
-    }, 1000);
-
-    return () => clearInterval(timer);
+    document.title = "ImpactX 2026 | SLIIT Women in FOSS";
   }, []);
 
+  const handleClose = useCallback(() => {
+    setSelectedIndex(null);
+  }, []);
+
+  const handlePrev = useCallback(() => {
+    setSelectedIndex((prev) =>
+      prev !== null ? (prev === 0 ? PHOTOS.length - 1 : prev - 1) : null
+    );
+  }, []);
+
+  const handleNext = useCallback(() => {
+    setSelectedIndex((prev) =>
+      prev !== null ? (prev === PHOTOS.length - 1 ? 0 : prev + 1) : null
+    );
+  }, []);
+
+  useEffect(() => {
+    if (selectedIndex === null) return;
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        handleClose();
+      } else if (e.key === "ArrowLeft") {
+        handlePrev();
+      } else if (e.key === "ArrowRight") {
+        handleNext();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = originalOverflow;
+    };
+  }, [selectedIndex, handleClose, handlePrev, handleNext]);
+
   return (
-    <main className="bg-[#0d0b14] text-white selection:bg-purple-500 font-sans min-h-screen pt-20 md:pt-32 pb-12 md:pb-24 relative overflow-x-hidden">
+    <div className="bg-[#0b0518] text-white selection:bg-purple-500/30 font-sans min-h-screen pt-24 md:pt-32 pb-16 md:pb-24 relative overflow-x-hidden">
       {/* Dynamic Background Elements */}
-      <div className="fixed inset-0 pointer-events-none">
-        <div className="absolute top-[-10%] left-[-10%] w-[300px] md:w-[800px] h-[300px] md:h-[800px] bg-purple-600/10 blur-[80px] md:blur-[150px] rounded-full" />
-        <div className="absolute top-[10%] right-[-5%] w-[200px] md:w-[400px] h-[200px] md:h-[400px] bg-blue-500/10 blur-[60px] md:blur-[120px] rounded-full" />
+      <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+        <div className="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] bg-purple-600/10 blur-[140px] rounded-full" />
+        <div className="absolute top-[20%] right-[-10%] w-[400px] h-[400px] bg-blue-600/10 blur-[120px] rounded-full" />
+        <div className="absolute inset-0 opacity-15 bg-[radial-gradient(#a855f7_1px,transparent_1px)] [background-size:24px_24px]" />
       </div>
 
-      <div className="max-w-[1300px] mx-auto px-6 md:px-8 relative z-10">
-        {/* HEADER */}
-        <header className="relative">
-          <div className="w-16 md:w-24 h-[2px] bg-purple-500 mb-6 md:mb-8" />
-          <span className="text-purple-400 font-mono tracking-[0.3em] md:tracking-[0.5em] text-[9px] md:text-[10px] uppercase block mb-4">
-            Impact X // 2026 Edition
+      <div className="max-w-[1320px] mx-auto px-6 md:px-10 relative z-10">
+        {/* TOP BAR: BACK LINK */}
+        <div className="mb-4">
+          <Link
+            href="/events"
+            className="inline-flex items-center gap-2 text-purple-400 hover:text-purple-300 text-sm md:text-base font-medium transition-colors group"
+          >
+            <ArrowLeft
+              size={18}
+              className="transition-transform duration-300 group-hover:-translate-x-1"
+            />
+            <span>Back to Events</span>
+          </Link>
+        </div>
+
+        {/* HERO TITLE */}
+        <h1 className="text-4xl sm:text-5xl md:text-6xl font-black text-white tracking-tight mb-4">
+          ImpactX 2026
+        </h1>
+
+        {/* META ROW */}
+        <div className="flex flex-wrap items-center gap-3 sm:gap-4 text-xs sm:text-sm text-white/80 mb-6">
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-purple-500/40 bg-purple-950/40 text-purple-200 font-medium">
+            <Trophy size={14} className="text-purple-300" />
+            Hackathons
           </span>
-          <h1 className="text-6xl sm:text-8xl md:text-[10vw] font-[1000] leading-[0.8] tracking-[-0.07em] md:tracking-[-0.09em] uppercase italic text-white mb-8 md:mb-10">
-            I m p a c t
-            <span className="outlined-text"> X</span>
-            <span className="text-purple-500 not-italic ml-[-0.05em]">.</span>
-          </h1>
-          <p className="mt-6 md:mt-8 max-w-2xl text-lg md:text-xl font-bold uppercase italic text-white/70 leading-snug">
-            2026 Edition
-          </p>
-        </header>
 
-        {/* WHAT IS IMPACT X */}
-        <section aria-labelledby="impact-x-heading" className="mb-24 mt-16">
-          <div className="max-w-6xl mx-auto">
-            <div className="mb-12 md:mb-16">
-              <h2
-                id="impact-x-heading"
-                className="text-3xl md:text-4xl font-black italic uppercase mb-6"
-              >
-                What is Impact X
-              </h2>
-              <p className="max-w-3xl text-white/70 leading-relaxed text-base md:text-lg">
-                Impact X is a special initiative by SLIIT Women in FOSS that
-                brings together innovators, developers, and aspiring
-                technologists. The event highlights the voices of women in
-                open-source, leadership, and emerging technologies.
-              </p>
-            </div>
+          <span
+            className="w-1.5 h-1.5 rounded-full bg-purple-400/80"
+            aria-hidden="true"
+          />
 
-            <ol className="grid grid-cols-1 md:grid-cols-2 gap-x-12 lg:gap-x-20">
-              {IMPACT_POINTS.map((point, index) => (
-                <li key={point.title} className="group py-7 md:py-9">
-                  <div className="flex items-start gap-5 md:gap-7">
-                    <span
-                      aria-hidden="true"
-                      className="impact-number shrink-0 text-5xl sm:text-6xl lg:text-7xl font-black italic leading-none transition-colors duration-300 group-hover:text-purple-500"
-                    >
-                      {String(index + 1).padStart(2, "0")}
-                    </span>
-                    <div className="pt-1">
-                      <h3 className="text-lg md:text-xl font-black italic uppercase text-white leading-tight transition-transform duration-300 group-hover:translate-x-1">
-                        {point.title}
-                      </h3>
-                      <p className="mt-3 text-sm md:text-base text-white/60 leading-relaxed">
-                        {point.description}
-                      </p>
-                    </div>
-                  </div>
-                  <div
-                    aria-hidden="true"
-                    className="mt-7 md:mt-9 h-px w-full bg-gradient-to-r from-purple-500/40 to-transparent"
+          <span className="inline-flex items-center gap-1.5 text-white/80">
+            <Camera size={15} className="text-purple-400" />
+            10 Photos
+          </span>
+
+          <span
+            className="w-1.5 h-1.5 rounded-full bg-purple-400/80"
+            aria-hidden="true"
+          />
+
+          <span className="inline-flex items-center gap-1.5 text-white/80">
+            <Calendar size={15} className="text-purple-400" />
+            June 2026
+          </span>
+        </div>
+
+        {/* SHORT DESCRIPTION */}
+        <p className="max-w-3xl text-sm sm:text-base text-white/70 leading-relaxed mb-10 md:mb-12 font-normal">
+          Impact X is a special initiative by SLIIT Women in FOSS that brings
+          together innovators, developers, and aspiring technologists. The event
+          highlights the voices of women in open-source, leadership, and emerging
+          technologies.
+        </p>
+
+        {/* PHOTO GALLERY GRID (Bento Layout) */}
+        <section aria-label="ImpactX 2026 photo gallery">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
+            {PHOTOS.map((photo, index) => {
+              const colSpanClass = photo.full
+                ? "col-span-1 sm:col-span-2 md:col-span-3"
+                : photo.wide
+                ? "col-span-1 sm:col-span-2 md:col-span-2"
+                : "col-span-1";
+
+              return (
+                <button
+                  key={photo.id}
+                  type="button"
+                  onClick={() => setSelectedIndex(index)}
+                  aria-label={`Open photo ${photo.id}: ${photo.alt}`}
+                  className={`group relative text-left w-full overflow-hidden rounded-2xl md:rounded-3xl border border-white/10 bg-white/[0.03] transition-all duration-300 hover:border-purple-500/50 hover:shadow-[0_0_30px_rgba(168,85,247,0.25)] focus:outline-none focus:ring-2 focus:ring-purple-500 ${colSpanClass} ${
+                    photo.heightClass || "h-60 sm:h-72 md:h-80"
+                  }`}
+                >
+                  <Image
+                    src={photo.src}
+                    alt={photo.alt}
+                    fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
                   />
-                </li>
-              ))}
-            </ol>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+                </button>
+              );
+            })}
           </div>
         </section>
+      </div>
 
-        {/* SPONSORS */}
-        <section className="mt-24 overflow-hidden">
-          <h2 className="text-3xl font-black italic uppercase mb-10 flex items-center gap-4">
-            2026 Partners
-            <span className="w-full h-[1px] bg-gradient-to-r from-purple-500/50 to-transparent" />
-          </h2>
-
-          <div className="relative w-full">
-            <div className="absolute left-0 top-0 w-40 h-full bg-gradient-to-r from-[#0d0b14] to-transparent z-20 pointer-events-none" />
-            <div className="absolute right-0 top-0 w-28 h-full bg-gradient-to-l from-[#0d0b14] to-transparent z-20 pointer-events-none" />
-
-            <div className="flex w-max animate-marquee hover:[animation-play-state:paused] gap-10 py-6">
-              {[...SPONSORS, ...SPONSORS].map((sponsor, index) => {
-                const isRevealed = Boolean(sponsor.logo);
-                const useWhiteLogoCard = isRevealed;
-
-                const borderStyles: Record<string, string> = {
-                  golden: "hover:border-yellow-400/50",
-                  platinum: "hover:border-gray-300/50",
-                  default: "hover:border-purple-500/50",
-                };
-
-                const shadowStyles: Record<string, string> = {
-                  golden: "",
-                  platinum: "",
-                  default: "group-hover:drop-shadow-[0_0_15px_rgba(168,85,247,0.4)]",
-                };
-
-                const tier = sponsor.tier ?? "default";
-
-                return (
-                  <div
-                    key={`${sponsor.id}-${index}`}
-                    className={`group relative flex items-center justify-center h-28 w-64 rounded-2xl transition-all duration-500 hover:scale-[1.02] ${
-                      useWhiteLogoCard
-                        ? "border border-white/40 bg-white shadow-[0_0_30px_rgba(255,255,255,0.08)]"
-                        : `border border-white/5 bg-gradient-to-b from-white/[0.03] to-transparent ${borderStyles[tier]}`
-                    }`}
-                  >
-                    <div
-                      className={`absolute inset-0 rounded-2xl transition-opacity duration-500 ${
-                        useWhiteLogoCard
-                          ? "opacity-0"
-                          : "bg-[radial-gradient(circle_at_center,_rgba(168,85,247,0.1)_0%,_transparent_70%)] opacity-0 group-hover:opacity-100"
-                      }`}
-                    />
-
-                    {isRevealed ? (
-                      <img
-                        src={sponsor.logo}
-                        alt={sponsor.name ?? "Sponsor logo"}
-                        className={`h-12 w-auto object-contain transition-all duration-500 filter ${
-                          useWhiteLogoCard
-                            ? "opacity-100 grayscale-0 brightness-100"
-                            : "opacity-100 grayscale-0 brightness-110 group-hover:brightness-125"
-                        } drop-shadow-[0_0_10px_rgba(168,85,247,0)] ${shadowStyles[tier]}`}
-                        loading="lazy"
-                      />
-                    ) : (
-                      <div className="flex flex-col items-center justify-center">
-                        <div className="relative">
-                          <span className="text-5xl font-[900] text-white/10 group-hover:text-purple-500/20 transition-colors duration-500 italic">
-                            ?
-                          </span>
-                          <div className="absolute inset-0 flex items-center justify-center">
-                            <div className="w-10 h-1 bg-white/10 group-hover:bg-purple-500/40 transition-all duration-900 group-hover:w-full group-hover:rotate-12" />
-                          </div>
-                        </div>
-                        <span className="mt-2 font-mono text-[8px] text-white/30 tracking-[0.3em] uppercase">
-                          Hidden
-                        </span>
-                      </div>
-                    )}
-
-                    <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-all">
-                      <div className="w-1 h-1 bg-purple-500 rounded-full animate-pulse" />
-                    </div>
-
-                    {isRevealed &&
-                    (tier === "golden" ||
-                      tier === "platinum" ||
-                      sponsor.id === "sp-3") ? (
-                      <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 opacity-100 transition-all">
-                        <span className="inline-flex min-w-[96px] items-center justify-center whitespace-nowrap font-mono text-[9px] font-bold text-purple-100 uppercase tracking-[0.28em] bg-[#0d0b14] px-3 py-1 border border-purple-500/25 rounded-full shadow-[0_6px_16px_rgba(0,0,0,0.35)]">
-                          {tier === "golden"
-                            ? "Gold"
-                            : tier === "platinum"
-                            ? "Platinum"
-                            : "Media"}
-                        </span>
-                      </div>
-                    ) : null}
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        </section>
-
-        {/* SPEAKERS */}
-        <section className="mt-24 mb-24">
-          <h2 className="text-3xl font-black italic uppercase mb-10">
-            2026 Speakers
-          </h2>
-
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
-            {speakers.map((speaker, index) => (
-              <div
-                key={speaker.id}
-                className="group relative h-72 rounded-xl border border-white/10 overflow-hidden bg-white/[0.02] transition-all duration-500 hover:border-purple-500/50 hover:bg-purple-500/[0.03]"
-              >
-                <div className="absolute inset-0 opacity-10 group-hover:opacity-20 transition-opacity bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:16px_16px]" />
-
-                <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-3">
-                  {speaker.status === "hidden" ? (
-                    <>
-                      <div className="relative">
-                        <span className="text-7xl font-[1000] text-white/5 group-hover:text-purple-500/20 italic transition-colors duration-500">
-                          ?
-                        </span>
-                        <div className="absolute inset-0 flex items-center justify-center">
-                          <div className="w-12 h-1 bg-white/10 group-hover:bg-purple-500/40 transition-all duration-700 group-hover:w-full group-hover:rotate-12" />
-                        </div>
-                      </div>
-                      <div className="mt-4 flex flex-col items-center">
-                        <Lock
-                          size={16}
-                          className="text-white/20 group-hover:text-purple-500/50 mb-2"
-                        />
-                        <span className="font-mono text-[8px] text-white/30 tracking-[0.3em] uppercase">
-                          Encrypted
-                        </span>
-                      </div>
-                    </>
-                  ) : (
-                    <>
-                      <img
-                        src={speaker.image || undefined}
-                        alt={speaker.name}
-                        className="w-24 h-24 rounded-full object-cover border border-white/10 mb-3"
-                      />
-                      <p className="text-xs text-white/50">{speaker.role}</p>
-                      <div className="mt-6" />
-                      <br/>
-                      <br/>
-                      <br/>
-                    </>
-                  )}
-                </div>
-
-                <div className="absolute bottom-0 left-0 right-0 p-5 bg-gradient-to-t from-black via-black/80 to-transparent">
-                  <div className="flex flex-col gap-1">
-                    <p className="font-mono text-[9px] text-purple-400 tracking-[0.2em] uppercase opacity-60">
-                      _0{index + 1}
-                    </p>
-                    <p className="text-sm font-black italic uppercase tracking-tighter text-white/40 group-hover:text-white/70 transition-colors">
-                      {speaker.status === "hidden"
-                        ? "Identity_Hidden"
-                        : speaker.name}
-                    </p>
-                  </div>
-
-                  <div className="mt-3 h-[2px] w-full bg-white/5 relative overflow-hidden">
-                    <div className="absolute inset-0 bg-purple-600 w-1/3 -translate-x-full group-hover:translate-x-[300%] transition-transform duration-1000" />
-                  </div>
-                </div>
-
-                <div className="absolute inset-0 pointer-events-none">
-                  <div className="h-20 w-full bg-gradient-to-b from-transparent via-purple-500/10 to-transparent -translate-y-full group-hover:animate-scan" />
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-16 items-stretch">
-          {/* LEFT COLUMN: INTEL */}
-          <div className="lg:col-span-4 order-2 lg:order-1">
-            <div className="bg-white/[0.03] border border-white/10 p-6 md:p-8 rounded-2xl backdrop-blur-sm h-full flex flex-col">
-              <h2 className="text-[10px] font-mono uppercase tracking-[0.3em] text-purple-400 mb-6 md:mb-8 flex items-center gap-2">
-                <Activity size={14} className="animate-pulse" aria-hidden="true" />{" "}
-                Briefing_Note
-              </h2>
-
-              <div className="mb-8 md:mb-10 p-4 border-l-2 border-purple-500/30 bg-purple-500/5">
-                <p className="text-xs font-bold text-purple-400 uppercase mb-2">
-                  Why Medium?
-                </p>
-                <p className="text-sm text-white/60 leading-relaxed italic">
-                  Medium is a global stage. This competition isn&apos;t just a
-                  contest; it&apos;s a &quot;Proof of Work&quot; for your career.
-                </p>
-              </div>
-
-              <h2 className="text-[10px] font-mono uppercase tracking-[0.3em] text-purple-400 mb-6 flex items-center gap-2">
-                <ShieldCheck size={14} aria-hidden="true" /> Submission Rules
-              </h2>
-              <div className="space-y-6">
-                {RULES.map((rule, idx) => (
-                  <div key={`rule-${idx}`} className="group">
-                    <p className="text-[9px] font-mono text-white/30 mb-1 font-bold">
-                      PROTOCOL_0{idx + 1}
-                    </p>
-                    <p className="text-xs md:text-sm font-black uppercase italic tracking-wide group-hover:text-purple-400 transition-colors leading-tight">
-                      {rule}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </div>
+      {/* FULL-SCREEN LIGHTBOX MODAL */}
+      {selectedIndex !== null && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label="Photo Lightbox"
+          onClick={handleClose}
+          className="fixed inset-0 z-[200] flex items-center justify-center bg-black/95 backdrop-blur-md p-4 md:p-8 select-none"
+        >
+          {/* Top Counter */}
+          <div className="absolute top-5 left-1/2 -translate-x-1/2 z-[210] font-mono text-xs md:text-sm text-white/80 bg-white/10 backdrop-blur-md px-4 py-1.5 rounded-full border border-white/10 shadow-lg">
+            {selectedIndex + 1} / {PHOTOS.length}
           </div>
 
-          {/* RIGHT COLUMN: UPLINK */}
-          <div className="lg:col-span-8 order-1 lg:order-2 group relative">
-            <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 to-blue-600 rounded-[2rem] md:rounded-[3rem] blur opacity-10" />
-            <div className="relative h-full bg-white/[0.02] border border-white/10 p-8 md:p-16 rounded-[2rem] md:rounded-[3rem] overflow-hidden backdrop-blur-md">
-              <div className="flex flex-col h-full justify-between relative z-10">
-                <div>
-                  <div className="flex items-center gap-4 mb-8">
-                    <div className="p-3 bg-purple-500/10 rounded-xl text-purple-500">
-                      <Fingerprint
-                        size={28}
-                        className=""
-                        aria-hidden="true"
-                      />
-                    </div>
-                    <div>
-                      <h2 className="text-2xl md:text-3xl font-[1000] uppercase italic tracking-tighter">
-                        Transmission Portal
-                      </h2>
-                      <p className="font-mono text-[8px] md:text-[9px] text-purple-400 uppercase tracking-[0.4em]">
-                        Uplink_Status: Stable
-                      </p>
-                    </div>
-                  </div>
-                  <div className="mt-8 md:mt-12">
-                    <p className="text-3xl md:text-4xl lg:text-5xl font-black uppercase italic leading-[1.1]">
-                      READY TO UPLINK <br />
-                      YOUR <span className="text-purple-500">MANIFESTO?</span>
-                    </p>
-                  </div>
-                </div>
+          {/* Close Button */}
+          <button
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation();
+              handleClose();
+            }}
+            aria-label="Close photo preview"
+            className="absolute top-4 right-4 md:top-6 md:right-6 z-[210] flex h-11 w-11 items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/20 transition-all hover:scale-110 active:scale-95 border border-white/10 focus:outline-none focus:ring-2 focus:ring-purple-500"
+          >
+            <X size={24} />
+          </button>
 
-                <div className="mt-8 md:mt-10 rounded-2xl border border-purple-500/20 bg-white/[0.02] p-5 md:p-6">
-                  <p className="font-mono text-[9px] md:text-[10px] uppercase tracking-[0.35em] text-purple-400 mb-4">
-                    Topic Categories
-                  </p>
+          {/* Previous Button */}
+          <button
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation();
+              handlePrev();
+            }}
+            aria-label="Previous photo"
+            className="absolute left-3 md:left-8 top-1/2 -translate-y-1/2 z-[210] flex h-12 w-12 items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/20 transition-all hover:scale-110 active:scale-95 border border-white/10 focus:outline-none focus:ring-2 focus:ring-purple-500 shadow-xl"
+          >
+            <ChevronLeft size={28} />
+          </button>
 
-                  <ul className="space-y-4">
-                    {TOPIC_CATEGORIES.map((item, idx) => (
-                      <li
-                        key={`topic-${idx}`}
-                        className="border-l-2 border-purple-500/40 pl-3"
-                      >
-                        <p className="text-sm md:text-[1rem] font-black italic text-white leading-snug">
-                          {item.title}
-                        </p>
-                        <p className="text-sm md:text-l text-white/65 italic mt-1 leading-relaxed">
-                          {item.description}
-                        </p>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+          {/* Next Button */}
+          <button
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation();
+              handleNext();
+            }}
+            aria-label="Next photo"
+            className="absolute right-3 md:right-8 top-1/2 -translate-y-1/2 z-[210] flex h-12 w-12 items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/20 transition-all hover:scale-110 active:scale-95 border border-white/10 focus:outline-none focus:ring-2 focus:ring-purple-500 shadow-xl"
+          >
+            <ChevronRight size={28} />
+          </button>
 
-                <div className="mt-8 md:mt-10 rounded-2xl border border-purple-500/30 bg-white/[0.02] p-5 md:p-6">
-                  <p className="font-mono text-[9px] md:text-[10px] uppercase tracking-[0.35em] text-purple-400 mb-3">
-                    Deadline Countdown
-                  </p>
-
-                  {timeLeft.expired ? (
-                    <p className="text-sm md:text-base font-black italic uppercase text-red-400">
-                      Submission closed
-                    </p>
-                  ) : (
-                    <p className="text-lg md:text-2xl font-black italic uppercase text-white tracking-wide">
-                      {timeLeft.days}d : {timeLeft.hours}h : {timeLeft.minutes}m
-                      : {timeLeft.seconds}s
-                    </p>
-                  )}
-                </div>
-
-                <div className="mt-12 md:mt-16">
-                  <a
-                    href="https://forms.gle/QFKJE49p99mVrEnS8"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex w-full group/btn relative items-center justify-between bg-white p-6 md:p-8 text-black transition-all hover:bg-purple-600 hover:text-white rounded-xl md:rounded-2xl"
-                  >
-                    <span className="relative z-10 font-[1000] uppercase italic tracking-[0.1em] md:tracking-[0.2em] text-lg md:text-2xl flex items-center gap-4">
-                      Initiate Submission
-                    </span>
-                    <ChevronRight className="relative z-10 group-hover/btn:translate-x-2 transition-transform" />
-                  </a>
-                </div>
-              </div>
+          {/* Active Image and Caption */}
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="relative max-w-5xl max-h-[85vh] flex flex-col items-center justify-center px-4"
+          >
+            <div className="relative max-w-full max-h-[75vh]">
+              <Image
+                src={PHOTOS[selectedIndex].src}
+                alt={PHOTOS[selectedIndex].alt}
+                width={1200}
+                height={800}
+                priority
+                className="max-w-full max-h-[75vh] w-auto h-auto object-contain rounded-xl md:rounded-2xl shadow-2xl border border-white/10"
+              />
             </div>
+            <p className="mt-4 text-center text-xs sm:text-sm text-white/70 italic px-4 font-sans max-w-2xl">
+              {PHOTOS[selectedIndex].alt}
+            </p>
           </div>
         </div>
-      </div>
-
-      <style jsx>{`
-        .outlined-text {
-          color: transparent;
-          -webkit-text-stroke: 1px rgba(255, 255, 255, 0.6);
-        }
-        .impact-number {
-          color: transparent;
-          -webkit-text-stroke: 1px rgba(168, 85, 247, 0.75);
-        }
-        .group:hover .impact-number {
-          -webkit-text-stroke: 1px rgb(168, 85, 247);
-        }
-        @keyframes scan {
-          0% {
-            transform: translateX(-100%);
-          }
-          100% {
-            transform: translateX(300%);
-          }
-        }
-        @keyframes marquee {
-          0% {
-            transform: translateX(0);
-          }
-          100% {
-            transform: translateX(-50%);
-          }
-        }
-        .animate-marquee {
-          animation: marquee 25s linear infinite;
-        }
-        .animate-scan {
-          animation: scan 2s linear infinite;
-        }
-      `}</style>
-    </main>
+      )}
+    </div>
   );
 }
