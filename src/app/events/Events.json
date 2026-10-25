@@ -6,13 +6,19 @@
     "__Comment_2": "Add all events in sorted order.(Add new events at the beginning of an array.)",
     "Events": [
         {
+            "title": "UI/UX Design Bootcamp",
+            "image": "/assets/events/UI UX Design Bootcamp.jpeg",
+            "description": "Lead UX Designer at IFS, Sanduni Kariyawasam, led a hands-on bootcamp on UI/UX design fundamentals.",
+            "date": "29th August 2026",
+            "speaker": "Sanduni Kariyawasam, Lead UX Designer at IFS"
+        },
+        {
             "title": "Impact X 2026",
             "image": "/assets/events/Impact X.jpg",
             "description": "SLIIT WIF's flagship event celebrating innovation, open source, and women in tech.",
             "date": "23rd March 2026",
             "link": "/Womens_Day"
         },
-
         {
             "title": "Psychology of getting hacked",
             "image": "/assets/events/Psychology of Hacking.jpeg",
