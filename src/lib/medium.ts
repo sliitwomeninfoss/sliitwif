@@ -48,7 +48,13 @@ export async function getMediumPosts(): Promise<MediumPost[]> {
   }
   const xml = await res.text();
 
-  return [...xml.matchAll(/<item>([\s\S]*?)<\/item>/g)].map(([, item]) => {
+  const items = [...xml.matchAll(/<item>([\s\S]*?)<\/item>/g)];
+  // Fail the build rather than deploy an empty blog list
+  if (items.length === 0) {
+    throw new Error("Medium feed returned no posts");
+  }
+
+  return items.map(([, item]) => {
     const content = getTag(item, "content:encoded");
     // Medium appends a tracking pixel, so skip it when picking a thumbnail
     const image = [...content.matchAll(/<img[^>]+src="([^">]+)"/g)]
