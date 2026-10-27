@@ -1,9 +1,11 @@
 import HomeIntro from "./components/HomeIntro";
+import { getMediumPosts } from "@/lib/medium";
 
-export default function Home() {
+export default async function Home() {
+  const blogPosts = await getMediumPosts();
   return (
     <main>
-      <HomeIntro />
+      <HomeIntro blogPosts={blogPosts} />
     </main>
   );
 }

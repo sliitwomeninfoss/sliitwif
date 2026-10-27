@@ -8,12 +8,13 @@ import PastEventsSection from "./PastEventsSection";
 import WEBINARSection from "./PastWebinars";
 import BLOGSSection from "./PastBlogs";
 import Link from 'next/link';
+import type { MediumPost } from '@/lib/medium';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-export default function WomenInFOSS() {
+export default function WomenInFOSS({ blogPosts }: { blogPosts: MediumPost[] }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const heroRef = useRef<HTMLElement>(null);
   const upperTextRef = useRef<HTMLDivElement>(null);
@@ -330,7 +331,7 @@ export default function WomenInFOSS() {
 
       <PastEventsSection />
       <WEBINARSection />
-      <BLOGSSection />
+      <BLOGSSection posts={blogPosts} />
 
       <style jsx>{`
         .stroke-text-white { color: transparent; -webkit-text-stroke: 1.5px rgba(255,255,255,0.8); }

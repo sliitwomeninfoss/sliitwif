@@ -1,92 +1,26 @@
 "use client";
 
-import React, { useEffect, useRef, useState, useCallback } from "react";
+import React, { useEffect, useMemo, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight, Calendar } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { FALLBACK_IMAGE, type MediumPost } from "@/lib/medium";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-/* ---------------- TYPES ---------------- */
-interface MediumPost {
-  title: string;
-  pubDate: string;
-  link: string;
-  guid: string;
-  thumbnail: string;
-  description: string;
-  categories: string[];
-}
-
-const MEDIUM_RSS_URL =
-  "https://api.rss2json.com/v1/api.json?rss_url=https://medium.com/feed/sliitwif";
-
-const FALLBACK_IMAGE = "/assets/logo.png";
-
-export default function BlogPreviewSection() {
+export default function BlogPreviewSection({ posts }: { posts: MediumPost[] }) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [blogs, setBlogs] = useState<MediumPost[]>([]);
-  const [loading, setLoading] = useState(true);
+  const blogs = useMemo(() => posts.slice(0, 5), [posts]);
   const hasAnimated = useRef(false);
-
-  /* ---------------- FETCH BLOGS ---------------- */
-  const fetchBlogs = useCallback(async (isMounted: boolean) => {
-    try {
-      const res = await fetch(MEDIUM_RSS_URL);
-      if (!res.ok) throw new Error("Failed to fetch blogs");
-
-      const data = await res.json();
-      const cleanedPosts: MediumPost[] = data.items
-        .slice(0, 5)
-        .map((post: MediumPost) => {
-          let image = post.thumbnail;
-
-          const invalidImage =
-            !image ||
-            image.trim() === "" ||
-            image.includes("stat?event") ||
-            image.includes("medium.com/_/stat");
-
-          if (invalidImage) {
-            const match = post.description?.match(
-              /<img[^>]+src="([^">]+)"/
-            );
-            image = match?.[1] || FALLBACK_IMAGE;
-          }
-
-          return {
-            ...post,
-            title: post.title.replace(/&amp;/g, "&"),
-            thumbnail: image || FALLBACK_IMAGE,
-          };
-        });
-
-      if (isMounted) {
-        setBlogs(cleanedPosts);
-        setLoading(false);
-      }
-    } catch (error) {
-      console.error("Error loading blogs:", error);
-      if (isMounted) setLoading(false);
-    }
-  }, []);
-
-  useEffect(() => {
-    let isMounted = true;
-    fetchBlogs(isMounted);
-    return () => {
-      isMounted = false;
-    };
-  }, [fetchBlogs]);
 
   /* ---------------- GSAP ---------------- */
   useEffect(() => {
-    // Don't run animations if still loading or no blogs
-    if (loading || blogs.length === 0 || hasAnimated.current) return;
+    // Don't run animations if there are no blogs
+    if (blogs.length === 0 || hasAnimated.current) return;
 
     const ctx = gsap.context(() => {
       // Animate on load without scroll trigger
@@ -111,7 +45,7 @@ export default function BlogPreviewSection() {
     }, containerRef);
 
     return () => ctx.revert();
-  }, [blogs, loading]);
+  }, [blogs]);
 
   return (
     <section
@@ -130,13 +64,7 @@ export default function BlogPreviewSection() {
           </div>
         </div>
 
-        {loading ? (
-          <div className="flex items-center justify-center py-20">
-            <div className="text-purple-400 font-mono text-sm animate-pulse">
-              Loading blogs...
-            </div>
-          </div>
-        ) : blogs.length === 0 ? (
+        {blogs.length === 0 ? (
           <div className="flex items-center justify-center py-20">
             <div className="text-purple-400/60 font-mono text-sm">
               No blogs available
