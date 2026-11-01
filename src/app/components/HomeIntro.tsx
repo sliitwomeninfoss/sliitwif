@@ -163,7 +163,7 @@ export default function WomenInFOSS({ blogPosts }: { blogPosts: MediumPost[] }) 
                 <h2 className="text-5xl md:text-7xl lg:text-[clamp(4rem,8vw,9rem)] font-black leading-[0.85] tracking-tighter uppercase italic">
                   Beyond the <br/>
                   <span className="text-purple-400 not-italic">Community</span><br/>
-                  <span className="text-white/20">Is the</span> <span className="text-purple-400">Code</span>
+                  <span className="text-white">Is the</span> <span className="text-purple-400">Code</span>
                 </h2>
                 <div className="mt-8 flex flex-wrap gap-3">
                   {['Est. 2018', 'Open Source', 'Empowerment'].map((tag) => (
